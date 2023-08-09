@@ -25,4 +25,4 @@ replay_pid*
 /backend/target/
 
 # personal properties file
-*.properties
+database.properties
