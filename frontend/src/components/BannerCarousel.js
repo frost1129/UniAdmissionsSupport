@@ -7,7 +7,7 @@ const BannerCarousel = () => {
     return (
         <Carousel data-bs-theme="dark">
             <Carousel.Item>
-                <Image className="w-75" src={logo} fluid />
+                <Image src={logo} fluid />
             </Carousel.Item>
             <Carousel.Item>
                 <Image className="w-75" src={logo} fluid />
