@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Image } from "react-bootstrap";
 
-import logo from "../img/ou_logo_short.png";
 import Api, { enpoints } from "../config/Api";
 import MySpinner from "./MySpinner";
 
@@ -23,7 +22,7 @@ const BannerCarousel = () => {
         <Carousel data-bs-theme="dark">
             {banners.map((banner) => {
                 return (
-                    <Carousel.Item>
+                    <Carousel.Item className="text-center">
                         <Image src={banner.image} fluid />
                     </Carousel.Item>
                 );

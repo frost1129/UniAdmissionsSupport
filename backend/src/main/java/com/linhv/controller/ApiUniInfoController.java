@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 @RequestMapping("/api")
-@CrossOrigin
+//@CrossOrigin
 public class ApiUniInfoController {
     
     @Autowired
