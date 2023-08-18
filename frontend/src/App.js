@@ -9,14 +9,14 @@ import SignUp from "./layouts/SignUp";
 const App = () => {
     return (
         <BrowserRouter>
-            {/* <Header /> */}
-
             <Routes>
-                {/* <Route path="/" element={<Home/>} /> */}
+                {/* <Route path="/">
+                    <Route index element={<Header />} />
+                    <Route index element={<Home/>} />
+                    <Route index element={<Footer />} />
+                </Route> */}
                 <Route path="/" element={<SignIn />} />
             </Routes>
-            <SignUp />
-            {/* <Footer /> */}
         </BrowserRouter>
     );
 };
