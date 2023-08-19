@@ -3,12 +3,12 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./layouts/Home";
-import SignIn from "./layouts/SignIn";
-import SignUp from "./layouts/SignUp";
+import News from "./components/News";
 
 const App = () => {
     return (
         <BrowserRouter>
+<<<<<<< HEAD
             <Routes>
                 {/* <Route path="/">
                     <Route index element={<Header />} />
@@ -17,6 +17,14 @@ const App = () => {
                 </Route> */}
                 <Route path="/" element={<SignIn />} />
             </Routes>
+=======
+            <Header />
+
+            <Routes>
+                <Route path="/" element={<News/>} />
+            </Routes>
+            {/* <Footer /> */}
+>>>>>>> implement-ui
         </BrowserRouter>
     );
 };
