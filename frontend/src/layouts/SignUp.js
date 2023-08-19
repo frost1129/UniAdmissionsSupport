@@ -24,6 +24,7 @@ const SignInUp = () => {
                                 type="text"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Địa chỉ Email"
+                                name="email"
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -31,6 +32,7 @@ const SignInUp = () => {
                                 type="text"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Họ và tên đệm"
+                                name="last_name"
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -38,6 +40,7 @@ const SignInUp = () => {
                                 type="text"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Tên"
+                                name="first_name"
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -45,6 +48,7 @@ const SignInUp = () => {
                                 type="password"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Mật khẩu"
+                                name="password"
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">

@@ -35,6 +35,7 @@ const SignInUp = () => {
                                 type="text"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Địa chỉ Email"
+                                name="email"
                             />
                         </InputGroup>
                         <InputGroup className="mb-1">
@@ -42,6 +43,7 @@ const SignInUp = () => {
                                 type="password"
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Mật khẩu"
+                                name="password"
                             />
                         </InputGroup>
                         <InputGroup className="mb-5 d-flex justify-content-between">
