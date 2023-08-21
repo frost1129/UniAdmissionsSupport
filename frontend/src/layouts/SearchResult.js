@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
 import SearchPostItem from "../components/SearchPostItem";
+import Paging from "../components/Paging";
 
 const SearchResult = () => {
     const postData = {
@@ -17,7 +18,7 @@ const SearchResult = () => {
                 <h3 className="text-uppercase text-center p-3">
                     Kết quả tìm kiếm
                 </h3>
-                <InputGroup className="mb-3">
+                <InputGroup className="mb-3 shadow-sm">
                     <Form.Control
                         placeholder="Nội dung cần tìm..."
                         aria-label="Nội dung cần tìm..."
@@ -38,6 +39,8 @@ const SearchResult = () => {
                     <SearchPostItem post={postData}/>
                     <SearchPostItem post={postData}/>
                 </Container>
+
+                <Paging />
             </Container>
         </Container>
     );
