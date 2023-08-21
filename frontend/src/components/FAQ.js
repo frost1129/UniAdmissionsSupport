@@ -4,7 +4,7 @@ import React from "react";
 import { Accordion, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const FAQs = () => {
+const FAQ = () => {
     return (
         <Container fluid>
             <h3 className="text-center my-3">Các câu hỏi thường gặp</h3>
@@ -42,4 +42,4 @@ const FAQs = () => {
     );
 };
 
-export default FAQs;
+export default FAQ;

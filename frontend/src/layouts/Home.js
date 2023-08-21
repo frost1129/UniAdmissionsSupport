@@ -1,7 +1,7 @@
 import React from "react";
 import BannerCarousel from "../components/BannerCarousel";
 import Search from "../components/Search";
-import FAQs from "../components/FAQs";
+import FAQ from "../components/FAQ";
 import UserQuestion from "../components/UserQuestion";
 
 const Home = () => {
@@ -9,7 +9,7 @@ const Home = () => {
         <>
             <BannerCarousel/>
             <Search/>
-            <FAQs/>
+            <FAQ/>
             <UserQuestion/>
         </>
     )
