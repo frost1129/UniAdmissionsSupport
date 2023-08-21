@@ -1,9 +1,46 @@
-import React from 'react'
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React from "react";
+import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import SearchPostItem from "../components/SearchPostItem";
 
 const SearchResult = () => {
-  return (
-    <div>SearchResult</div>
-  )
-}
+    const postData = {
+        title: "Tiêu đề bài viết 123",
+        type: "Loại hình tuyển sinh",
+        date: "Ngày đăng",
+    };
 
-export default SearchResult
+    return (
+        <Container>
+            <Container className="w-75 mx-auto">
+                <h3 className="text-uppercase text-center p-3">
+                    Kết quả tìm kiếm
+                </h3>
+                <InputGroup className="mb-3">
+                    <Form.Control
+                        placeholder="Nội dung cần tìm..."
+                        aria-label="Nội dung cần tìm..."
+                    />
+                    <Button variant="outline-secondary">
+                        Tìm kiếm
+                        <FontAwesomeIcon className="mx-1" icon={faSearch} />
+                    </Button>
+                </InputGroup>
+
+                <Container>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                    <SearchPostItem post={postData}/>
+                </Container>
+            </Container>
+        </Container>
+    );
+};
+
+export default SearchResult;
