@@ -12,7 +12,7 @@ import {
 const FAQs = () => {
     return (
         <Container>
-            <Container className="w-75 mx-auto">
+            <Container className="col-md-10 mx-auto">
                 <h3 className="text-uppercase text-center p-3">
                     Các câu hỏi thường gặp
                 </h3>
