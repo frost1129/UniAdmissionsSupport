@@ -8,7 +8,7 @@ const FAQ = () => {
     return (
         <Container fluid>
             <h3 className="text-center my-3">Các câu hỏi thường gặp</h3>
-            <Accordion defaultActiveKey="0" className="w-75 mx-auto" flush>
+            <Accordion defaultActiveKey="0" className="col-md-10 mx-auto" flush>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Accordion Item #1</Accordion.Header>
                     <Accordion.Body>
