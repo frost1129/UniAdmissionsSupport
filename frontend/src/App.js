@@ -7,23 +7,12 @@ import Home from "./layouts/Home";
 const App = () => {
     return (
         <BrowserRouter>
-<<<<<<< HEAD
-            <Routes>
-                {/* <Route path="/">
-                    <Route index element={<Header />} />
-                    <Route index element={<Home/>} />
-                    <Route index element={<Footer />} />
-                </Route> */}
-                <Route path="/" element={<SignIn />} />
-            </Routes>
-=======
             <Header />
 
             <Routes>
                 <Route path="/" element={<Home/>} />
             </Routes>
             {/* <Footer /> */}
->>>>>>> implement-ui
         </BrowserRouter>
     );
 };
