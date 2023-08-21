@@ -69,6 +69,9 @@ public class UserQuestion implements Serializable {
     @JoinColumn(name = "ask_user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private User askUserId;
+    @Size(min = 1, max = 65535)
+    @Column(name = "ask_user_email")
+    private String askUserEmail;
 
     public UserQuestion() {
     }
