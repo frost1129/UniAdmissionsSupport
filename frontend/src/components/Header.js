@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 import logo from "../img/ou_logo_long.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightToBracket } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
+import UserDetail from "./UserDetail";
 
 const Header = () => {
+    const [showUserDetail, setShowUserDetail] = useState(false);
+
+    const handleShowUserDetail = () => {
+        setShowUserDetail(true);
+    };
+
     return (
+        <>
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
                 <Navbar.Brand href="#home">
@@ -56,20 +64,26 @@ const Header = () => {
                                 <FontAwesomeIcon className="mx-2" icon={faRightToBracket} />
                                 Đăng nhập
                             </Nav.Link>
-                            {/* <NavDropdown title="Xin chào, user" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="#xemthongtin">
-                                    Thông tin cá nhân
+                            <NavDropdown title="Xin chào, user" id="basic-nav-dropdown">
+                                <NavDropdown.Item>
+                                    <Link className="text-decoration-none text-black" onClick={handleShowUserDetail}>
+                                        Thông tin tài khoản
+                                    </Link>
                                 </NavDropdown.Item>
                                 <NavDropdown.Item>
                                     <Link className="text-decoration-none text-black">Đăng xuất</Link>
                                 </NavDropdown.Item>
-                            </NavDropdown> */}
+                            </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
                 </span>
                 <Navbar.Toggle aria-controls="basic-navbar-nav"/>
             </Container>
         </Navbar>
+
+        {/* HIỂN THỊ USER DETAILS */}
+        {showUserDetail && <UserDetail onClose={() => setShowUserDetail(false)}/>}
+        </>
     );
 };
 
