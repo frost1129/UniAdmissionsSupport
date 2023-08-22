@@ -38,6 +38,10 @@ code {
   max-height: 500px;
 }
 
+.img-fit {
+  width: 100%;
+}
+
 @media (max-height: 500px) {
   .carousel {
     width:auto;

@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./layouts/Home";
 import SearchResult from "./layouts/SearchResult";
 import FAQs from "./layouts/FAQs";
+import PostDetail from "./layouts/PostDetail";
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                 <Route path="/" element={<Home/>} /> 
                 <Route path="/search" element={<SearchResult/>} />
                 <Route path="/faqs" element={<FAQs/>} />
+                <Route path="/post" element={<PostDetail/>} />
             </Routes>
             {/* <Footer /> */}
         </BrowserRouter>
