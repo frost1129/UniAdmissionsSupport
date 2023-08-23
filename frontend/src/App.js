@@ -6,6 +6,7 @@ import Home from "./layouts/Home";
 import SearchResult from "./layouts/SearchResult";
 import FAQs from "./layouts/FAQs";
 import PostDetail from "./layouts/PostDetail";
+import Posts from "./layouts/Posts";
 
 const App = () => {
     return (
@@ -16,6 +17,7 @@ const App = () => {
                 <Route path="/" element={<Home/>} /> 
                 <Route path="/search" element={<SearchResult/>} />
                 <Route path="/faqs" element={<FAQs/>} />
+                <Route path="/posts" element={<Posts/>} />
                 <Route path="/post" element={<PostDetail/>} />
             </Routes>
             {/* <Footer /> */}

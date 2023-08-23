@@ -11,7 +11,11 @@ const News = () => {
     return (
         <Container className="section col-md-10 mx-auto my-3">
             <Row className="my-3 p-2 rounded shadow-sm">
-            <h3 className="text-sm-start text-center fw-bold">Section title</h3>
+                <h3 className="text-sm-start text-center fw-bold">
+                    <Link className="text-decoration-none link-dark">
+                        Section title
+                    </Link>
+                </h3>
                 <div className="col-sm-12 col-md-7 col-xs-12 col-lg-7">
                     <div className="thumb-container">
                         <Link>
@@ -40,12 +44,16 @@ const News = () => {
                         </div>
                         <div className="col-8">
                             <small className="text-secondary">
-                                <FontAwesomeIcon icon={faClock} className="mx-1" />
+                                <FontAwesomeIcon
+                                    icon={faClock}
+                                    className="mx-1"
+                                />
                                 Timestamp
                             </small>
                             <Link className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
-                                    Title of the paper is here and super duper long long long long long long ...
+                                    Title of the paper is here and super duper
+                                    long long long long long long ...
                                 </p>
                             </Link>
                         </div>
@@ -61,12 +69,16 @@ const News = () => {
                         </div>
                         <div className="col-8">
                             <small className="text-secondary">
-                                <FontAwesomeIcon icon={faClock} className="mx-1" />
+                                <FontAwesomeIcon
+                                    icon={faClock}
+                                    className="mx-1"
+                                />
                                 Timestamp
                             </small>
                             <Link className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
-                                    Title of the paper is here and super duper long long long long long long ...
+                                    Title of the paper is here and super duper
+                                    long long long long long long ...
                                 </p>
                             </Link>
                         </div>
@@ -82,7 +94,11 @@ const News = () => {
 
             <Row className="rounded shadow-sm">
                 <div className="col-sm-12 col-md-6 col-xs-12 col-lg-6 my-3">
-                    <h3 className="text-center">Section 2 title</h3> 
+                    <h4 className="text-center fw-bold">
+                        <Link className="text-decoration-none link-dark">
+                            Section 2 title
+                        </Link>
+                    </h4>
                     <Row className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
@@ -93,26 +109,34 @@ const News = () => {
                         </div>
                         <div className="col-8">
                             <small className="text-secondary">
-                                <FontAwesomeIcon icon={faClock} className="mx-1" />
+                                <FontAwesomeIcon
+                                    icon={faClock}
+                                    className="mx-1"
+                                />
                                 Timestamp
                             </small>
                             <Link className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
-                                    Title of the paper is here and super duper long long long long long long ...
+                                    Title of the paper is here and super duper
+                                    long long long long long long ...
                                 </p>
                             </Link>
                         </div>
-                    </Row> 
+                    </Row>
 
                     <Row className="my-1">
                         <Link className="text-decoration-none text-center text-uppercase">
                             <small>Xem tất cả</small>
                         </Link>
-                    </Row>             
+                    </Row>
                 </div>
 
                 <div className="col-sm-12 col-md-6 col-xs-12 col-lg-6 my-3">
-                    <h3 className="text-center">Section 3 title</h3> 
+                    <h4 className="text-center fw-bold">
+                        <Link className="text-decoration-none link-dark">
+                            Section 3 title
+                        </Link>
+                    </h4>
                     <Row className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
@@ -123,29 +147,29 @@ const News = () => {
                         </div>
                         <div className="col-8">
                             <small className="text-secondary">
-                                <FontAwesomeIcon icon={faClock} className="mx-1" />
+                                <FontAwesomeIcon
+                                    icon={faClock}
+                                    className="mx-1"
+                                />
                                 Timestamp
                             </small>
                             <Link className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
-                                    Title of the paper is here and super duper long long long long long long ...
+                                    Title of the paper is here and super duper
+                                    long long long long long long ...
                                 </p>
                             </Link>
                         </div>
-                    </Row>  
+                    </Row>
 
                     <Row className="my-1">
                         <Link className="text-decoration-none text-center text-uppercase">
                             <small>Xem tất cả</small>
                         </Link>
-                    </Row>            
+                    </Row>
                 </div>
-                
             </Row>
-
         </Container>
-
-        
     );
 };
 
