@@ -6,9 +6,9 @@ import { Button, Container, Form, InputGroup } from "react-bootstrap";
 const Search = () => {
     return (
         <Container className="bg-primary bg-gradient p-3 text-center" fluid>
-            <h3 className="text-center my-3">Tìm kiếm thông tin</h3>
+            <h3 className="text-center my-3 fw-bold text-white">Tìm kiếm thông tin</h3>
             <Container className="w-75 mx-auto">
-            <InputGroup className="mb-3">
+            <InputGroup className="mb-3 shadow">
                 <Form.Control
                   placeholder="Nội dung cần tìm..."
                   aria-label="Nội dung cần tìm..."

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Container, Image, Row } from "react-bootstrap";
+import { Card, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const Faculties = () => {
@@ -12,7 +12,7 @@ const Faculties = () => {
                 </div>
 
                 <div class="col-6 col-md-4 mb-3 text-center thumbnail">
-                    <Link className="stretched-link text-decoration-none">
+                    <Link className="text-decoration-none">
                         <Card>
                             <Card.Img src="https://dummyimage.com/600x400/aaa/fff"/>
                             <Card.ImgOverlay>

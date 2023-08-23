@@ -5,8 +5,8 @@ import { Link } from "react-router-dom";
 const UserQuestion = () => {
     return (
         <Container>
-            <h3 className="text-center fw-bold my-3">Câu hỏi tuyển sinh</h3>
-            <Form className="col-md-10  mx-auto">
+            <Form className="col-md-10 mx-auto p-3 rounded shadow">
+            <h3 className="text-center fw-bold mb-3">Câu hỏi tuyển sinh</h3>
                 <Form.Group className="mb-3">
                     <Form.Label>Họ và Tên</Form.Label>
                     <Form.Control type="text" placeholder="Nguyễn Văn A" />
