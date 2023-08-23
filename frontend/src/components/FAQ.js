@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const FAQ = () => {
     return (
         <Container fluid>
-            <h3 className="text-center my-3">Các câu hỏi thường gặp</h3>
+            <h3 className="text-center my-3 fw-bold">Các câu hỏi thường gặp</h3>
             <Accordion defaultActiveKey="0" className="col-md-10 mx-auto" flush>
                 <Accordion.Item eventKey="0">
                     <Accordion.Header>Accordion Item #1</Accordion.Header>

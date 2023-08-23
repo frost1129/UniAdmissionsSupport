@@ -9,9 +9,9 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 const News = () => {
     return (
-        <Container className="section">
-            <h2 className="text-sm-start text-center">Section title</h2>
-            <Row>
+        <Container className="section col-md-10 mx-auto my-3">
+            <Row className="my-3 p-2 rounded shadow-sm">
+            <h3 className="text-sm-start text-center fw-bold">Section title</h3>
                 <div className="col-sm-12 col-md-7 col-xs-12 col-lg-7">
                     <div className="thumb-container">
                         <Link>
@@ -80,9 +80,9 @@ const News = () => {
                 </div>
             </Row>
 
-            <Row>
+            <Row className="rounded shadow-sm">
                 <div className="col-sm-12 col-md-6 col-xs-12 col-lg-6 my-3">
-                    <h2 className="text-center">Section 2 title</h2> 
+                    <h3 className="text-center">Section 2 title</h3> 
                     <Row className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
@@ -112,7 +112,7 @@ const News = () => {
                 </div>
 
                 <div className="col-sm-12 col-md-6 col-xs-12 col-lg-6 my-3">
-                    <h2 className="text-center">Section 3 title</h2> 
+                    <h3 className="text-center">Section 3 title</h3> 
                     <Row className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
