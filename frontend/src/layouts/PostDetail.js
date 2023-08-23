@@ -1,5 +1,5 @@
 import React from "react";
-import { Alert, Button, Card, Container, Form, Image, Row } from "react-bootstrap";
+import { Alert, Button, Card, Container, Form, Image } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import Comment from "../components/Comment";
 
