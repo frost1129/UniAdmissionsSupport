@@ -1,16 +1,42 @@
-import React, { useState } from "react";
-import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 import logo from "../img/ou_logo_long.png";
 import UserDetail from "./UserDetail";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
     const [showUserDetail, setShowUserDetail] = useState(false);
+    const [toFaculties, setToFaculties] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleShowUserDetail = () => {
         setShowUserDetail(true);
     };
+
+    const scrollToFaculties = () => {
+        const facultiesComponent = document.getElementById('faculties');
+        if (facultiesComponent) {
+            facultiesComponent.scrollIntoView({ behavior: 'smooth' });
+        }
+    };
+
+    const handleToFaculties = () => {
+        if (location.pathname === '/') {
+            scrollToFaculties();
+        } else {
+            setToFaculties(true);
+            navigate('/');
+        }
+    };
+
+    useEffect(() => {
+        if (toFaculties) {
+            scrollToFaculties();
+            setToFaculties(false);
+        }
+    }, [toFaculties]);
 
     return (
         <>
@@ -45,7 +71,7 @@ const Header = () => {
                                         Sau đại học
                                     </NavDropdown.Item>
                                 </NavDropdown>
-                                <Nav.Link>
+                                <Nav.Link onClick={handleToFaculties}>
                                     Thông tin các Khoa
                                 </Nav.Link>
                                 <NavDropdown
