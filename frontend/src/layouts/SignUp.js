@@ -2,8 +2,9 @@ import React from "react";
 import { Button, Container, Form, Image, InputGroup, Row } from "react-bootstrap";
 import ImgSignup from "../img/signup.png";
 import "./signin.css"
+import { Link } from "react-router-dom";
 
-const SignInUp = () => {
+const SignUp = () => {
     return (
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
             <Row className="rounded-4 p-3 bg-white shadow box-area">
@@ -17,7 +18,7 @@ const SignInUp = () => {
                 <Container className="col-md-6 rounded-4 bg-info-subtle right-box">
                     <Form>
                         <div className="mb-4 text-primary-emphasis">
-                            <h2>ĐĂNG KÝ TÀI KHOẢN</h2>
+                            <h3 className="fw-bold">ĐĂNG KÝ TÀI KHOẢN</h3>
                         </div>
                         <InputGroup className="mb-3">
                             <input
@@ -64,7 +65,8 @@ const SignInUp = () => {
                         </InputGroup>
                         <Row>
                             <small>
-                                Đã có tài khoản? <a href="#">Đăng nhập</a>
+                                Đã có tài khoản? 
+                                <Link to='/login' className="mx-1">Đăng nhập</Link>
                             </small>
                         </Row>
                     </Form>
@@ -74,4 +76,4 @@ const SignInUp = () => {
     );
 };
 
-export default SignInUp;
+export default SignUp;

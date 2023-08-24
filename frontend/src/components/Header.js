@@ -4,6 +4,7 @@ import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 import logo from "../img/ou_logo_long.png";
 import UserDetail from "./UserDetail";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import SignUp from "../layouts/SignUp";
 
 const Header = () => {
     const [showUserDetail, setShowUserDetail] = useState(false);
@@ -42,14 +43,16 @@ const Header = () => {
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Navbar.Brand href="#home">
-                        <img
-                            src={logo}
-                            height="60"
-                            className="d-inline-block align-top"
-                            alt="OU logo"
-                        />
-                    </Navbar.Brand>
+                    <Link to='/' className="text-text-decoration-none">
+                        <Navbar.Brand>
+                            <img
+                                src={logo}
+                                height="60"
+                                className="d-inline-block align-top"
+                                alt="OU logo"
+                            />
+                        </Navbar.Brand>
+                    </Link>
 
                     <span>
                         <Navbar.Collapse
@@ -95,24 +98,29 @@ const Header = () => {
                                     </NavDropdown.Item>
                                 </NavDropdown>
                                 <Nav.Link href="#faqs">FAQs</Nav.Link>
-                                <Nav.Link href="#login" className="fw-bold">
+                                <Link to='/login' className="fw-bold text-decoration-none text-dark">
                                     Đăng nhập
-                                </Nav.Link>
+                                </Link>
                                 <NavDropdown
-                                    className="fw-bold"
+                                    className="fw-bold text-dark"
                                     title="Xin chào, user"
                                     id="basic-nav-dropdown"
                                 >
                                     <NavDropdown.Item>
                                         <Link
-                                            className="text-decoration-none text-black"
+                                            className="text-decoration-none text-dark"
                                             onClick={handleShowUserDetail}
                                         >
                                             Thông tin tài khoản
                                         </Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
-                                        <Link className="text-decoration-none text-black">
+                                        <Link className="text-decoration-none text-dark">
+                                            Quản lý câu hỏi
+                                        </Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link className="text-decoration-none text-dark">
                                             Đăng xuất
                                         </Link>
                                     </NavDropdown.Item>

@@ -12,8 +12,9 @@ import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
 import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import ImgLogin from "../img/login_img.png";
 import "./signin.css"
+import { Link } from "react-router-dom";
 
-const SignInUp = () => {
+const SignIn = () => {
     return (
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
             <Row className="rounded-4 p-3 bg-white shadow box-area">
@@ -28,7 +29,7 @@ const SignInUp = () => {
                 <Container className="col-md-6 rounded-4 bg-info-subtle right-box">
                     <Form>
                         <div className="mb-4">
-                            <h2>ĐĂNG NHẬP</h2>
+                            <h3 className="fw-bold">ĐĂNG NHẬP</h3>
                         </div>
                         <InputGroup className="mb-3 text-primary-emphasis">
                             <input
@@ -78,7 +79,8 @@ const SignInUp = () => {
                         </InputGroup>
                         <Row className="text-end">
                             <small>
-                                Chưa có tài khoản? <a href="#">Đăng ký</a>
+                                Chưa có tài khoản? 
+                                <Link to='/signup' className="mx-1">Đăng ký</Link>
                             </small>
                         </Row>
                     </Form>
@@ -88,4 +90,4 @@ const SignInUp = () => {
     );
 };
 
-export default SignInUp;
+export default SignIn;
