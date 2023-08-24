@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
+import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 import logo from "../img/ou_logo_long.png";
 import UserDetail from "./UserDetail";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import SignUp from "../layouts/SignUp";
 
 const Header = () => {
     const [showUserDetail, setShowUserDetail] = useState(false);
@@ -116,6 +115,11 @@ const Header = () => {
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
                                         <Link className="text-decoration-none text-dark">
+                                            Bảng điều khiển
+                                        </Link>
+                                    </NavDropdown.Item>
+                                    <NavDropdown.Item>
+                                        <Link to='/question-manage' className="text-decoration-none text-dark">
                                             Quản lý câu hỏi
                                         </Link>
                                     </NavDropdown.Item>

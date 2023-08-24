@@ -11,8 +11,8 @@ import {
 
 const FAQs = () => {
     return (
-        <Container>
-            <Container className="col-md-10 mx-auto">
+        <Container className="bg-white">
+            <Container className="col-md-10 mx-auto bg-white">
                 <h3 className="text-uppercase text-center p-3">
                     Các câu hỏi thường gặp
                 </h3>

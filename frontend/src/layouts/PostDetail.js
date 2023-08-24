@@ -6,7 +6,7 @@ import Comment from "../components/Comment";
 const PostDetail = () => {
     return (
         <Container>
-            <Container className="col-md-10 mx-auto">
+            <Container className="col-md-10 mx-auto bg-white">
                 <article>
                     <header className="my-4">
                         <h3 className="fw-bold text-uppercase mt-3 text-primary">

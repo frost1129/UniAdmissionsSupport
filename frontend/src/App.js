@@ -1,7 +1,7 @@
 import React from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
 import Home from "./layouts/Home";
 import SearchResult from "./layouts/SearchResult";
 import FAQs from "./layouts/FAQs";
@@ -12,9 +12,13 @@ import SignUp from "./layouts/SignUp";
 import QuestionManage from "./layouts/QuestionManage";
 
 const App = () => {
+    const location = useLocation();
+    const pathToHideHF = ['/login', '/signup'];
+    const hideHeaderFooter = pathToHideHF.includes(location.pathname);
+
     return (
-        <BrowserRouter>
-            <Header />
+        <>
+            {!hideHeaderFooter && <Header />}
 
             <Routes>
                 <Route path="/" element={<Home/>} /> 
@@ -26,8 +30,9 @@ const App = () => {
                 <Route path="/posts" element={<Posts/>} />
                 <Route path="/post" element={<PostDetail/>} />
             </Routes>
-            {/* <Footer /> */}
-        </BrowserRouter>
+
+            {/* {!hideHeaderFooter && <Footer />} */}
+        </>
     );
 };
 

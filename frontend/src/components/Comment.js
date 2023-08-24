@@ -3,7 +3,7 @@ import { Image } from "react-bootstrap";
 
 const Comment = () => {
     return (
-        <div className="d-flex mb-4">
+        <div className="d-flex mb-4 bg-white">
             <div className="flex-shrink-0">
                 <Image
                     src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"

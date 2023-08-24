@@ -13,8 +13,8 @@ const Posts = () => {
     };
 
     return (
-        <Container>
-            <Container className="col-md-10 mx-auto">
+        <Container className="bg-white">
+            <Container className="col-md-10 mx-auto bg-white">
                 <h3 className="text-uppercase text-center fw-bold p-3">
                     Tiêu đề hệ tuyển sinh
                 </h3>

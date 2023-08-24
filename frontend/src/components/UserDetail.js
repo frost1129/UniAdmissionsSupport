@@ -32,7 +32,7 @@ const UserDetail = ({ onClose }) => {
                 <div className="info mb-4">
                     <div className="d-flex justify-content-between align-items-end">
                         <h6>Thông tin cá nhân</h6>
-                        <Button variant="outline-primary" disabled>
+                        <Button variant="outline-primary">
                             Lưu chỉnh sửa
                         </Button>
                     </div>

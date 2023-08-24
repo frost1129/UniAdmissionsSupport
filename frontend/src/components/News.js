@@ -9,7 +9,7 @@ import { faClock } from "@fortawesome/free-solid-svg-icons";
 
 const News = () => {
     return (
-        <Container className="section col-md-10 mx-auto my-3">
+        <Container className="section col-md-10 mx-auto my-3 bg-white">
             <Row className="my-3 p-2 rounded shadow-sm">
                 <h3 className="text-sm-start text-center fw-bold">
                     <Link className="text-decoration-none link-dark">
@@ -19,7 +19,7 @@ const News = () => {
                 <div className="col-sm-12 col-md-7 col-xs-12 col-lg-7">
                     <div className="thumb-container">
                         <Link>
-                            <Image className="thumb mb-3 border-2" src={Img} />
+                            <Image className="thumb mb-3 border-2" src={Img} rounded />
                         </Link>
                     </div>
                     <div>
@@ -38,7 +38,7 @@ const News = () => {
                         <div className="col-4">
                             <div className="thumb-container">
                                 <Link>
-                                    <Image className="thumb img-md" src={Img} />
+                                    <Image className="thumb img-md" src={Img} rounded />
                                 </Link>
                             </div>
                         </div>
@@ -63,7 +63,7 @@ const News = () => {
                         <div className="col-4">
                             <div className="thumb-container">
                                 <Link>
-                                    <Image className="thumb img-md" src={Img} />
+                                    <Image className="thumb img-md" src={Img} rounded />
                                 </Link>
                             </div>
                         </div>
@@ -103,7 +103,7 @@ const News = () => {
                         <div className="col-4">
                             <div className="thumb-container">
                                 <Link>
-                                    <Image className="thumb img-md" src={Img} />
+                                    <Image className="thumb img-md" src={Img} rounded />
                                 </Link>
                             </div>
                         </div>
@@ -141,7 +141,7 @@ const News = () => {
                         <div className="col-4">
                             <div className="thumb-container">
                                 <Link>
-                                    <Image className="thumb img-md" src={Img} />
+                                    <Image className="thumb img-md" src={Img} rounded />
                                 </Link>
                             </div>
                         </div>

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const Faculties = () => {
     return (
-        <Container id="faculties" className="col-md-10 mx-auto my-3">
+        <Container id="faculties" className="col-md-10 mx-auto py-2 my-3 bg-white">
             <Row>
                 <div class="col-12 col-md-4 mb-3 text-md-start text-center">
                     <h3 className="text-primary fw-bold">Thông tin các Khoa</h3>
