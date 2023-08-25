@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import logo from "../img/ou_logo_long_white.png";
 
 const AdminNav = () => {
-    const [activeTab, setActiveTab] = useState("link1");
+    const [activeTab, setActiveTab] = useState("banner");
 
 	return (
 		<Container fluid>
@@ -25,15 +25,37 @@ const AdminNav = () => {
 						activeKey={activeTab}
 						onSelect={(key) => setActiveTab(key)}
 					>
-						<small className="fw-bold text-uppercase mb-2">Đây là text nhỏ hơn</small>
+						<small className="fw-bold text-uppercase mb-2">Thông tin chung</small>
 						<Nav.Item>
-							<Nav.Link as={Link} eventKey="link1" className="nav-link text-white">
-								Active???
+							<Nav.Link as={Link} eventKey="banner" className="nav-link text-white">
+								Quản lý Banner
 							</Nav.Link>
 						</Nav.Item>
 						<Nav.Item>
-							<Nav.Link as={Link} eventKey="link2" className="nav-link text-white">
-								Active???
+							<Nav.Link as={Link} eventKey="users" className="nav-link text-white">
+								Quản lý người dùng
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link as={Link} eventKey="faculties" className="nav-link text-white">
+								Quản lý Khoa
+							</Nav.Link>
+						</Nav.Item>
+
+						<small className="fw-bold text-uppercase mb-2">Thông tin tuyển sinh</small>
+						<Nav.Item>
+							<Nav.Link as={Link} eventKey="popular" className="nav-link text-white">
+								Bài đăng nổi bật
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link as={Link} eventKey="post" className="nav-link text-white">
+								Bài đăng tuyển sinh
+							</Nav.Link>
+						</Nav.Item>
+						<Nav.Item>
+							<Nav.Link as={Link} eventKey="livestream" className="nav-link text-white">
+								Livestream tuyển sinh
 							</Nav.Link>
 						</Nav.Item>
 					</Nav>
