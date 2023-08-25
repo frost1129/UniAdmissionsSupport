@@ -114,7 +114,7 @@ const Header = () => {
                                         </Link>
                                     </NavDropdown.Item>
                                     <NavDropdown.Item>
-                                        <Link className="text-decoration-none text-dark">
+                                        <Link to='/admin' className="text-decoration-none text-dark">
                                             Bảng điều khiển
                                         </Link>
                                     </NavDropdown.Item>

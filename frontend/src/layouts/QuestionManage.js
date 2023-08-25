@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
+import { Container } from "react-bootstrap";
 
 const QuestionManage = () => {
-  return (
-    <div>QuestionManage</div>
-  )
-}
+    return (
+        <Container className="bg-white">
+            <Container className="col-md-10 mx-auto bg-white">
+              	hello
+            </Container>
+        </Container>
+    );
+};
 
-export default QuestionManage
+export default QuestionManage;
