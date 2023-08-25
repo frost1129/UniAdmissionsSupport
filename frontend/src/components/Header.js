@@ -42,7 +42,7 @@ const Header = () => {
         <>
             <Navbar expand="lg" className="bg-body-tertiary">
                 <Container>
-                    <Link to='/' className="text-text-decoration-none">
+                    <Link to='/' className="text-decoration-none">
                         <Navbar.Brand>
                             <img
                                 src={logo}
