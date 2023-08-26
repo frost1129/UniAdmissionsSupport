@@ -1,6 +1,5 @@
 import React from "react";
 import { Button, Form, Image, Modal } from "react-bootstrap";
-import "./userDetails.css";
 
 const UserDetail = ({ onClose }) => {
     return (
@@ -26,6 +25,7 @@ const UserDetail = ({ onClose }) => {
                         <Image
                             className="img-thumbnail img-avatar"
                             src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                            style={{width: "50vw", maxWidth: "160px"}}
                         />
                     </div>
                 </div>
