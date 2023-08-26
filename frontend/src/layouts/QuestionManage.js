@@ -1,7 +1,7 @@
-import { faInfoCircle, faPen, faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faInfoCircle, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
-import { Button, Container, Form, Image, Modal, Table } from "react-bootstrap";
+import { Button, Container, Form, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const QuestionManage = () => {

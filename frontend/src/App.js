@@ -11,20 +11,22 @@ import SignIn from "./layouts/SignIn";
 import SignUp from "./layouts/SignUp";
 import QuestionManage from "./layouts/QuestionManage";
 import Admin from "./admin/Admin";
-import AdminNav from "./admin/AdminNav";
+import AdminUser from "./admin/AUsers";
+import AdminFaculties from "./admin/AFaculties";
+import AdminPost from "./admin/APost";
+import AdminLivestream from "./admin/ALivestream";
 
 const App = () => {
     const location = useLocation();
     const pathToHideHF = ['/login', '/signup', '/admin'];
-    const adminPath = ['/admin', '/admin/users']
 
     const hideHeaderFooter = pathToHideHF.includes(location.pathname);
-    const isAdminRoute = adminPath.includes(location.pathname);
+    const isAdminRoute = location.pathname.includes('/admin')
 
     return (
         <>
             {!hideHeaderFooter && !isAdminRoute && <Header />}
-            {isAdminRoute && <AdminNav />}
+            {/* {isAdminRoute && <AdminNav />} */}
 
             <Routes>
                 <Route path="/" element={<Home/>} /> 
@@ -32,11 +34,16 @@ const App = () => {
                 <Route path="/signup" element={<SignUp/>} /> 
                 <Route path="/search" element={<SearchResult/>} />
                 <Route path="/question-manage" element={<QuestionManage/>} />
-                <Route path="/admin" element={<Admin/>} />
-                <Route path="/admin/users" element={<FAQs/>} />
                 <Route path="/faqs" element={<FAQs/>} />
                 <Route path="/posts" element={<Posts/>} />
                 <Route path="/post" element={<PostDetail/>} />
+            
+                <Route path="/admin" element={<Admin/>} />
+                <Route path="/admin/users" element={<Admin/>} />
+                <Route path="/admin/questions" element={<AdminUser/>} />
+                <Route path="/admin/faculties" element={<AdminFaculties/>} />
+                <Route path="/admin/post" element={<AdminPost/>} />
+                <Route path="/admin/livestream" element={<AdminLivestream/>} />
             </Routes>
 
             {/* {!hideHeaderFooter && !isAdminRoute && <Footer />} */}
