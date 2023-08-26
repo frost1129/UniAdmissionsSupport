@@ -39,8 +39,8 @@ const App = () => {
                 <Route path="/post" element={<PostDetail/>} />
             
                 <Route path="/admin" element={<Admin/>} />
-                <Route path="/admin/users" element={<Admin/>} />
-                <Route path="/admin/questions" element={<AdminUser/>} />
+                <Route path="/admin/users" element={<AdminUser/>} />
+                {/* <Route path="/admin/questions" element={<AdminUser/>} /> */}
                 <Route path="/admin/faculties" element={<AdminFaculties/>} />
                 <Route path="/admin/post" element={<AdminPost/>} />
                 <Route path="/admin/livestream" element={<AdminLivestream/>} />

@@ -71,12 +71,11 @@ const SignIn = () => {
                                 Đăng nhập
                             </Button>
                         </InputGroup>
-                        <InputGroup className="mb-3">
+                        {/* <InputGroup className="mb-3">
                             <Button className="btn-lg btn-light w-100 fs-6">
-                                {/* TODO: icon facebook */}
                                 <small>Đăng nhập bằng Facebook</small>
                             </Button>
-                        </InputGroup>
+                        </InputGroup> */}
                         <Row className="text-end">
                             <small>
                                 Chưa có tài khoản? 
