@@ -10,7 +10,6 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -62,11 +61,11 @@ public class PostComment implements Serializable {
     @JoinColumn(name = "post_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private Post postId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "commentId")
+    @OneToMany(mappedBy = "commentId")
     @JsonIgnore
     private Set<PostComment> postCommentSet;
     @JoinColumn(name = "comment_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private PostComment commentId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)

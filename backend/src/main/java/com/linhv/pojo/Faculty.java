@@ -59,9 +59,7 @@ public class Faculty implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "name_eng")
     private String nameEng;
     // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
@@ -85,11 +83,10 @@ public class Faculty implements Serializable {
         this.id = id;
     }
 
-    public Faculty(Integer id, String website, String name, String nameEng) {
+    public Faculty(Integer id, String website, String name) {
         this.id = id;
         this.website = website;
         this.name = name;
-        this.nameEng = nameEng;
     }
 
     public Integer getId() {

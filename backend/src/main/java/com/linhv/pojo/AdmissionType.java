@@ -48,13 +48,13 @@ public class AdmissionType implements Serializable {
     @Size(min = 1, max = 255)
     @Column(name = "name")
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "admissionType")
+    @OneToMany(mappedBy = "admissionType")
     @JsonIgnore
     private Set<LivestreamQuesion> livestreamQuesionSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "admissionType")
     @JsonIgnore
     private Set<Post> postSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "userAdmissionType")
+    @OneToMany(mappedBy = "userAdmissionType")
     @JsonIgnore
     private Set<User> userSet;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "admissionType")

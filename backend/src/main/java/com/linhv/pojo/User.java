@@ -77,15 +77,11 @@ public class User implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "last_name")
     private String lastName;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "facebook_id")
     private String facebookId;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "image")
     private String image;
     @Basic(optional = false)
@@ -115,15 +111,15 @@ public class User implements Serializable {
     @JsonIgnore
     private Set<PostComment> postCommentSet;
     @JoinColumn(name = "user_admission_type", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private AdmissionType userAdmissionType;
     @JoinColumn(name = "uni_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private UniMainInfo uniId;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "answerUserId")
+    @OneToMany(mappedBy = "answerUserId")
     @JsonIgnore
     private Set<UserQuestion> userQuestionSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "askUserId")
+    @OneToMany(mappedBy = "askUserId")
     @JsonIgnore
     private Set<UserQuestion> userQuestionSet1;
 
@@ -134,14 +130,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public User(Integer id, String email, String password, String firstName, String lastName, String facebookId, String image, String userRole, boolean active, Date createdDate) {
+    public User(Integer id, String email, String password, String firstName, String lastName, String userRole, boolean active, Date createdDate) {
         this.id = id;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.facebookId = facebookId;
-        this.image = image;
         this.userRole = userRole;
         this.active = active;
         this.createdDate = createdDate;

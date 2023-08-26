@@ -40,14 +40,10 @@ public class FacultyPost implements Serializable {
     @NotNull
     @Column(name = "id")
     private Integer id;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "content")
     private String content;
-    @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
@@ -57,12 +53,6 @@ public class FacultyPost implements Serializable {
 
     public FacultyPost(Integer id) {
         this.id = id;
-    }
-
-    public FacultyPost(Integer id, String content, Date updatedDate) {
-        this.id = id;
-        this.content = content;
-        this.updatedDate = updatedDate;
     }
 
     public Integer getId() {

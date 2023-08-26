@@ -33,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "UserQuestion.findAll", query = "SELECT u FROM UserQuestion u"),
     @NamedQuery(name = "UserQuestion.findById", query = "SELECT u FROM UserQuestion u WHERE u.id = :id"),
-    @NamedQuery(name = "UserQuestion.findBySubmitTime", query = "SELECT u FROM UserQuestion u WHERE u.submitTime = :submitTime")})
+    @NamedQuery(name = "UserQuestion.findBySubmitTime", query = "SELECT u FROM UserQuestion u WHERE u.submitTime = :submitTime"),
+    @NamedQuery(name = "UserQuestion.findByAskUserEmail", query = "SELECT u FROM UserQuestion u WHERE u.askUserEmail = :askUserEmail")})
 public class UserQuestion implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -54,24 +55,22 @@ public class UserQuestion implements Serializable {
     @Column(name = "submit_time")
     @Temporal(TemporalType.TIMESTAMP)
     private Date submitTime;
-    @Basic(optional = false)
-    @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(max = 65535)
     @Column(name = "answer")
     private String answer;
+    @Size(max = 255)
+    @Column(name = "ask_user_email")
+    private String askUserEmail;
     @JoinColumn(name = "admission_type", referencedColumnName = "id")
     @ManyToOne(optional = false)
     private AdmissionType admissionType;
     @JoinColumn(name = "answer_user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User answerUserId;
     @JoinColumn(name = "ask_user_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private User askUserId;
-    @Size(min = 1, max = 65535)
-    @Column(name = "ask_user_email")
-    private String askUserEmail;
 
     public UserQuestion() {
     }
@@ -80,11 +79,10 @@ public class UserQuestion implements Serializable {
         this.id = id;
     }
 
-    public UserQuestion(String id, String content, Date submitTime, String answer) {
+    public UserQuestion(String id, String content, Date submitTime) {
         this.id = id;
         this.content = content;
         this.submitTime = submitTime;
-        this.answer = answer;
     }
 
     public String getId() {
@@ -117,6 +115,14 @@ public class UserQuestion implements Serializable {
 
     public void setAnswer(String answer) {
         this.answer = answer;
+    }
+
+    public String getAskUserEmail() {
+        return askUserEmail;
+    }
+
+    public void setAskUserEmail(String askUserEmail) {
+        this.askUserEmail = askUserEmail;
     }
 
     public AdmissionType getAdmissionType() {

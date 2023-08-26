@@ -81,7 +81,7 @@ public class Post implements Serializable {
     @NotNull
     @Column(name = "allow_question")
     private boolean allowQuestion;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "livestreamPostId")
+    @OneToMany(mappedBy = "livestreamPostId")
     @JsonIgnore
     private Set<LivestreamQuesion> livestreamQuesionSet;
     @JoinColumn(name = "admission_type", referencedColumnName = "id")

@@ -46,10 +46,10 @@ public class LivestreamQuesion implements Serializable {
     @Column(name = "content")
     private String content;
     @JoinColumn(name = "admission_type", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private AdmissionType admissionType;
     @JoinColumn(name = "livestream_post_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private Post livestreamPostId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne(optional = false)
