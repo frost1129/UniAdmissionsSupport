@@ -55,12 +55,12 @@ public class UserServiceImpl implements UserService{
         u.setLastName(params.get("lastName"));
         u.setActive(true);
         u.setCreatedDate(new Date());
-        u.setUserRole(User.USER);
-        
-//        if (params.get("role").isEmpty())
-//            u.setUserRole(User.USER);
-//        else 
-//            u.setUserRole(params.get("role"));
+
+        String userRole = params.get("role");
+        if (userRole != null && !userRole.isEmpty())
+            u.setUserRole(userRole);
+        else 
+            u.setUserRole(User.USER);
         
         if (!avatar.isEmpty()) {
             try {
