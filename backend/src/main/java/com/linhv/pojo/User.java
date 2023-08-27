@@ -49,6 +49,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByCreatedDate", query = "SELECT u FROM User u WHERE u.createdDate = :createdDate")})
 public class User implements Serializable {
 
+    public static final String ADMIN = "ADMIN";
+    public static final String ADVISOR = "ADVISOR";
+    public static final String USER = "USER";
+
+    
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -114,7 +119,7 @@ public class User implements Serializable {
     @ManyToOne
     private AdmissionType userAdmissionType;
     @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private UniMainInfo uniId;
     @OneToMany(mappedBy = "answerUserId")
     @JsonIgnore
