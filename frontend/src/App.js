@@ -16,10 +16,11 @@ import AdminFaculties from "./admin/AFaculties";
 import AdminPost from "./admin/APost";
 import AdminLivestream from "./admin/ALivestream";
 import PostConfig from "./admin/PostConfig";
+import AdminNav from "./admin/AdminNav";
 
 const App = () => {
     const location = useLocation();
-    const pathToHideHF = ['/login', '/signup', '/admin', '/posts/add'];
+    const pathToHideHF = ['/login', '/signup', '/admin'];
 
     const hideHeaderFooter = pathToHideHF.includes(location.pathname);
     const isAdminRoute = location.pathname.includes('/admin')
@@ -27,7 +28,7 @@ const App = () => {
     return (
         <>
             {!hideHeaderFooter && !isAdminRoute && <Header />}
-            {/* {isAdminRoute && <AdminNav />} */}
+            {isAdminRoute && <AdminNav />}
 
             <Routes>
                 <Route path="/" element={<Home/>} /> 
@@ -39,13 +40,13 @@ const App = () => {
                 <Route path="/posts" element={<Posts/>} />
                 <Route path="/post" element={<PostDetail/>} />
 
-                <Route path="/posts/add" element={<PostConfig/>} />
+                <Route path="/admin/addpost" element={<PostConfig/>} />
             
                 <Route path="/admin" element={<Admin/>} />
                 <Route path="/admin/users" element={<AdminUser/>} />
                 {/* <Route path="/admin/questions" element={<AdminUser/>} /> */}
                 <Route path="/admin/faculties" element={<AdminFaculties/>} />
-                <Route path="/admin/post" element={<AdminPost/>} />
+                <Route path="/admin/posts" element={<AdminPost/>} />
                 <Route path="/admin/livestream" element={<AdminLivestream/>} />
             </Routes>
 

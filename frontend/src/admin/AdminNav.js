@@ -12,7 +12,7 @@ const AdminNav = () => {
         { key: 'main', path: '/admin' },
         { key: 'users', path: '/admin/users' },
         { key: 'faculties', path: '/admin/faculties' },
-        { key: 'post', path: '/admin/post' },
+        { key: 'posts', path: '/admin/posts' },
         { key: 'livestream', path: '/admin/livestream' },
     ];
 
@@ -24,7 +24,10 @@ const AdminNav = () => {
     }, [location.pathname, tabs]);
 
     return (
-        <div className="bg-dark min-vh-100 text-white">
+        <div 
+			className="bg-dark text-white fixed-bottom col-xl-2 col-3"
+			style={{ height: '100vh', top: '0', left: '0', padding: '2rem 1rem'}} 
+		>
 			<Link
 				to="/admin"
 				className="text-decoration-none d-flex align-items-center"
@@ -36,7 +39,7 @@ const AdminNav = () => {
 				className="flex-column"
 				activeKey={activeTab}
 			>
-				<small className="fw-bold text-uppercase mb-2">
+				<small className="fw-bold text-uppercase mt-3">
 					Thông tin chung
 				</small>
 				<Nav.Item>
@@ -70,14 +73,14 @@ const AdminNav = () => {
 					</Nav.Link>
 				</Nav.Item>
 
-				<small className="fw-bold text-uppercase mb-2">
+				<small className="fw-bold text-uppercase mt-3">
 					Thông tin tuyển sinh
 				</small>
 				<Nav.Item>
 					<Nav.Link
 						as={Link}
-						to="/admin/post"
-						eventKey="post"
+						to="/admin/posts"
+						eventKey="posts"
 						className="nav-link text-white"
 					>
 						Bài đăng tuyển sinh

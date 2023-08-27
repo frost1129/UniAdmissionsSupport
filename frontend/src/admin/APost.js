@@ -1,17 +1,12 @@
 import React from "react";
-import { Container, Row } from "react-bootstrap";
-import AdminNav from "./AdminNav";
 
 const APost = () => {
     return (
-        <Container className="d-flex" fluid>
-            <Row>
-                <div className="col-3 col-xl-2 bg-dark">
-                    <AdminNav />
-                </div>
-                <div className="col-9 col-xl-10 overflow-y-scroll">Post</div>
-            </Row>
-        </Container>
+        <div className="d-flex justify-content-end m-4">
+            <div className="col-xl-10 col-9">
+                đây là nội dung của posts
+            </div>
+        </div>
     );
 };
 
