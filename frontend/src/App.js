@@ -15,10 +15,11 @@ import AdminUser from "./admin/AUsers";
 import AdminFaculties from "./admin/AFaculties";
 import AdminPost from "./admin/APost";
 import AdminLivestream from "./admin/ALivestream";
+import PostConfig from "./admin/PostConfig";
 
 const App = () => {
     const location = useLocation();
-    const pathToHideHF = ['/login', '/signup', '/admin'];
+    const pathToHideHF = ['/login', '/signup', '/admin', '/posts/add'];
 
     const hideHeaderFooter = pathToHideHF.includes(location.pathname);
     const isAdminRoute = location.pathname.includes('/admin')
@@ -37,6 +38,8 @@ const App = () => {
                 <Route path="/faqs" element={<FAQs/>} />
                 <Route path="/posts" element={<Posts/>} />
                 <Route path="/post" element={<PostDetail/>} />
+
+                <Route path="/posts/add" element={<PostConfig/>} />
             
                 <Route path="/admin" element={<Admin/>} />
                 <Route path="/admin/users" element={<AdminUser/>} />
