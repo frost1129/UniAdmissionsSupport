@@ -93,6 +93,9 @@ public class Post implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     @JsonIgnore
     private Set<PostComment> postCommentSet;
+    @Size(max = 255)
+    @Column(name = "slug")
+    private String slug;
 
     public Post() {
     }
