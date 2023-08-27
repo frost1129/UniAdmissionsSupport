@@ -5,7 +5,7 @@ const ImageModal = ({ imageUrl, show, onClose }) => {
     return (
         <Modal show={show} onHide={onClose}>
             <Modal.Body>
-                <img src={imageUrl} style={{ width: '100%' }} />
+                <img src={imageUrl} style={{ width: '100%' }} alt='zoomed photo' />
             </Modal.Body>
         </Modal>
     );
