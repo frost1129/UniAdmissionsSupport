@@ -5,22 +5,17 @@
 
 package com.linhv.pojo;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
-import java.util.Set;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -68,18 +63,6 @@ public class UniMainInfo implements Serializable {
     private String admissionPhone;
     @Column(name = "admission_address")
     private Integer admissionAddress;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uniId")
-    @JsonIgnore
-    private Set<Banner> bannerSet;
-    @OneToMany(mappedBy = "uniId")
-    @JsonIgnore
-    private Set<Branch> branchSet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uniId")
-    @JsonIgnore
-    private Set<Faculty> facultySet;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "uniId")
-    @JsonIgnore
-    private Set<User> userSet;
 
     public UniMainInfo() {
     }
@@ -142,42 +125,6 @@ public class UniMainInfo implements Serializable {
 
     public void setAdmissionAddress(Integer admissionAddress) {
         this.admissionAddress = admissionAddress;
-    }
-
-    @XmlTransient
-    public Set<Banner> getBannerSet() {
-        return bannerSet;
-    }
-
-    public void setBannerSet(Set<Banner> bannerSet) {
-        this.bannerSet = bannerSet;
-    }
-
-    @XmlTransient
-    public Set<Branch> getBranchSet() {
-        return branchSet;
-    }
-
-    public void setBranchSet(Set<Branch> branchSet) {
-        this.branchSet = branchSet;
-    }
-
-    @XmlTransient
-    public Set<Faculty> getFacultySet() {
-        return facultySet;
-    }
-
-    public void setFacultySet(Set<Faculty> facultySet) {
-        this.facultySet = facultySet;
-    }
-
-    @XmlTransient
-    public Set<User> getUserSet() {
-        return userSet;
-    }
-
-    public void setUserSet(Set<User> userSet) {
-        this.userSet = userSet;
     }
 
     @Override

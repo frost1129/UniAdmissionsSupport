@@ -12,9 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -52,9 +50,6 @@ public class Branch implements Serializable {
     @Size(min = 1, max = 65535)
     @Column(name = "link")
     private String link;
-    @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne
-    private UniMainInfo uniId;
 
     public Branch() {
     }
@@ -91,14 +86,6 @@ public class Branch implements Serializable {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public UniMainInfo getUniId() {
-        return uniId;
-    }
-
-    public void setUniId(UniMainInfo uniId) {
-        this.uniId = uniId;
     }
 
     @Override

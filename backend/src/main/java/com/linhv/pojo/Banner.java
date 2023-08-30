@@ -49,9 +49,6 @@ public class Banner implements Serializable {
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")
     @ManyToOne
     private Faculty facultyId;
-    @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
-    private UniMainInfo uniId;
 
     public Banner() {
     }
@@ -87,14 +84,6 @@ public class Banner implements Serializable {
 
     public void setFacultyId(Faculty facultyId) {
         this.facultyId = facultyId;
-    }
-
-    public UniMainInfo getUniId() {
-        return uniId;
-    }
-
-    public void setUniId(UniMainInfo uniId) {
-        this.uniId = uniId;
     }
 
     @Override

@@ -118,9 +118,6 @@ public class User implements Serializable {
     @JoinColumn(name = "user_admission_type", referencedColumnName = "id")
     @ManyToOne
     private AdmissionType userAdmissionType;
-    @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne
-    private UniMainInfo uniId;
     @OneToMany(mappedBy = "answerUserId")
     @JsonIgnore
     private Set<UserQuestion> userQuestionSet;
@@ -268,14 +265,6 @@ public class User implements Serializable {
 
     public void setUserAdmissionType(AdmissionType userAdmissionType) {
         this.userAdmissionType = userAdmissionType;
-    }
-
-    public UniMainInfo getUniId() {
-        return uniId;
-    }
-
-    public void setUniId(UniMainInfo uniId) {
-        this.uniId = uniId;
     }
 
     @XmlTransient

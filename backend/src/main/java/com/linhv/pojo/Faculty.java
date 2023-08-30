@@ -15,9 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -69,9 +67,6 @@ public class Faculty implements Serializable {
     @OneToMany(mappedBy = "facultyId")
     @JsonIgnore
     private Set<Banner> bannerSet;
-    @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne
-    private UniMainInfo uniId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     @JsonIgnore
     private Set<AdmissionScore> admissionScoreSet;
@@ -136,14 +131,6 @@ public class Faculty implements Serializable {
 
     public void setBannerSet(Set<Banner> bannerSet) {
         this.bannerSet = bannerSet;
-    }
-
-    public UniMainInfo getUniId() {
-        return uniId;
-    }
-
-    public void setUniId(UniMainInfo uniId) {
-        this.uniId = uniId;
     }
 
     @XmlTransient
