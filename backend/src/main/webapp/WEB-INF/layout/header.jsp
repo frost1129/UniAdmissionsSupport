@@ -8,9 +8,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="bg-dark text-white fixed-bottom col-xl-2 col-3" style="height: 100vh; top: 0px; left: 0px; padding: 2rem 1rem;">
-<!--    <a class="text-decoration-none d-flex align-items-center" href="/admin">
-        <img src="/static/media/ou_logo_long_white.04963e61124f355ef102.png" alt="OU logo" class="py-5 img-fluid">
-    </a>-->
+    <a class="text-decoration-none d-flex align-items-center" href="<c:url value="/"/>">
+        <img src="https://res.cloudinary.com/dbh8vdpi7/image/upload/v1693374553/ou_logo_long_white_eojuky.png" alt="OU logo" class="py-5 img-fluid">
+    </a>
     <div class="flex-column nav nav-pills">
         <small class="fw-bold text-uppercase mt-3">Thông tin chung</small>
         <li class="nav-item mb-2">
