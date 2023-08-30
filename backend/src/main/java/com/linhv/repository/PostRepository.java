@@ -4,10 +4,13 @@
  */
 package com.linhv.repository;
 
+import com.linhv.pojo.Post;
+
 /**
  *
  * @author prodi
  */
 public interface PostRepository {
-    
+    Post getPostById(String id);
+    Post addPost(Post post);
 }

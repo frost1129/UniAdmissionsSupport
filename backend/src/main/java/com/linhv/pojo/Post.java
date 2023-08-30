@@ -44,21 +44,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByAllowComment", query = "SELECT p FROM Post p WHERE p.allowComment = :allowComment"),
     @NamedQuery(name = "Post.findByAllowQuestion", query = "SELECT p FROM Post p WHERE p.allowQuestion = :allowQuestion")})
 public class Post implements Serializable {
-
-    /**
-     * @return the slug
-     */
-    public String getSlug() {
-        return slug;
-    }
-
-    /**
-     * @param slug the slug to set
-     */
-    public void setSlug(String slug) {
-        this.slug = slug;
-    }
-
+    
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -107,9 +93,6 @@ public class Post implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     @JsonIgnore
     private Set<PostComment> postCommentSet;
-    @Size(max = 255)
-    @Column(name = "slug")
-    private String slug;
 
     public Post() {
     }
