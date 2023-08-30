@@ -29,40 +29,35 @@ const UserDetail = ({ onClose }) => {
                         />
                     </div>
                 </div>
-                <div className="info mb-4">
-                    <div className="d-flex justify-content-between align-items-end">
-                        <h6>Thông tin cá nhân</h6>
-                        <Button variant="outline-primary">
-                            Lưu chỉnh sửa
-                        </Button>
-                    </div>
-                    <div>
-                        <Form>
-                            <Form.Group className="mb-2">
-                                <Form.Label>Địa chỉ Email</Form.Label>
-                                <Form.Control type="email" placeholder="email hiện tại của người dùng" readOnly/>
-                            </Form.Group>
-                            <Form.Group className="mb-2">
-                                <Form.Label>Họ và tên đệm</Form.Label>
-                                <Form.Control type="text" placeholder="họ và tên đệm hiện tại của người dùng"/>
-                            </Form.Group>
-                            <Form.Group className="mb-2">
-                                <Form.Label>Tên</Form.Label>
-                                <Form.Control type="text" placeholder="tên hiện tại của người dùng"/>
-                            </Form.Group>
-                            <Form.Group className="mb-2">
-                                <Form.Label>Mật khẩu mới</Form.Label>
-                                <Form.Control type="password" placeholder="Nhập mật khẩu mới"/>
-                            </Form.Group>
-                            <Form.Group className="mb-2">
-                                <Form.Label>Nhập lại khẩu cũ</Form.Label>
-                                <Form.Control type="password" placeholder="Nhập lại mật khẩu cũ"/>
-                            </Form.Group>
-                        </Form>
-                    </div>
+                <div className="info mb-4">   
+                    <Form>
+                        <div className="d-flex justify-content-between align-items-end">
+                            <h6>Thông tin cá nhân</h6>
+                            <Button type="submit" variant="outline-primary">
+                                Lưu chỉnh sửa
+                            </Button>
+                        </div>
+                        <Form.Group className="mb-2">
+                            <Form.Label>Địa chỉ Email</Form.Label>
+                            <Form.Control type="email" placeholder="email hiện tại của người dùng" readOnly/>
+                        </Form.Group>
+                        <Form.Group className="mb-2">
+                            <Form.Label>Họ và tên đệm</Form.Label>
+                            <Form.Control type="text" placeholder="họ và tên đệm hiện tại của người dùng"/>
+                        </Form.Group>
+                        <Form.Group className="mb-2">
+                            <Form.Label>Tên</Form.Label>
+                            <Form.Control type="text" placeholder="tên hiện tại của người dùng"/>
+                        </Form.Group>
+                        <Form.Group className="mb-2">
+                            <Form.Label>Mật khẩu</Form.Label>
+                            <Form.Control type="password" placeholder="Nhập mật khẩu để xác nhận thay đổi"/>
+                        </Form.Group>
+                    </Form>
                 </div>
+                
 
-                <div className="password">
+                {/* <div className="password">
                     <div className="d-flex justify-content-between align-items-end">
                         <h6>Đổi mật khẩu</h6>
                         <Button variant="outline-warning">
@@ -81,7 +76,7 @@ const UserDetail = ({ onClose }) => {
                             </Form.Group>
                         </Form>
                     </div>
-                </div>
+                </div> */}
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="primary" onClick={onClose}>Đóng</Button>

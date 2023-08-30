@@ -70,7 +70,7 @@ public class Faculty implements Serializable {
     @JsonIgnore
     private Set<Banner> bannerSet;
     @JoinColumn(name = "uni_id", referencedColumnName = "id")
-    @ManyToOne(optional = false)
+    @ManyToOne
     private UniMainInfo uniId;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "facultyId")
     @JsonIgnore

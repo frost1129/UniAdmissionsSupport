@@ -13,10 +13,14 @@ import com.linhv.service.UserService;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -37,9 +41,6 @@ public class UserServiceImpl implements UserService{
     
     @Autowired
     private Cloudinary cloudinary;
-    
-    @Autowired
-    private SimpleDateFormat simpleDateFormat;
 
     @Override
     public User getUserByEmail(String email) {
@@ -82,8 +83,30 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        User u = this.userRepo.getUserByEmail(email);
+        if (u == null) {
+            throw new UsernameNotFoundException("Email không hợp lệ");
+        }
+        
+        Set<GrantedAuthority> authorities = new HashSet<>();
+        authorities.add(new SimpleGrantedAuthority(u.getUserRole()));
+        return new org.springframework.security.core.userdetails.User(
+                u.getEmail(), u.getPassword(), authorities
+        );
+    }
+
+    @Override
+    public boolean updateUser(Map<String, String> params) {
+        User user = this.userRepo.getUserByEmail(params.get("email"));
+        if (user == null) {
+            return false;
+        }
+        
+        user.setLastName(params.get("lastName"));
+        user.setFirstName(params.get("firstName"));
+
+        return this.userRepo.updateUser(user);
     }
 
 }

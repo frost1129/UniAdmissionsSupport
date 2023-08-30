@@ -14,4 +14,5 @@ public interface UserRepository {
     User getUserByEmail(String email);
     User addUser(User user);
     boolean authUser(String email, String password);
+    boolean updateUser(User user);
 }

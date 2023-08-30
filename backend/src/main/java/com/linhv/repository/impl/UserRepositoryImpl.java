@@ -8,6 +8,7 @@ package com.linhv.repository.impl;
 import com.linhv.pojo.User;
 import com.linhv.repository.UserRepository;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -47,7 +48,21 @@ public class UserRepositoryImpl implements UserRepository{
 
     @Override
     public boolean authUser(String email, String password) {
-        return  false;
+        User user = getUserByEmail(email);
+        return this.encoder.matches(password, user.getPassword());
+    }
+
+    @Override
+    public boolean updateUser(User user) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            session.update(user);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+        
     }
 
 }
