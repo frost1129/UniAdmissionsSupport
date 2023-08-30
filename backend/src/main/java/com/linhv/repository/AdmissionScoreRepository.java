@@ -4,13 +4,10 @@
  */
 package com.linhv.repository;
 
-import com.linhv.pojo.UniMainInfo;
-
 /**
  *
  * @author prodi
  */
-public interface UniMainInfoRepository {
-    UniMainInfo getUniInfo(String id);
-    UniMainInfo updateUniInfo(UniMainInfo info);
+public interface AdmissionScoreRepository {
+    
 }

@@ -5,9 +5,10 @@
 
 package com.linhv.service.impl;
 
-import com.linhv.pojo.UniMainInfo;
-import com.linhv.repository.UniMainInfoRepository;
-import com.linhv.service.UniMainInfoService;
+import com.linhv.pojo.Topic;
+import com.linhv.repository.TopicRepository;
+import com.linhv.service.TopicService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,14 +17,14 @@ import org.springframework.stereotype.Service;
  * @author prodi
  */
 @Service
-public class UniMainInfoServiceImpl implements UniMainInfoService{
-
-    @Autowired
-    private UniMainInfoRepository uniMainRepo;
+public class TopicServiceImpl implements TopicService {
     
+    @Autowired
+    private TopicRepository topicRepo;
+
     @Override
-    public UniMainInfo getUniInfo(String id) {
-        return this.uniMainRepo.getUniInfo(id);
+    public List<Topic> getTopics() {
+        return this.topicRepo.getAllTopics();
     }
 
 }

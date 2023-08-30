@@ -5,9 +5,15 @@
 
 package com.linhv.controller;
 
+import com.linhv.pojo.AdmissionType;
 import com.linhv.pojo.Banner;
 import com.linhv.pojo.Branch;
+import com.linhv.pojo.Topic;
 import com.linhv.pojo.UniMainInfo;
+import com.linhv.service.AdmissionTypeService;
+import com.linhv.service.BannerService;
+import com.linhv.service.BranchService;
+import com.linhv.service.TopicService;
 import com.linhv.service.UniMainInfoService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +35,14 @@ public class ApiUniInfoController {
     
     @Autowired
     private UniMainInfoService uniMainService;
+    @Autowired
+    private AdmissionTypeService admissionTypeService;
+    @Autowired
+    private BannerService bannerService;
+    @Autowired
+    private BranchService branchService;
+    @Autowired
+    private TopicService topicService;
 
     @GetMapping("/hello/")
     public ResponseEntity<String> hello() {
@@ -42,11 +56,21 @@ public class ApiUniInfoController {
     
     @GetMapping("/branches/")
     public ResponseEntity<List<Branch>> getBranches() {
-        return new ResponseEntity<>(this.uniMainService.getBranches(), HttpStatus.OK);
+        return new ResponseEntity<>(this.branchService.getBranches(), HttpStatus.OK);
     }
     
     @GetMapping("/banners/")
     public ResponseEntity<List<Banner>> getBanners() {
-        return new ResponseEntity<>(this.uniMainService.getBanners(), HttpStatus.OK);
+        return new ResponseEntity<>(this.bannerService.getBanners(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/admissions/")
+    public ResponseEntity<List<AdmissionType>> getAdmissionTypes() {
+        return new ResponseEntity<>(this.admissionTypeService.getAdmissionType(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/topics/")
+    public ResponseEntity<List<Topic>> getTopics() {
+        return new ResponseEntity<>(this.topicService.getTopics(), HttpStatus.OK);
     }
 }

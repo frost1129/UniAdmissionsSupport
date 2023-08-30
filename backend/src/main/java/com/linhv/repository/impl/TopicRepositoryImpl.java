@@ -5,8 +5,9 @@
 
 package com.linhv.repository.impl;
 
-import com.linhv.pojo.UniMainInfo;
-import com.linhv.repository.UniMainInfoRepository;
+import com.linhv.pojo.Topic;
+import com.linhv.repository.TopicRepository;
+import java.util.List;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,17 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class UniMainInfoRepositoryImpl implements UniMainInfoRepository{
-
+public class TopicRepositoryImpl implements TopicRepository{
+    
     @Autowired
     private LocalSessionFactoryBean factory;
-    
-    @Override
-    public UniMainInfo getUniInfo(String id) {
-        Session session = this.factory.getObject().getCurrentSession();
-        Query q = session.createQuery("from UniMainInfo where id=:id");
-        q.setParameter("id", id);
-        
-        return (UniMainInfo) q.getSingleResult();
-    }
 
     @Override
-    public UniMainInfo updateUniInfo(UniMainInfo info) {
+    public List<Topic> getAllTopics() {
         Session s = this.factory.getObject().getCurrentSession();
-        s.update(info);
-        return info;
+        Query q = s.createQuery("from Topic");
+        
+        return q.getResultList();
     }
-    
+
 }

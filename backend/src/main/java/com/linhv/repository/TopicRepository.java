@@ -4,13 +4,13 @@
  */
 package com.linhv.repository;
 
-import com.linhv.pojo.UniMainInfo;
+import com.linhv.pojo.Topic;
+import java.util.List;
 
 /**
  *
  * @author prodi
  */
-public interface UniMainInfoRepository {
-    UniMainInfo getUniInfo(String id);
-    UniMainInfo updateUniInfo(UniMainInfo info);
+public interface TopicRepository {
+    List<Topic> getAllTopics();
 }

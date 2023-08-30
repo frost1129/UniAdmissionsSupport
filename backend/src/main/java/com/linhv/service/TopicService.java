@@ -2,15 +2,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Interface.java to edit this template
  */
-package com.linhv.repository;
+package com.linhv.service;
 
-import com.linhv.pojo.UniMainInfo;
+import com.linhv.pojo.Topic;
+import java.util.List;
 
 /**
  *
  * @author prodi
  */
-public interface UniMainInfoRepository {
-    UniMainInfo getUniInfo(String id);
-    UniMainInfo updateUniInfo(UniMainInfo info);
+public interface TopicService {
+    List<Topic> getTopics();
 }

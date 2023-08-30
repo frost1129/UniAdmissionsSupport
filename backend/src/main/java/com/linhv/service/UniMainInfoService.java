@@ -4,10 +4,7 @@
  */
 package com.linhv.service;
 
-import com.linhv.pojo.Banner;
-import com.linhv.pojo.Branch;
 import com.linhv.pojo.UniMainInfo;
-import java.util.List;
 
 /**
  *
@@ -15,6 +12,4 @@ import java.util.List;
  */
 public interface UniMainInfoService {
     UniMainInfo getUniInfo(String id);
-    List<Branch> getBranches();
-    List<Banner> getBanners();
 }

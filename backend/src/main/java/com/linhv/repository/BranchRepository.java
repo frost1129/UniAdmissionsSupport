@@ -4,13 +4,17 @@
  */
 package com.linhv.repository;
 
-import com.linhv.pojo.UniMainInfo;
+import com.linhv.pojo.Branch;
+import java.util.List;
 
 /**
  *
  * @author prodi
  */
-public interface UniMainInfoRepository {
-    UniMainInfo getUniInfo(String id);
-    UniMainInfo updateUniInfo(UniMainInfo info);
+public interface BranchRepository {
+    Branch add(Branch branch);
+    Branch update(Branch branch);
+    boolean delete(Branch branch);
+    Branch getBranchById(int id);
+    List<Branch> getAllBranches();
 }
