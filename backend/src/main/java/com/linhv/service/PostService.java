@@ -13,5 +13,9 @@ import java.util.List;
  */
 public interface PostService {
     Post getPostById(String id);
-    Post addPost(Post post);
+    boolean addPost(Post post);
+    boolean updatePost(Post post);
+    boolean detelePost(Post post);
+    List<Post> getAllPostByAdmission(int admissionId);
+    List<Post> get5PostByAdmission(int admissionId);
 }

@@ -7,7 +7,10 @@ package com.linhv.repository.impl;
 
 import com.linhv.pojo.Post;
 import com.linhv.repository.PostRepository;
+import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -28,18 +31,67 @@ public class PostRepositoryImpl implements PostRepository{
     @Override
     public Post getPostById(String id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("from Post where id=:id");
-        q.setParameter("id", id);
-        
-        return (Post) q.getSingleResult();
+        try {
+            return s.get(Post.class, id);
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
-    public Post addPost(Post post) {
+    public boolean addPost(Post post) {
         Session s = this.factory.getObject().getCurrentSession();
-        s.save(post);
+        try {        
+            s.save(post);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePost(Post post) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {        
+            s.update(post);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean detelePost(Post post) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {        
+            s.delete(post);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public List<Post> getAllPostByAdmission(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id");
+        q.setParameter("id", id);
         
-        return post;
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Post> get5PostByAdmission(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id ORDER BY p.updatedDate DESC");
+        q.setParameter("id", id);
+        q.setMaxResults(5);
+        
+        return q.getResultList();
     }
 
 }

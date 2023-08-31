@@ -5,6 +5,7 @@
 package com.linhv.repository;
 
 import com.linhv.pojo.Post;
+import java.util.List;
 
 /**
  *
@@ -12,5 +13,9 @@ import com.linhv.pojo.Post;
  */
 public interface PostRepository {
     Post getPostById(String id);
-    Post addPost(Post post);
+    boolean addPost(Post post);
+    boolean updatePost(Post post);
+    boolean detelePost(Post post);
+    List<Post> getAllPostByAdmission(int admissionId);
+    List<Post> get5PostByAdmission(int admissionId);
 }

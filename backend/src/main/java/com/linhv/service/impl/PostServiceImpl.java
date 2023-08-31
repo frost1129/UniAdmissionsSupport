@@ -5,15 +5,13 @@
 
 package com.linhv.service.impl;
 
+import com.github.slugify.Slugify;
 import com.linhv.pojo.Post;
 import com.linhv.pojo.User;
 import com.linhv.repository.PostRepository;
 import com.linhv.service.PostService;
-import java.text.Normalizer;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
-import java.util.regex.Pattern;
+import java.util.List;
 import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,13 +23,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class PostServiceImpl implements PostService{
     
-    private final Pattern NONLATIN = Pattern.compile("[^\\w-]");
-    private final Pattern WHITESPACE = Pattern.compile("[\\s]");
-    private final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyyyMMdd-HHmmss");
-    
     @Autowired
     private PostRepository postRepo;
-
+    
+    private Slugify slg = Slugify.builder().build();
+    
     @Override
     public Post getPostById(String id) {
         Post p = null;
@@ -44,8 +40,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public Post addPost(Post post) {
-        post.setId("test-id");
+    public boolean addPost(Post post) {
+        post.setId(slg.slugify(post.getTitle()));
         post.setUpdatedDate(new Date());
         post.setUserId(new User(3));
         
@@ -59,27 +55,24 @@ public class PostServiceImpl implements PostService{
 
         return this.postRepo.addPost(post);
     }
-    
-    public String toSlug(String input) {
-        String nowhitespace = WHITESPACE.matcher(input).replaceAll("-");
-        String normalized = Normalizer.normalize(nowhitespace, Normalizer.Form.NFD);
-        String slug = NONLATIN.matcher(normalized).replaceAll("");
-        slug = slug.toLowerCase(Locale.ENGLISH);
 
-        // Kiểm tra xem slug có trùng với các slug hiện tại không
-        // Nếu có, thêm ngày tháng năm và giờ vào slug
-        // Ví dụ: my-post -> my-post-20230830-150000
-        if (isDuplicateSlug(slug)) {
-            String timestamp = DATE_FORMAT.format(new Date());
-            slug = slug + "-" + timestamp;
-        }
-
-        return slug;
+    @Override
+    public boolean updatePost(Post post) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    private boolean isDuplicateSlug(String slug) {
-//        return this.postService.getPostById(slug) != null; 
-    return false;
+    @Override
+    public boolean detelePost(Post post) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
+    @Override
+    public List<Post> getAllPostByAdmission(int id) {
+        return this.postRepo.getAllPostByAdmission(id);
+    }
+
+    @Override
+    public List<Post> get5PostByAdmission(int id) {
+        return this.postRepo.get5PostByAdmission(id);
+    }
 }
