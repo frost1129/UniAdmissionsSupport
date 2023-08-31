@@ -28,7 +28,7 @@
         </div>
         <div class="mb-2">
             <label class="form-label">Tiêu đề bài đăng</label>
-            <form:input type="text" class="form-control" path="content" placeholder="Nhập tiêu đề bài viết ở đây" />
+            <form:input type="text" class="form-control" path="title" placeholder="Nhập tiêu đề bài viết ở đây" />
         </div>
         <div class="mb-3 row">
             <div class="col">

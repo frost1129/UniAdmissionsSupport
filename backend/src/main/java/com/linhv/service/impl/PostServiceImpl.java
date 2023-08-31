@@ -45,7 +45,7 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public Post addPost(Post post) {
-        post.setId(this.toSlug(post.getTitle()));
+        post.setId("test-id");
         post.setUpdatedDate(new Date());
         post.setUserId(new User(3));
         

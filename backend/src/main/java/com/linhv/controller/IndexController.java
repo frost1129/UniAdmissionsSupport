@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  * @author prodi
  */
 @Controller
+@ControllerAdvice
 public class IndexController {
     
     @Autowired
@@ -33,17 +35,20 @@ public class IndexController {
     @Autowired
     private PostService postService;
     
+    @ModelAttribute
+    public void commonAttr(Model model) {
+        model.addAttribute("admissionTypes", this.admissionTypeService.getAdmissionType());
+    }
+    
     @RequestMapping("/")
     public String index(Model model) {
         model.addAttribute("banners", this.bannerService.getBanners());
-        
         return "index";
     }
     
     @GetMapping("/create-post")
     public String createPost(Model model) {
         model.addAttribute("post", new Post());
-        model.addAttribute("admissionTypes", this.admissionTypeService.getAdmissionType());
         return "createPost";
     }
     
@@ -51,15 +56,14 @@ public class IndexController {
     public String create(@ModelAttribute(value = "product") Post p, 
             @RequestParam("content") String content,
             BindingResult bs) {
+        if (bs.hasErrors()) {
+            
+            return "createPost"; // Trả về trang sửa đổi nếu có lỗi
+        }
         
         p.setContent(content);
-        
-//        if (bs.hasErrors()) {
-//            return "text-editor"; // Trả về trang sửa đổi nếu có lỗi
-//        }
-//        
 //        this.postService.addPost(p);
         
-        return "createPost";
+        return "redirect:/index";
     }
 }
