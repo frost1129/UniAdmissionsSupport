@@ -12,6 +12,7 @@ import com.linhv.pojo.User;
  */
 public interface UserRepository {
     User getUserByEmail(String email);
+    User getUserById(int id);
     User addUser(User user);
     boolean authUser(String email, String password);
     boolean updateUser(User user);

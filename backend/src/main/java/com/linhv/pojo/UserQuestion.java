@@ -43,7 +43,7 @@ public class UserQuestion implements Serializable {
     @NotNull
     @Size(min = 1, max = 255)
     @Column(name = "id")
-    private String id;
+    private Integer id;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -68,28 +68,25 @@ public class UserQuestion implements Serializable {
     @JoinColumn(name = "answer_user_id", referencedColumnName = "id")
     @ManyToOne
     private User answerUserId;
-    @JoinColumn(name = "ask_user_id", referencedColumnName = "id")
-    @ManyToOne
-    private User askUserId;
 
     public UserQuestion() {
     }
 
-    public UserQuestion(String id) {
+    public UserQuestion(Integer id) {
         this.id = id;
     }
 
-    public UserQuestion(String id, String content, Date submitTime) {
+    public UserQuestion(Integer id, String content, Date submitTime) {
         this.id = id;
         this.content = content;
         this.submitTime = submitTime;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -139,14 +136,6 @@ public class UserQuestion implements Serializable {
 
     public void setAnswerUserId(User answerUserId) {
         this.answerUserId = answerUserId;
-    }
-
-    public User getAskUserId() {
-        return askUserId;
-    }
-
-    public void setAskUserId(User askUserId) {
-        this.askUserId = askUserId;
     }
 
     @Override

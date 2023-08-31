@@ -7,6 +7,7 @@ package com.linhv.repository.impl;
 
 import com.linhv.pojo.User;
 import com.linhv.repository.UserRepository;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -32,10 +33,29 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public User getUserByEmail(String email) {
         Session session = this.factory.getObject().getCurrentSession();
-        Query q = session.createQuery("from User where email=:e");
-        q.setParameter("e", email);
-        
-        return (User) q.getSingleResult();
+        try {
+            Query q = session.createQuery("FROM User WHERE email=:e");
+            q.setParameter("e", email);
+            
+            return (User) q.getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    
+    @Override
+    public User getUserById(int id) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = session.createQuery("FROM User WHERE id=:id");
+            q.setParameter("id", id);
+            
+            return (User) q.getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
     }
 
     @Override
@@ -64,5 +84,7 @@ public class UserRepositoryImpl implements UserRepository{
         }
         
     }
+
+    
 
 }
