@@ -7,6 +7,7 @@ package com.linhv.controller;
 
 import com.linhv.pojo.Post;
 import com.linhv.service.PostService;
+import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,17 +41,15 @@ public class PostController {
     }
     
     @PostMapping("/create-post")
-    public String create(@ModelAttribute(value = "product") Post p, 
+    public String create(
+            @ModelAttribute(value = "post") Post p, 
             @RequestParam("content") String content,
             BindingResult bs) {
-        if (bs.hasErrors()) {
-            
-            return "createPost"; // Trả về trang sửa đổi nếu có lỗi
+        if (!bs.hasErrors()) {
+            p.setContent(content);
+            if (this.postService.addPost(p) == true)
+                return "redirect:/";
         }
-        
-        p.setContent(content);
-//        this.postService.addPost(p);
-        
-        return "index";
+        return "createPost";
     }
 }

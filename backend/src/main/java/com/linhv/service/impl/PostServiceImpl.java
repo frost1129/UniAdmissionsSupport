@@ -10,6 +10,7 @@ import com.linhv.pojo.Post;
 import com.linhv.pojo.User;
 import com.linhv.repository.PostRepository;
 import com.linhv.service.PostService;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -41,7 +42,10 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public boolean addPost(Post post) {
-        post.setId(slg.slugify(post.getTitle()));
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd-HHmmss");
+        String formattedDate = dateFormat.format(new Date());
+        
+        post.setId(slg.slugify(post.getTitle()) + "-" + formattedDate);
         post.setUpdatedDate(new Date());
         post.setUserId(new User(3));
         
