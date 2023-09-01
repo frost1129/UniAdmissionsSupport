@@ -5,14 +5,20 @@
 
 package com.linhv.service.impl;
 
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import com.github.slugify.Slugify;
 import com.linhv.pojo.Post;
 import com.linhv.pojo.User;
 import com.linhv.repository.PostRepository;
 import com.linhv.service.PostService;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.NoResultException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +32,9 @@ public class PostServiceImpl implements PostService{
     
     @Autowired
     private PostRepository postRepo;
+    
+    @Autowired
+    private Cloudinary cloudinary;
     
     private Slugify slg = Slugify.builder().build();
     
@@ -55,6 +64,15 @@ public class PostServiceImpl implements PostService{
         } else if (post.getPostType().equals("livestream")) {
             post.setAllowComment(false);
             post.setAllowQuestion(true);
+        }
+        
+        if (!post.getFile().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(post.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                post.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(PostServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
 
         return this.postRepo.addPost(post);

@@ -42,11 +42,9 @@ public class PostController {
     
     @PostMapping("/create-post")
     public String create(
-            @ModelAttribute(value = "post") Post p, 
-            @RequestParam("content") String content,
+            @ModelAttribute(value = "post") Post p,
             BindingResult bs) {
         if (!bs.hasErrors()) {
-            p.setContent(content);
             if (this.postService.addPost(p) == true)
                 return "redirect:/";
         }

@@ -21,7 +21,7 @@
         action="${action}" 
         enctype="multipart/form-data"
     >
-        <form:input path="content" name="content" id="content-field" />
+        <form:input type="hidden" path="content" name="content" id="content-field" />
         
         <div class="mb-4 text-primary-emphasis">
             <h4>Chi tiết bài đăng</h4>
@@ -29,6 +29,10 @@
         <div class="mb-2">
             <label class="form-label">Tiêu đề bài đăng</label>
             <form:input type="text" class="form-control" path="title" placeholder="Nhập tiêu đề bài viết ở đây" />
+        </div>
+        <div class="mb-3">
+            <label for="file" class="form-label">Chọn ảnh cho bài đăng</label>
+            <form:input cssClass="form-control" type="file" id="file" path="file" accept="image/png, image/gif, image/jpeg" />
         </div>
         <div class="mb-3 row">
             <div class="col">

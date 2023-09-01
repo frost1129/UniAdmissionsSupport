@@ -23,10 +23,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -44,6 +46,34 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Post.findByAllowComment", query = "SELECT p FROM Post p WHERE p.allowComment = :allowComment"),
     @NamedQuery(name = "Post.findByAllowQuestion", query = "SELECT p FROM Post p WHERE p.allowQuestion = :allowQuestion")})
 public class Post implements Serializable {
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
+    /**
+     * @return the image
+     */
+    public String getImage() {
+        return image;
+    }
+
+    /**
+     * @param image the image to set
+     */
+    public void setImage(String image) {
+        this.image = image;
+    }
     
     private static final long serialVersionUID = 1L;
     @Id
@@ -93,6 +123,11 @@ public class Post implements Serializable {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "postId")
     @JsonIgnore
     private Set<PostComment> postCommentSet;
+    @Column(name = "image")
+    private String image;
+    
+    @Transient
+    private MultipartFile file;
 
     public Post() {
     }
