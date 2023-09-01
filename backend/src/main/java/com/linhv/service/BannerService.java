@@ -13,4 +13,8 @@ import java.util.List;
  */
 public interface BannerService {
     List<Banner> getBanners();
+    Banner add(Banner banner);
+    boolean update(Banner banner);
+    boolean delete(Banner banner);
+    Banner getBannerById(int id);
 }

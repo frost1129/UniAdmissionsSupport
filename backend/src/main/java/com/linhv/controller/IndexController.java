@@ -5,14 +5,18 @@
 
 package com.linhv.controller;
 
+import com.linhv.pojo.Banner;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
 import com.linhv.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -37,7 +41,22 @@ public class IndexController {
     
     @RequestMapping("/")
     public String index(Model model) {
+        model.addAttribute("banner", new Banner());
         model.addAttribute("banners", this.bannerService.getBanners());
         return "index";
+    }
+    
+    @PostMapping("/add-banner")
+    public String addBanner(@ModelAttribute(value = "banner") Banner b, BindingResult bs) {
+        if (!bs.hasErrors()) {
+            this.bannerService.add(b);
+        }
+        return "redirect:/";
+    }
+    
+    @PostMapping("/banners/{id}")
+    public String deleteBanner(@PathVariable(value = "id") int id) {
+        this.bannerService.delete(this.bannerService.getBannerById(id));
+        return "redirect:/";
     }
 }

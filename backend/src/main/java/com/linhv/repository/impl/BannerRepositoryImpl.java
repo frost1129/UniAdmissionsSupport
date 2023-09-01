@@ -35,11 +35,11 @@ public class BannerRepositoryImpl implements BannerRepository{
     }
 
     @Override
-    public Banner update(Banner banner) {
+    public boolean update(Banner banner) {
         Session s = this.factory.getObject().getCurrentSession();
         s.update(banner);
         
-        return banner;
+        return true;
     }
 
     @Override

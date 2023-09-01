@@ -4,7 +4,8 @@
     Author     : prodi
 --%>
 
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <div class="py-2 container-fluid">
@@ -12,26 +13,52 @@
         Banner
     </h4>
     <div class="row d-flex flex-row flex-nowrap py-2" style="overflow-x: auto;">
-        <div class="p-2 me-2 card" style="width: 12rem;">
-            <a class="text-decoration-none" href="/admin">
-                <div class="d-flex justify-content-center align-items-center rounded fw-bolder" style="height: 11rem;">
-                    +
-                </div>
-            </a>
+        <div class="p-2 me-2 card d-flex justify-content-center align-items-center" style="width: 11rem;" >
+            <button type="button" class="btn bg-transparent" style="width: 100%; height: 100%" id="openModalBtn">+</button>
         </div>
         <c:forEach items="${banners}" var="b">
-            <div class="pt-2 px-2 me-2 card" style="width: 12rem;">
-                <img class="card-img" alt="Banner" src="${b.image}" />
+            <div class="pt-2 px-2 me-2 card" style="height: 13rem; width: 13rem;">
+                <img class="card-img" style="width: 12rem; max-height: 8rem" alt="Banner" src="${b.image}" />
                 <div class="text-center card-body">
-                    <button type="button" class="btn btn-danger">
-                        Xóa
-                    </button>
+                    <c:url value="/banners/${b.id}" var="del" />
+                    <form action="${del}" method="POST">
+                        <input type="hidden" name="id" value="${b.id}">
+                        <button class="btn btn-danger" type="submit">Xóa</button>
+                    </form>
                 </div>
             </div>
         </c:forEach>
         
     </div>
 </div>
+
+<div class="modal fade" id="addBannerModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm banner</h5>
+                    <button type="button" id="closeModal" class="btn bg-transparent" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <c:url value="/add-banner" var="add" />
+                    <form:form 
+                        modelAttribute="banner" 
+                        method="post" 
+                        action="${add}" 
+                        enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label for="file" class="form-label">Chọn banner</label>
+                            <form:input cssClass="form-control" type="file" id="file" path="file" accept="image/png, image/gif, image/jpeg" />
+                        </div>
+                        <button type="submit" class="btn btn-primary">Lưu banner</button>
+                    </form:form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <div class="py-2 container-fluid">
     <h4 class="">
         Bài đăng nổi bật
@@ -66,3 +93,16 @@
     </table>
 </div>
 
+<script>
+    $(document).ready(function () {
+        var modal = $('#addBannerModal');
+
+        $('#openModalBtn').click(function () {
+            modal.modal('show');
+        });
+        
+        $('#closeModal').click(function () {
+            modal.modal('hide'); // Đóng modal
+        });
+    });
+</script>

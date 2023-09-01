@@ -13,7 +13,7 @@ import java.util.List;
  */
 public interface BannerRepository {
     Banner add(Banner banner);
-    Banner update(Banner banner);
+    boolean update(Banner banner);
     boolean delete(Banner banner);
     Banner getBannerById(int id);
     List<Banner> getAllBanners();
