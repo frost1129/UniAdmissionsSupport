@@ -38,18 +38,33 @@
             <div class="col">
                 <label class="form-label">Loại bài đăng</label>
                 <form:select class="form-select" path="postType">
-                    <option value="post">Tin tuyển sinh</option>
-                    <option value="livestream">Livestream tuyển sinh</option>
+                    <c:choose>
+                        <c:when test="${post.postType == 'post'}">
+                            <option value="post">Tin tuyển sinh</option>
+                        </c:when>
+                        <c:when test="${post.postType == 'livestream'}">
+                            <option value="livestream">Livestream tuyển sinh</option>
+                        </c:when>
+                        <c:otherwise>
+                            <option value="post">Tin tuyển sinh</option>
+                            <option value="livestream">Livestream tuyển sinh</option>
+                        </c:otherwise>
+                    </c:choose>  
                 </form:select>
             </div>
             <div class="col">
                 <label class="form-label">Hệ tuyển sinh</label>
                 <form:select class="form-select" path="admissionType">
-                    
                     <c:forEach items="${admissionTypes}" var="a">
-                        <option value="${a.id}">${a.name}</option>
+                        <c:choose>
+                            <c:when test="${a.id == post.admissionType.id}">
+                                <option value="${a.id}" selected>${a.name}</option>
+                            </c:when>
+                            <c:otherwise>
+                                <option value="${a.id}">${a.name}</option>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
-                        
                 </form:select>
             </div>
         </div>

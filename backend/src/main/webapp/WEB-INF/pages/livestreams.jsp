@@ -11,12 +11,21 @@
     <h4 class="">
         Banner
     </h4>
+    
+    <c:url value="/create-post" var="add" />
+    <div class="navbar justify-content-between">
+        <a href="${add}" class="btn btn-outline-primary">Thêm thông báo livestream</a>
+        <form class="form-inline d-flex flex-row">
+            <input class="form-control mr-sm-2 mx-1" type="search" placeholder="Nhập tiêu đề bài đăng">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm</button>
+        </form>
+    </div>
 
     <table class="table table-hover">
         <thead>
             <tr>
                 <th>Hình</th>
-                <th>Tiêu đề bài viết</th>
+                <th>Tiêu đề</th>
                 <th>Hệ tuyển sinh</th>
                 <th>Người đăng</th>
                 <td></td>
@@ -26,15 +35,18 @@
             <c:forEach items="${liveposts}" var="p">
                 <tr>
                     <td>
-                        <img src="${p.image}" alt="${p.title}" width="120px"/>
+                        <c:if test="${p.image != null}">
+                            <img src="${p.image}" alt="${p.title}" width="120px"/>
+                        </c:if>
                     </td>
                     <td>${p.title}</td>
                     <td>${p.admissionType.name}</td>
                     <td>${p.userId.lastName} ${p.userId.firstName}</td>
                     <td>
-                        <c:url value="/create-post/${p.id}" var="api" />
-                        <a href="${api}" class="btn btn-success">Cập nhật</a>
-                        <button class="btn btn-danger" onclick="deleteProduct('${api}')">Xóa</button>
+                        <c:url value="/create-post/${p.id}" var="update" />
+                        <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
+                        <a href="" class="btn btn-success rounded-pill p-0 px-2">Xem câu hỏi</a>
+                        <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
                     </td>
                 </tr>
             </c:forEach>
