@@ -6,11 +6,14 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Post;
+import com.linhv.service.PostService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,9 +23,19 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class PostController {
+    
+    @Autowired
+    private PostService postService;
+    
     @GetMapping("/create-post")
     public String createPost(Model model) {
         model.addAttribute("post", new Post());
+        return "createPost";
+    }
+    
+    @GetMapping("/create-post/{id}")
+    public String postDetail(Model model, @PathVariable(value = "id") String id) {
+        model.addAttribute("post", this.postService.getPostById(id));
         return "createPost";
     }
     

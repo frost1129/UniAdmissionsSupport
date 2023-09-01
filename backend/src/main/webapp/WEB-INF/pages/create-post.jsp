@@ -21,7 +21,7 @@
         action="${action}" 
         enctype="multipart/form-data"
     >
-        <form:input type="hidden" path="content" name="content" id="content-field" />
+        <form:input path="content" name="content" id="content-field" />
         
         <div class="mb-4 text-primary-emphasis">
             <h4>Chi tiết bài đăng</h4>
@@ -76,6 +76,11 @@
     });
     
     var contentField = document.getElementById('content-field');
+    
+    var contentValue = contentField.value;
+    if (contentValue) {
+        quill.root.innerHTML = contentValue;
+    }
 
     quill.on('text-change', function() {
         contentField.value = quill.root.innerHTML;

@@ -121,9 +121,6 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "answerUserId")
     @JsonIgnore
     private Set<UserQuestion> userQuestionSet;
-    @OneToMany(mappedBy = "askUserId")
-    @JsonIgnore
-    private Set<UserQuestion> userQuestionSet1;
 
     public User() {
     }
@@ -274,15 +271,6 @@ public class User implements Serializable {
 
     public void setUserQuestionSet(Set<UserQuestion> userQuestionSet) {
         this.userQuestionSet = userQuestionSet;
-    }
-
-    @XmlTransient
-    public Set<UserQuestion> getUserQuestionSet1() {
-        return userQuestionSet1;
-    }
-
-    public void setUserQuestionSet1(Set<UserQuestion> userQuestionSet1) {
-        this.userQuestionSet1 = userQuestionSet1;
     }
 
     @Override
