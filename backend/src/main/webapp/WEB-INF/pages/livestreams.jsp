@@ -16,7 +16,7 @@
     <div class="navbar justify-content-between">
         <a href="${add}" class="btn btn-outline-primary">Thêm thông báo livestream</a>
         <form class="form-inline d-flex flex-row">
-            <input class="form-control mr-sm-2 mx-1" type="search" placeholder="Nhập tiêu đề bài đăng">
+            <input class="form-control mr-sm-2 mx-1" type="search" name="kw" placeholder="Nhập tiêu đề bài đăng">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Tìm</button>
         </form>
     </div>

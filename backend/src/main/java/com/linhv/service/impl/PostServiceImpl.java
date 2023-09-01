@@ -107,4 +107,9 @@ public class PostServiceImpl implements PostService{
     public List<Post> getAllLivestream() {
         return this.postRepo.getAllLivestream();
     }
+
+    @Override
+    public List<Post> getAll(Map<String, String> map) {
+        return this.postRepo.getAll(map);
+    }
 }

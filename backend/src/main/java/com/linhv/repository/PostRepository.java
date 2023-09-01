@@ -6,6 +6,7 @@ package com.linhv.repository;
 
 import com.linhv.pojo.Post;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -20,4 +21,5 @@ public interface PostRepository {
     List<Post> getAllLivestream();
     List<Post> getAllPostByAdmission(int admissionId);
     List<Post> get5PostByAdmission(int admissionId);
+    List<Post> getAll(Map<String, String> params);
 }

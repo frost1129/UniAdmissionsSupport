@@ -7,7 +7,7 @@ package com.linhv.controller;
 
 import com.linhv.pojo.Post;
 import com.linhv.service.PostService;
-import java.util.logging.Logger;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -28,15 +29,19 @@ public class PostController {
     private PostService postService;
     
     @GetMapping("/posts")
-    public String allPosts(Model model) {
-        model.addAttribute("posts", this.postService.getAllPost());
+    public String allPosts(Model model, @RequestParam Map<String, String> params) {
+        params.put("postType", "post");
+        
+        model.addAttribute("posts", this.postService.getAll(params));
         
         return "posts";
     }
     
     @GetMapping("/livestreams")
-    public String allLivestreams(Model model) {
-        model.addAttribute("liveposts", this.postService.getAllLivestream());
+    public String allLivestreams(Model model, @RequestParam Map<String, String> params) {
+        params.put("postType", "livestream");
+        
+        model.addAttribute("liveposts", this.postService.getAll(params));
         
         return "livestreams";
     }
