@@ -30,10 +30,10 @@
             Thông tin tuyển sinh
         </small>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="<c:url value="/create-post" />">Bài đăng tuyển sinh</a>
+            <a class="nav-link text-white" href="<c:url value="/posts" />">Bài đăng tuyển sinh</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="#">Livestream tuyển sinh</a>
+            <a class="nav-link text-white" href="<c:url value="/livestreams" />">Livestream tuyển sinh</a>
         </li>
     </div>
 </div>

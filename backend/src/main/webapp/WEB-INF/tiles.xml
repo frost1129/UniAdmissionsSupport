@@ -20,5 +20,15 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Bài đăng" />
         <put-attribute name="content" value="/WEB-INF/pages/create-post.jsp" />
     </definition>
+    
+    <definition name="posts" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý bài đăng" />
+        <put-attribute name="content" value="/WEB-INF/pages/posts.jsp" />
+    </definition>
+    
+    <definition name="livestreams" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý livestream" />
+        <put-attribute name="content" value="/WEB-INF/pages/livestreams.jsp" />
+    </definition>
 
 </tiles-definitions>

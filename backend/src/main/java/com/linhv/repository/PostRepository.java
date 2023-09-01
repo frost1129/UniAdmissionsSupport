@@ -16,6 +16,8 @@ public interface PostRepository {
     boolean addPost(Post post);
     boolean updatePost(Post post);
     boolean detelePost(Post post);
+    List<Post> getAllPost();
+    List<Post> getAllLivestream();
     List<Post> getAllPostByAdmission(int admissionId);
     List<Post> get5PostByAdmission(int admissionId);
 }

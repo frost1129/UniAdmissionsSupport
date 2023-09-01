@@ -78,7 +78,7 @@ public class PostRepositoryImpl implements PostRepository{
     @Override
     public List<Post> getAllPostByAdmission(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id");
+        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id ORDER BY p.updatedDate");
         q.setParameter("id", id);
         
         return q.getResultList();
@@ -90,6 +90,24 @@ public class PostRepositoryImpl implements PostRepository{
         Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id ORDER BY p.updatedDate DESC");
         q.setParameter("id", id);
         q.setMaxResults(5);
+        
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Post> getAllPost() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate");
+        q.setParameter("type", "post");
+        
+        return q.getResultList();
+    }
+
+    @Override
+    public List<Post> getAllLivestream() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate");
+        q.setParameter("type", "livestream");
         
         return q.getResultList();
     }

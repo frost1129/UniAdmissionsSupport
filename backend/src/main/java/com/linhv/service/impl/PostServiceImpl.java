@@ -97,4 +97,14 @@ public class PostServiceImpl implements PostService{
     public List<Post> get5PostByAdmission(int id) {
         return this.postRepo.get5PostByAdmission(id);
     }
+
+    @Override
+    public List<Post> getAllPost() {
+        return this.postRepo.getAllPost();
+    }
+
+    @Override
+    public List<Post> getAllLivestream() {
+        return this.postRepo.getAllLivestream();
+    }
 }

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -27,6 +26,20 @@ public class PostController {
     
     @Autowired
     private PostService postService;
+    
+    @GetMapping("/posts")
+    public String allPosts(Model model) {
+        model.addAttribute("posts", this.postService.getAllPost());
+        
+        return "posts";
+    }
+    
+    @GetMapping("/livestreams")
+    public String allLivestreams(Model model) {
+        model.addAttribute("liveposts", this.postService.getAllLivestream());
+        
+        return "livestreams";
+    }
     
     @GetMapping("/create-post")
     public String createPost(Model model) {

@@ -18,4 +18,6 @@ public interface PostService {
     boolean detelePost(Post post);
     List<Post> getAllPostByAdmission(int admissionId);
     List<Post> get5PostByAdmission(int admissionId);
+    List<Post> getAllPost();
+    List<Post> getAllLivestream();
 }
