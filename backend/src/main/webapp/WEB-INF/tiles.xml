@@ -30,5 +30,10 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Quản lý livestream" />
         <put-attribute name="content" value="/WEB-INF/pages/livestreams.jsp" />
     </definition>
+    
+    <definition name="questions" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý câu hỏi" />
+        <put-attribute name="content" value="/WEB-INF/pages/questions.jsp" />
+    </definition>
 
 </tiles-definitions>

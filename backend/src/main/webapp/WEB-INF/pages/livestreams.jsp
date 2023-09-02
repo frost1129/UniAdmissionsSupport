@@ -9,10 +9,10 @@
 
 <div class="py-2 container-fluid">
     <h4 class="">
-        Banner
+        Quản lý bài đăng livestream
     </h4>
     
-    <c:url value="/create-post" var="add" />
+    <c:url value="/admin/create-post" var="add" />
     <div class="navbar justify-content-between">
         <a href="${add}" class="btn btn-outline-primary">Thêm thông báo livestream</a>
         <form class="form-inline d-flex flex-row">
@@ -43,7 +43,7 @@
                     <td>${p.admissionType.name}</td>
                     <td>${p.userId.lastName} ${p.userId.firstName}</td>
                     <td>
-                        <c:url value="/create-post/${p.id}" var="update" />
+                        <c:url value="/admin/create-post/${p.id}" var="update" />
                         <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
                         <a href="" class="btn btn-success rounded-pill p-0 px-2">Xem câu hỏi</a>
                         <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>

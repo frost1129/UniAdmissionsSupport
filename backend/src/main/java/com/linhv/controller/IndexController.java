@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @ControllerAdvice
+@RequestMapping("/admin")
 public class IndexController {
     
     @Autowired
@@ -51,12 +52,12 @@ public class IndexController {
         if (!bs.hasErrors()) {
             this.bannerService.add(b);
         }
-        return "redirect:/";
+        return "redirect:/admin/";
     }
     
     @PostMapping("/banners/{id}")
     public String deleteBanner(@PathVariable(value = "id") int id) {
         this.bannerService.delete(this.bannerService.getBannerById(id));
-        return "redirect:/";
+        return "redirect:/admin/";
     }
 }

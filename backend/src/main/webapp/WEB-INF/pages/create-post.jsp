@@ -12,7 +12,7 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body>
-    <c:url value="/create-post" var="action"/>
+    <c:url value="/admin/create-post" var="action"/>
     
     <form:form 
         cssClass="py-3 container-fluid" 
@@ -32,6 +32,10 @@
         </div>
         <div class="mb-3">
             <label for="file" class="form-label">Chọn ảnh cho bài đăng</label>
+            <br>
+            <c:if test="${post.image != null}">
+                <img class="mb-2" src="${post.image}" alt="${post.title}" width="120px"/>
+            </c:if>
             <form:input cssClass="form-control" type="file" id="file" path="file" accept="image/png, image/gif, image/jpeg" />
         </div>
         <div class="mb-3 row">
@@ -72,7 +76,14 @@
             <label class="form-label">Nội dung bài đăng</label>
             <div id="editor"></div>   
         </div>
-        <button type="submit" class="btn btn-primary">Lưu bài đăng</button>
+            <c:choose>
+                <c:when test="${post.id != null}">
+                    <button type="submit" class="btn btn-primary">Lưu bài đăng</button>
+                </c:when>
+                <c:otherwise>
+                    <button type="submit" class="btn btn-success">Đăng bài</button>
+                </c:otherwise>
+            </c:choose>
     </form:form>
 </body>
 

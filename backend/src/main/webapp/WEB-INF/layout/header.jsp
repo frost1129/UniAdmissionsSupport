@@ -14,7 +14,7 @@
     <div class="flex-column nav nav-pills">
         <small class="fw-bold text-uppercase mt-3">Thông tin chung</small>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="<c:url value="/" />">Trang chủ</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/" />">Trang chủ</a>
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link text-white" href="#">Quản lý người dùng</a>
@@ -23,17 +23,17 @@
             <a class="nav-link text-white" href="#">Quản lý khoa</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="#">Quản lý câu hỏi</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/questions" />">Quản lý câu hỏi</a>
         </li>
         
         <small class="fw-bold text-uppercase mt-3">
             Thông tin tuyển sinh
         </small>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="<c:url value="/posts" />">Bài đăng tuyển sinh</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/posts" />">Bài đăng tuyển sinh</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="<c:url value="/livestreams" />">Livestream tuyển sinh</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/livestreams" />">Livestream tuyển sinh</a>
         </li>
     </div>
 </div>

@@ -4,6 +4,7 @@
  */
 package com.linhv.repository;
 
+import com.linhv.pojo.QuestionSettings;
 import com.linhv.pojo.UserQuestion;
 import java.util.List;
 
@@ -21,5 +22,4 @@ public interface UserQuestionRepository {
     boolean updateQuestion(UserQuestion question);
     UserQuestion addQuestion(UserQuestion question);
     boolean deleteQuestion(UserQuestion question);
-    
 }
