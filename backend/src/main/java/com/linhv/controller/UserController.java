@@ -5,10 +5,17 @@
 
 package com.linhv.controller;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
 /**
  *
  * @author prodi
  */
+@Controller
 public class UserController {
-
+    @GetMapping("/")
+    public String login() {
+        return "login";
+    }
 }
