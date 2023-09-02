@@ -13,9 +13,9 @@
     </a>
         
     <c:choose>
-        <c:when test="${pageContext.request.userPrincipal.name != null}">
-            Hello, ${pageContext.request.userPrincipal.name}
-            <a class="nav-link text-white" href="<c:url value="/logout" />">Đăng xuất</a>
+        <c:when test="${userInfo != null}">
+            Hello, ${userInfo.firstName}
+            <a class="btn btn-secondary mx-2" href="<c:url value="/logout" />">Đăng xuất</a>
         </c:when>
         
         <c:otherwise>

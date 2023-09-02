@@ -6,10 +6,15 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Banner;
+import com.linhv.pojo.User;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
 import com.linhv.service.PostService;
+import com.linhv.service.UserService;
+import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -34,10 +39,23 @@ public class IndexController {
     private AdmissionTypeService admissionTypeService;
     @Autowired
     private PostService postService;
+    @Autowired
+    private UserService userService;
     
     @ModelAttribute
     public void commonAttr(Model model) {
         model.addAttribute("admissionTypes", this.admissionTypeService.getAdmissionType());
+    }
+    
+    @ModelAttribute("userInfo")
+    public User getUser(Principal principal) {
+        if (principal != null) {
+            String email = principal.getName();
+            User user = this.userService.getUserByEmail(email);
+            
+            return user;
+        }
+        return null; // hoặc một giá trị mặc định nếu không có người dùng đăng nhập
     }
     
     @RequestMapping("/")

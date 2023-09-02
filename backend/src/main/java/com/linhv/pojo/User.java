@@ -50,9 +50,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByCreatedDate", query = "SELECT u FROM User u WHERE u.createdDate = :createdDate")})
 public class User implements Serializable {
 
-    public static final String ADMIN = "ADMIN";
-    public static final String ADVISOR = "ADVISOR";
-    public static final String USER = "USER";
+    public static final String ADMIN = "ROLE_ADMIN";
+    public static final String ADVISOR = "ROLE_ADVISOR";
+    public static final String USER = "ROLE_USER";
 
     
     private static final long serialVersionUID = 1L;
@@ -92,7 +92,7 @@ public class User implements Serializable {
     private String image;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 10)
+    @Size(min = 1, max = 20)
     @Column(name = "user_role")
     private String userRole;
     @Basic(optional = false)
