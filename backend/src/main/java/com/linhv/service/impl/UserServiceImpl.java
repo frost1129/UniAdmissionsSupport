@@ -86,7 +86,7 @@ public class UserServiceImpl implements UserService{
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         User u = this.userRepo.getUserByEmail(email);
         if (u == null) {
-            throw new UsernameNotFoundException("Email không hợp lệ");
+            throw new UsernameNotFoundException("Không tồn tại tài khoản với Email này!");
         }
         
         Set<GrantedAuthority> authorities = new HashSet<>();

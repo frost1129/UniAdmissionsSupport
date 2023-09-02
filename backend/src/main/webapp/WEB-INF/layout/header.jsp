@@ -11,6 +11,18 @@
     <a class="text-decoration-none d-flex align-items-center" href="<c:url value="/"/>">
         <img src="https://res.cloudinary.com/dbh8vdpi7/image/upload/v1693374553/ou_logo_long_white_eojuky.png" alt="OU logo" class="py-5 img-fluid">
     </a>
+        
+    <c:choose>
+        <c:when test="${pageContext.request.userPrincipal.name != null}">
+            Hello, ${pageContext.request.userPrincipal.name}
+            <a class="nav-link text-white" href="<c:url value="/logout" />">Đăng xuất</a>
+        </c:when>
+        
+        <c:otherwise>
+            <a class="nav-link text-white" href="<c:url value="/" />">Đăng nhập</a>
+        </c:otherwise>
+    </c:choose>
+        
     <div class="flex-column nav nav-pills">
         <small class="fw-bold text-uppercase mt-3">Thông tin chung</small>
         <li class="nav-item mb-2">

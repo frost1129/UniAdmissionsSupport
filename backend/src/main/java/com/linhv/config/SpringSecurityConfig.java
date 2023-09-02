@@ -56,14 +56,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http.formLogin()
                 .loginPage("/")
-                .usernameParameter("username")
+                .usernameParameter("email")
                 .passwordParameter("password");
         http.formLogin()
                 .defaultSuccessUrl("/admin/")
-                .failureUrl("/login?error");
-        http.logout().logoutSuccessUrl("/login");
+                .failureUrl("/?error");
+        http.logout().logoutSuccessUrl("/?logout");
         http.exceptionHandling()
-                .accessDeniedPage("/login?accessDenied");
+                .accessDeniedPage("/?accessDenied");
 
 //        http.authorizeRequests().antMatchers("/").permitAll()
 //                .antMatchers("/**/add")
