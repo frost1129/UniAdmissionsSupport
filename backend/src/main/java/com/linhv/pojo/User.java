@@ -25,11 +25,13 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -50,6 +52,20 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "User.findByCreatedDate", query = "SELECT u FROM User u WHERE u.createdDate = :createdDate")})
 public class User implements Serializable {
 
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
+    }
+
     public static final String ADMIN = "ROLE_ADMIN";
     public static final String ADVISOR = "ROLE_ADVISOR";
     public static final String USER = "ROLE_USER";
@@ -61,26 +77,24 @@ public class User implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
-     @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="{user.email.notValid}")//if the field contains email address consider using this annotation to enforce field validation
-    @Basic(optional = false)
     @NotNull(message = "{user.email.notNull}")
-    @Size(min = 1, max = 255)
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Email không hợp lệ")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @Size(max = 255, message = "{user.email.size}")
     @Column(name = "email")
     private String email;
     @Basic(optional = false)
     @NotNull(message = "{user.password.notNull}")
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, message = "{user.password.notNull}")
     @Column(name = "password")
     private String password;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, max = 20, message = "{user.firstName.size}")
     @Column(name = "first_name")
     private String firstName;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, max = 100, message = "{user.lastName.size}")
     @Column(name = "last_name")
     private String lastName;
     @Size(max = 255)
@@ -92,15 +106,13 @@ public class User implements Serializable {
     private String image;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 20)
+    @Size(min = 1, message = "{user.userRole.notNull}")
     @Column(name = "user_role")
     private String userRole;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "active")
     private boolean active;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "created_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
@@ -122,6 +134,12 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "answerUserId")
     @JsonIgnore
     private Set<UserQuestion> userQuestionSet;
+    
+    @Transient
+    private String confPassword;
+    
+    @Transient
+    private MultipartFile file;
 
     public User() {
     }
@@ -297,6 +315,20 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "com.linhv.pojo.User[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the confPassword
+     */
+    public String getConfPassword() {
+        return confPassword;
+    }
+
+    /**
+     * @param confPassword the confPassword to set
+     */
+    public void setConfPassword(String confPassword) {
+        this.confPassword = confPassword;
     }
 
 }

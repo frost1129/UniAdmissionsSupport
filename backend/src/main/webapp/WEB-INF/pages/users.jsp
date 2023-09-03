@@ -12,8 +12,9 @@
         Quản lý người dùng
     </h4>
     
+    <c:url value="/admin/users/create-user" var="add" />
     <div class="navbar justify-content-between">
-        <a type="button" id="openModal" class="btn btn-outline-primary">Thêm người dùng</a>
+        <a href="${add}" class="btn btn-outline-primary">Thêm người dùng</a>
     </div>
 
     <table class="table table-striped table-hover mx-4">
@@ -42,21 +43,21 @@
                     <td>${u.lastName} ${u.firstName}</td>
                     <td>${u.userRole}</td>
                     <td>
+                        <button class="rounded-pill p-0 px-2 btn btn-secondary" disabled>
                         <c:choose>
                             <c:when test="${u.userAdmissionType != null}">
-                                ${u.userAdmissionType}
+                                ${u.userAdmissionType.name}
                             </c:when>
                             <c:otherwise>
-                                <button class="rounded-pill p-0 px-2 btn btn-secondary" disabled>
-                                    Không tồn tại
-                                </button>
+                                Không có
                             </c:otherwise>
                         </c:choose>
+                        </button>
                     </td>
                     <td>
                         <c:url value="/admin/users/${u.id}" var="update" />
                         <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
-                        <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
+                        <button id="openModal" class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
                     </td>
                 </tr>
             </c:forEach>
@@ -68,7 +69,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Thêm người dùng</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
                 <button type="button" id="closeModal" class="btn bg-transparent" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>

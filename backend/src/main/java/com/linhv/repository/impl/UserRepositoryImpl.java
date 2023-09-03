@@ -77,7 +77,7 @@ public class UserRepositoryImpl implements UserRepository{
     public boolean updateUser(User user) {
         Session session = this.factory.getObject().getCurrentSession();
         try {
-            session.update(user);
+            session.merge(user);
             return true;
         } catch (HibernateException ex) {
             ex.printStackTrace();

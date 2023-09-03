@@ -53,6 +53,14 @@ const SignUp = () => {
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
+                            <input
+                                type="password"
+                                className="form-control form-control-lg bg-light fs-6"
+                                placeholder="Xác nhận mật khẩu"
+                                name="confPassword"
+                            />
+                        </InputGroup>
+                        <InputGroup className="mb-3">
                             <Button className="btn-lg btn-primary w-100 fs-6">
                                 Đăng Ký
                             </Button>

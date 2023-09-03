@@ -11,7 +11,6 @@ import com.linhv.pojo.User;
 import com.linhv.repository.UserRepository;
 import com.linhv.service.UserService;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -47,6 +46,32 @@ public class UserServiceImpl implements UserService{
     public User getUserByEmail(String email) {
         return this.userRepo.getUserByEmail(email);
     }
+    
+    @Override
+    public User getUserById(int id) {
+        return this.userRepo.getUserById(id);
+    }
+    
+    @Override
+    public User addUserByAdmin(User user) {
+        user.setPassword(this.encoder.encode(user.getPassword()));
+        user.setActive(true);
+        user.setCreatedDate(new Date());
+        
+        if (!user.getFile().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(user.getFile().getBytes(), 
+                        ObjectUtils.asMap("resource_type", "auto"));
+                user.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(UserServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        this.userRepo.addUser(user);
+        
+        return user;
+    }
 
     @Override
     public User addUser(Map<String, String> params, MultipartFile avatar) {
@@ -58,10 +83,10 @@ public class UserServiceImpl implements UserService{
         u.setActive(true);
         u.setCreatedDate(new Date());
 
-        String userRole = params.get("role");
-        if (userRole != null && !userRole.isEmpty())
-            u.setUserRole(userRole);
-        else 
+//        String userRole = params.get("role");
+//        if (userRole != null && !userRole.isEmpty())
+//            u.setUserRole(userRole);
+//        else 
             u.setUserRole(User.USER);
         
         if (!avatar.isEmpty()) {
@@ -109,10 +134,25 @@ public class UserServiceImpl implements UserService{
 
         return this.userRepo.updateUser(user);
     }
+    
+    @Override
+    public boolean updateUserByAdmin(User user) {
+        User u = this.userRepo.getUserByEmail(user.getEmail());
+        if (u == null) {
+            return false;
+        }
+        
+        u.setFirstName(user.getFirstName());
+        u.setLastName(user.getLastName());
+        u.setPassword(user.getPassword());
+        u.setUserAdmissionType(user.getUserAdmissionType());
+        u.setUserRole(user.getUserRole());
+        
+        return this.userRepo.updateUser(u);
+    }
 
     @Override
     public List<User> getAllUser() {
         return this.userRepo.getAllUser();
     }
-
 }
