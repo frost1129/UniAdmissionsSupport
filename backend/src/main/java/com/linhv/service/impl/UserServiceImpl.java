@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
@@ -107,6 +108,11 @@ public class UserServiceImpl implements UserService{
         user.setFirstName(params.get("firstName"));
 
         return this.userRepo.updateUser(user);
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        return this.userRepo.getAllUser();
     }
 
 }

@@ -7,6 +7,7 @@ package com.linhv.repository.impl;
 
 import com.linhv.pojo.User;
 import com.linhv.repository.UserRepository;
+import java.util.List;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
@@ -83,6 +84,13 @@ public class UserRepositoryImpl implements UserRepository{
             return false;
         }
         
+    }
+
+    @Override
+    public List<User> getAllUser() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User");
+        return q.getResultList();
     }
 
 }

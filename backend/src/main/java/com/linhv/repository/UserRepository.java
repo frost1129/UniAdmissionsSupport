@@ -5,6 +5,7 @@
 package com.linhv.repository;
 
 import com.linhv.pojo.User;
+import java.util.List;
 
 /**
  *
@@ -16,4 +17,5 @@ public interface UserRepository {
     User addUser(User user);
     boolean authUser(String email, String password);
     boolean updateUser(User user);
+    List<User> getAllUser();
 }

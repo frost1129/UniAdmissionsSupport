@@ -5,6 +5,7 @@
 package com.linhv.service;
 
 import com.linhv.pojo.User;
+import java.util.List;
 import java.util.Map;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,4 +19,5 @@ public interface UserService extends UserDetailsService{
     User addUser(Map<String, String> params, MultipartFile avatar);
     boolean authUser(String email, String password);
     boolean updateUser(Map<String, String> params);
+    List<User> getAllUser();
 }

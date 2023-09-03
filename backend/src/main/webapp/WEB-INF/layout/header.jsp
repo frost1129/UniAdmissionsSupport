@@ -29,7 +29,7 @@
             <a class="nav-link text-white" href="<c:url value="/admin/" />">Trang chủ</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="#">Quản lý người dùng</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/users" />">Quản lý người dùng</a>
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link text-white" href="#">Quản lý khoa</a>

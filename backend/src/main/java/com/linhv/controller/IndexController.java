@@ -9,12 +9,9 @@ import com.linhv.pojo.Banner;
 import com.linhv.pojo.User;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
-import com.linhv.service.PostService;
 import com.linhv.service.UserService;
 import java.security.Principal;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,8 +34,6 @@ public class IndexController {
     private BannerService bannerService;
     @Autowired
     private AdmissionTypeService admissionTypeService;
-    @Autowired
-    private PostService postService;
     @Autowired
     private UserService userService;
     
