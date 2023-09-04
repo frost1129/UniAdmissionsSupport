@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -72,5 +73,15 @@ public class IndexController {
     public String deleteBanner(@PathVariable(value = "id") int id) {
         this.bannerService.delete(this.bannerService.getBannerById(id));
         return "redirect:/admin/";
+    }
+    
+    @GetMapping("/add-topic")
+    public String addTopic() {
+        return "index";
+    }
+    
+    @PostMapping("/topics/{id}")
+    public String deleteTopic() {
+        return "redirect:/admin/posts/";
     }
 }
