@@ -22,4 +22,5 @@ public interface PostRepository {
     List<Post> getAllPostByAdmission(int admissionId);
     List<Post> get5PostByAdmission(int admissionId);
     List<Post> getAll(Map<String, String> params);
+    List<String> getAllTitle();
 }

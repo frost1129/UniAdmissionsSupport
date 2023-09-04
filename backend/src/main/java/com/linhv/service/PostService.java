@@ -22,4 +22,5 @@ public interface PostService {
     List<Post> getAllPost();
     List<Post> getAllLivestream();
     List<Post> getAll(Map<String, String> params);
+    List<String> getAllTitle();
 }

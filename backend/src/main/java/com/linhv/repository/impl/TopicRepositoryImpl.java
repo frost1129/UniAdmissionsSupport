@@ -8,6 +8,7 @@ package com.linhv.repository.impl;
 import com.linhv.pojo.Topic;
 import com.linhv.repository.TopicRepository;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,40 @@ public class TopicRepositoryImpl implements TopicRepository{
         Query q = s.createQuery("from Topic");
         
         return q.getResultList();
+    }
+
+    @Override
+    public Topic getTopicById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("FROM Topic WHERE id=:id");
+            q.setParameter("id", id);
+            
+            return (Topic) q.getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public Topic addTopic(Topic topic) {
+        Session s = this.factory.getObject().getCurrentSession();
+        s.save(topic);
+        return topic;
+    }
+
+    @Override
+    public boolean deleteTopic(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Topic t = this.getTopicById(id);
+            s.delete(t);
+            return true;
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 
 }

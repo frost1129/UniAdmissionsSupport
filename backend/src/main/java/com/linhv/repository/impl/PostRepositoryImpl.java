@@ -169,4 +169,11 @@ public class PostRepositoryImpl implements PostRepository{
         return query.getResultList();
     }
 
+    @Override
+    public List<String> getAllTitle() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT p.title FROM Post p");
+        return q.getResultList();
+    }
+
 }

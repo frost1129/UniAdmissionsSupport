@@ -40,13 +40,13 @@ public class Topic implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 20)
+    @NotNull(message = "{topic.title.notNull}")
+    @Size(min = 10, max = 50, message = "{topic.title.size}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 255)
+    @NotNull(message = "{topic.postIt.notNull}")
+    @Size(min = 1, message = "{topic.postIt.notNull}")
     @Column(name = "post_id")
     private String postId;
 

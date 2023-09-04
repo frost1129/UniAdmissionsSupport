@@ -13,4 +13,7 @@ import java.util.List;
  */
 public interface TopicRepository {
     List<Topic> getAllTopics();
+    Topic getTopicById(int id);
+    Topic addTopic(Topic topic);
+    boolean deleteTopic(int id);
 }

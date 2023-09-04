@@ -4,9 +4,9 @@
     Author     : prodi
 --%>
 
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!--CONTAINER CHỨA LIST BANNERS-->
 <div class="py-2 container-fluid">
@@ -82,36 +82,42 @@
 <!--CONTAINER CHỨA LIST TOPICS-->
 <div class="py-2 container-fluid">
     <h4 class="">
-        Bài đăng nổi bật
+        Chủ đề nổi bật
     </h4>
-    <c:url value="/admin/topics/create-topic" var="addTopic" />
+    <c:url value="/admin/topics/topic-detail" var="addTopic" />
     <div class="navbar justify-content-between">
         <a href="${addTopic}" class="btn btn-outline-primary">Thêm chủ đề</a>
     </div>
-    <table class="table table-striped table-hover">
-        <thead class="text-center">
-            <tr>
-                <th class="col-3">Tiêu đề topic</th>
-                <th>Tiêu đề bài đăng</th>
-                <th>Ngày cập nhật bài đăng</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody class="text-center">
-            <tr>
-                <td class="text-start">1</td>
-                <td>1</td>
-                <td>1</td>
-                <td>
-                    <c:url value="/admin/topics/${id}" var="delTopic" />
-                    <form action="${delTopic}" id="delTopicForm" method="POST">
-                        <input type="hidden" name="id" value="${id}">
-                        <button type="button" class="btn btn-danger rounded-pill p-0 px-2 openTopicModal">Xóa</button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
+    
+    <c:choose>
+        <c:when test="${empty topics}">
+            <h5><i>Hiện tại chưa có chủ đề nào</i></h5>
+        </c:when>
+        <c:otherwise>
+        <table class="table table-striped table-hover">
+            <thead class="text-center">
+                <tr>
+                    <th class="col-3">Tên chủ đề</th>
+                    <th class="w-25"></th>
+                </tr>
+            </thead>
+            <tbody class="text-center">
+                <c:forEach items="${topics}" var="t" >
+                <tr>
+                    <td class="text-start">${t.title}</td>
+                    <td>
+                        <c:url value="/admin/topics/${t.id}" var="delTopic" />
+                        <form action="${delTopic}" id="delTopicForm" method="POST">
+                            <input type="hidden" name="id" value="${t.id}">
+                            <button type="button" class="btn btn-danger rounded-pill p-0 px-2 openTopicModal">Xóa</button>
+                        </form>
+                    </td>
+                </tr>
+                </c:forEach>
+            </tbody>
+        </table>
+        </c:otherwise>
+    </c:choose>
 </div>
          
 <!--MODAL XÁC NHẬN XÓA TOPIC-->
@@ -216,6 +222,7 @@
                 url: deleteUrl,
                 success: function () {
                     topicModal.modal("hide");
+                    location.reload();
                 },
                 error: function () {
                     console.log(error);

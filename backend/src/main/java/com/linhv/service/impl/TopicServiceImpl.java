@@ -27,4 +27,19 @@ public class TopicServiceImpl implements TopicService {
         return this.topicRepo.getAllTopics();
     }
 
+    @Override
+    public Topic getTopicById(int id) {
+        return this.topicRepo.getTopicById(id);
+    }
+
+    @Override
+    public Topic addTopic(Topic topic) {
+        return this.topicRepo.addTopic(topic);
+    }
+
+    @Override
+    public boolean deleteTopic(int id) {
+        return this.topicRepo.deleteTopic(id);
+    }
+
 }

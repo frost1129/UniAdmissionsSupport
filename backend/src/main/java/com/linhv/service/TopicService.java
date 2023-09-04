@@ -13,4 +13,7 @@ import java.util.List;
  */
 public interface TopicService {
     List<Topic> getTopics();
+    Topic getTopicById(int id);
+    Topic addTopic(Topic topic);
+    boolean deleteTopic(int id);
 }

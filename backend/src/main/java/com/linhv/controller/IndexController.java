@@ -6,11 +6,16 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Banner;
+import com.linhv.pojo.Topic;
 import com.linhv.pojo.User;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
+import com.linhv.service.PostService;
+import com.linhv.service.TopicService;
 import com.linhv.service.UserService;
 import java.security.Principal;
+import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +26,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
@@ -33,8 +39,16 @@ public class IndexController {
     
     @Autowired
     private BannerService bannerService;
+    
     @Autowired
     private AdmissionTypeService admissionTypeService;
+    
+    @Autowired
+    private PostService postService;
+    
+    @Autowired
+    private TopicService topicService;
+    
     @Autowired
     private UserService userService;
     
@@ -58,6 +72,8 @@ public class IndexController {
     public String index(Model model) {
         model.addAttribute("banner", new Banner());
         model.addAttribute("banners", this.bannerService.getBanners());
+        model.addAttribute("topics", this.topicService.getTopics());
+        
         return "index";
     }
     
@@ -75,13 +91,27 @@ public class IndexController {
         return "redirect:/admin/";
     }
     
-    @GetMapping("/add-topic")
-    public String addTopic() {
-        return "index";
+    @GetMapping("/topics/topic-detail")
+    public String topicDetail(Model model, @RequestParam Map<String, String> params) {
+        model.addAttribute("posts", this.postService.getAll(params));
+        model.addAttribute("topic", new Topic());
+        return "topic-detail";
+    }
+    
+    @PostMapping("/topics/topic-detail")
+    public String addTopic(@ModelAttribute(value = "topic") @Valid Topic t, BindingResult bs) {
+//        bs.rejectValue("title", "error.topic", t.getTitle());
+        
+        if (!bs.hasErrors()){
+            this.topicService.addTopic(t);
+            return "redirect:/admin/";
+        }
+        return "topic-detail";
     }
     
     @PostMapping("/topics/{id}")
-    public String deleteTopic() {
-        return "redirect:/admin/posts/";
+    public String deleteTopic(@PathVariable(value = "id") int id) {
+        this.topicService.deleteTopic(id);
+        return "redirect:/admin/";
     }
 }

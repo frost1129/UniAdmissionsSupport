@@ -112,4 +112,9 @@ public class PostServiceImpl implements PostService{
     public List<Post> getAll(Map<String, String> map) {
         return this.postRepo.getAll(map);
     }
+
+    @Override
+    public List<String> getAllTitle() {
+        return this.postRepo.getAllTitle();
+    }
 }

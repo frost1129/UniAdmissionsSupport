@@ -51,5 +51,10 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Chi tiết tài khoản người dùng" />
         <put-attribute name="content" value="/WEB-INF/pages/user-detail.jsp" />
     </definition>
+    
+    <definition name="topic-detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết tài khoản người dùng" />
+        <put-attribute name="content" value="/WEB-INF/pages/topic-detail.jsp" />
+    </definition>
 
 </tiles-definitions>
