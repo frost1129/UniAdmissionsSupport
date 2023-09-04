@@ -16,6 +16,7 @@
     modelAttribute="topic" 
     method="post" 
     action="${action}" 
+    enctype="multipart/form-data"
 >
     <form:input type="hidden" path="postId" id="selectedId"/>
 
