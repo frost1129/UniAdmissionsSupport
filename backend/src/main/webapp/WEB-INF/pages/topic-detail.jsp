@@ -52,7 +52,7 @@
         
     <button type="submit" class="btn btn-success">Tạo chủ đề</button>
 </form:form>
-
+    
 <script>
     $(document).ready(function () {
         var selectedId = $("#selectedId");

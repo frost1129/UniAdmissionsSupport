@@ -53,8 +53,13 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
     </definition>
     
     <definition name="topic-detail" extends="baseLayout">
-        <put-attribute name="title" value="Chi tiết tài khoản người dùng" />
+        <put-attribute name="title" value="Chi tiết chủ đề" />
         <put-attribute name="content" value="/WEB-INF/pages/topic-detail.jsp" />
+    </definition>
+    
+    <definition name="branch-detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết chi nhánh" />
+        <put-attribute name="content" value="/WEB-INF/pages/branch-detail.jsp" />
     </definition>
 
 </tiles-definitions>

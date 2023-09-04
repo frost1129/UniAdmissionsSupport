@@ -13,4 +13,8 @@ import java.util.List;
  */
 public interface BranchService {
     List<Branch> getBranches();
+    Branch add(Branch branch);
+    Branch update(Branch branch);
+    boolean delete(Branch branch);
+    Branch getBranchById(int id);
 }

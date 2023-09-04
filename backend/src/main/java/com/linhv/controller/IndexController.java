@@ -6,10 +6,12 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Banner;
+import com.linhv.pojo.Branch;
 import com.linhv.pojo.Topic;
 import com.linhv.pojo.User;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
+import com.linhv.service.BranchService;
 import com.linhv.service.PostService;
 import com.linhv.service.TopicService;
 import com.linhv.service.UserService;
@@ -39,6 +41,9 @@ public class IndexController {
     
     @Autowired
     private BannerService bannerService;
+    
+    @Autowired
+    private BranchService branchService;
     
     @Autowired
     private AdmissionTypeService admissionTypeService;
@@ -72,6 +77,7 @@ public class IndexController {
     public String index(Model model) {
         model.addAttribute("banner", new Banner());
         model.addAttribute("banners", this.bannerService.getBanners());
+        model.addAttribute("branches", this.branchService.getBranches());
         model.addAttribute("topics", this.topicService.getTopics());
         
         return "index";
@@ -112,6 +118,36 @@ public class IndexController {
     @PostMapping("/topics/{id}")
     public String deleteTopic(@PathVariable(value = "id") int id) {
         this.topicService.deleteTopic(id);
+        return "redirect:/admin/";
+    }
+    
+    @GetMapping("/branches/branch-detail")
+    public String branchDetail(Model model) {
+        model.addAttribute("branch", new Branch());
+        return "branch-detail";
+    }
+    
+    @PostMapping("/branches/add-or-update")
+    public String addOrUpdateBranch(@ModelAttribute(value = "branch") @Valid Branch b, BindingResult bs) {
+        if (!bs.hasErrors()) {
+            if (b.getId() != null) 
+                this.branchService.update(b);
+            else 
+                this.branchService.add(b);
+            return "redirect:/admin/";
+        }
+        return "branch-detail";
+    }
+    
+    @GetMapping("/branches/{id}")
+    public String existBranch(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute(this.branchService.getBranchById(id));
+        return "branch-detail";
+    }
+    
+    @PostMapping("/branches/{id}")
+    public String deleteBranch(@PathVariable(value = "id") int id) {
+        this.branchService.delete(this.branchService.getBranchById(id));
         return "redirect:/admin/";
     }
 }

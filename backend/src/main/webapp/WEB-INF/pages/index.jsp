@@ -78,6 +78,57 @@
         </div>
     </div>
 </div>
+                
+<!--CONTAINER CHỨA LIST CƠ SỞ-->
+<div class="py-2 container-fluid">
+    <h4 class="">
+        Địa chỉ
+    </h4>
+    <div class="row d-flex flex-row flex-nowrap py-2" style="overflow-x: auto;">
+        <c:url value="/admin/branches/branch-detail" var="addOrUpdate" />
+        <div class="p-2 me-2 card d-flex justify-content-center align-items-center" style="width: 11rem;" >
+            <a href="${addOrUpdate}" class="btn bg-transparent" style="width: 100%;">+</a>
+        </div>
+        
+        <c:forEach items="${branches}" var="b">
+            <div class="pt-2 px-2 me-2 card" style="height: 16rem; width: 13rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Cơ sở ${b.id}</h5>
+                    <p class="card-text">
+                        ${b.address}
+                    </p>
+                    <a href="${b.link}" class="btn btn-outline-primary mb-2">Xem trên bản đồ</a>
+                    
+                    <c:url value="/admin/branches/${b.id}" var="del" />
+                    <form action="${del}" id="delBannerForm" method="POST">
+                        <input type="hidden" name="id" value="${b.id}">
+                        <a href="${del}" class="btn btn-primary">Sửa</a>
+                        <button class="btn btn-danger openBranchModal" type="button">Xóa</button>
+                    </form>
+                </div>
+            </div>
+        </c:forEach>
+    </div>
+</div>
+
+<!--MODAL XÁC NHẬN XÓA CƠ SỞ-->
+<div class="modal fade" id="branchModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header align-items-center">
+                <h5 class="modal-title">Xác nhận xóa</h5>
+            </div>
+            <div class="modal-body">
+                Bạn có chắc chắn về việc xóa chi nhánh với ID này <br>
+                <i>Lưu ý: Việc này đồng nghĩa rằng sẽ không tồn tại chi nhanh với ID này.</i>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeBranchModal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confDeleteBranch">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!--CONTAINER CHỨA LIST TOPICS-->
 <div class="py-2 container-fluid">
@@ -125,7 +176,7 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header align-items-center">
-                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+                <h5 class="modal-title">Xác nhận xóa</h5>
             </div>
             <div class="modal-body">
                 Bạn có chắc chắn về việc xóa chủ đề này? <br>
@@ -222,6 +273,38 @@
                 url: deleteUrl,
                 success: function () {
                     topicModal.modal("hide");
+                    location.reload();
+                },
+                error: function () {
+                    console.log(error);
+                }
+            });
+        });
+        
+//        XỬ LÝ SỰ KIỆN XÓA BRANCH        
+        var branchModal = $('#branchModal');
+        
+        $('.openBranchModal').click(function () {
+            var form = $(this).closest("form"); // Tìm form gần nhất
+            var deleteUrl = form.attr("action"); // Lấy URL xóa từ thuộc tính action của form
+
+            $("#confDeleteBranch").attr("branch-delete-url", deleteUrl);
+
+            branchModal.modal('show');
+        });
+        
+        $('#closeBranchModal').click(function () {
+            branchModal.modal('hide');
+        });
+        
+        $("#confDeleteBranch").click(function () {
+            var deleteUrl = $(this).attr("branch-delete-url"); // Lấy URL xóa từ thuộc tính data-delete-url
+
+            $.ajax({
+                type: "POST",
+                url: deleteUrl,
+                success: function () {
+                    branchModal.modal("hide");
                     location.reload();
                 },
                 error: function () {

@@ -41,13 +41,13 @@ public class Branch implements Serializable {
     private Integer id;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(min = 1, message = "{branch.address.notNull}")
     @Column(name = "address")
     private String address;
     @Basic(optional = false)
     @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, message = "{branch.link.notNull}")
     @Column(name = "link")
     private String link;
 

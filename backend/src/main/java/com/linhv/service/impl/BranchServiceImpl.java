@@ -27,4 +27,24 @@ public class BranchServiceImpl implements BranchService{
         return this.branchRepo.getAllBranches();
     }
 
+    @Override
+    public Branch add(Branch branch) {
+        return this.branchRepo.add(branch);
+    }
+
+    @Override
+    public Branch update(Branch branch) {
+        return this.branchRepo.update(branch);
+    }
+
+    @Override
+    public boolean delete(Branch branch) {
+        return this.branchRepo.delete(branch);
+    }
+
+    @Override
+    public Branch getBranchById(int id) {
+        return this.branchRepo.getBranchById(id);
+    }
+
 }
