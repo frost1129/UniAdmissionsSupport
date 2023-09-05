@@ -5,6 +5,7 @@
 package com.linhv.config;
 
 import com.linhv.formatters.AdmissionTypeFormatter;
+import com.linhv.formatters.UserFormatter;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -64,6 +65,7 @@ public class WebAppContextConfig implements WebMvcConfigurer {
     @Override
     public void addFormatters(FormatterRegistry registry) {
         registry.addFormatter(new AdmissionTypeFormatter());
+        registry.addFormatter(new UserFormatter());
     }
     
 

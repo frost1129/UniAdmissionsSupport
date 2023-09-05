@@ -79,23 +79,22 @@ public class Post implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 255)
+    @Size(max = 255)
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 100)
+    @Size(min = 1, message = "{post.title.notNull}")
     @Column(name = "title")
     private String title;
     @Basic(optional = false)
     @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, message = "{post.content.notNull}")
     @Column(name = "content")
     private String content;
     @Basic(optional = false)

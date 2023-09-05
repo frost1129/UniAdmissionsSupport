@@ -56,7 +56,6 @@ public class PostServiceImpl implements PostService{
         
         post.setId(slg.slugify(post.getTitle()) + "-" + formattedDate);
         post.setUpdatedDate(new Date());
-        post.setUserId(new User(3));
         
         if (post.getPostType().equals("post")) {
             post.setAllowComment(true);
@@ -80,7 +79,26 @@ public class PostServiceImpl implements PostService{
 
     @Override
     public boolean updatePost(Post post) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        post.setUpdatedDate(new Date());
+        
+        if (post.getPostType().equals("post")) {
+            post.setAllowComment(true);
+            post.setAllowQuestion(false);
+        } else if (post.getPostType().equals("livestream")) {
+            post.setAllowComment(false);
+            post.setAllowQuestion(true);
+        }
+        
+        if (!post.getFile().isEmpty()) {
+            try {
+                Map res = this.cloudinary.uploader().upload(post.getFile().getBytes(), ObjectUtils.asMap("resource_type", "auto"));
+                post.setImage(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(PostServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
+        return this.postRepo.updatePost(post);
     }
 
     @Override

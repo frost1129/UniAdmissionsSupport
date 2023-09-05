@@ -8,6 +8,8 @@ package com.linhv.controller;
 import com.linhv.pojo.QuestionSettings;
 import com.linhv.service.QuestionSettingService;
 import com.linhv.service.UserQuestionService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,12 +43,25 @@ public class QuestionController {
     }
     
     @PostMapping("/questions/update-time")
-    public String updateTime(@ModelAttribute(value = "times") QuestionSettings qs, BindingResult bs) {
-        if (!bs.hasErrors()) {
+    public String updateTime(
+            @RequestParam("time1") String time1,
+            @RequestParam("time2") String time2) {
+        try {
+            SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm");
+            Date startTime = timeFormat.parse(time1);
+            Date endTime = timeFormat.parse(time2);
+
+            QuestionSettings qs = this.settingService.getTime();
+            qs.setFromTime(startTime);
+            qs.setToTime(endTime);
+            
             this.settingService.setTime(qs);
+            
             return "redirect:/admin/questions";
+        } catch (Exception e) {
+            // Xử lý lỗi nếu có
+            e.printStackTrace();
+            return "redirect:/admin/questions"; 
         }
-        
-        return "redirect:/admin/";
     }
 }

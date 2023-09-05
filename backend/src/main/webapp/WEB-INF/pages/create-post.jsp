@@ -12,16 +12,23 @@
     <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 </head>
 <body>
-    <c:url value="/admin/create-post" var="action"/>
-    
+    <c:url value="/admin/create-post" var="add"/>
+    <c:url value="/admin/update-post" var="update"/>
+
     <form:form 
         cssClass="py-3 container-fluid" 
         modelAttribute="post" 
         method="post" 
-        action="${action}" 
+        action="${empty post.id ? add : update}" 
         enctype="multipart/form-data"
     >
+        <form:errors path="*" element="div" cssClass="alert alert-danger mt-1"/>
+        
+        <form:input type="hidden" path="id"/>
+        <form:input type="hidden" path="image"/>
         <form:input type="hidden" path="content" name="content" id="content-field" />
+        <form:input type="hidden" path="allowComment" />
+        <form:input type="hidden" path="allowQuestion" />
         
         <div class="mb-4 text-primary-emphasis">
             <h4>Chi tiết bài đăng</h4>
@@ -29,6 +36,7 @@
         <div class="mb-2">
             <label class="form-label">Tiêu đề bài đăng</label>
             <form:input type="text" class="form-control" path="title" placeholder="Nhập tiêu đề bài viết ở đây" />
+            <form:errors path="title" element="div" cssClass="alert alert-danger mt-1"/>
         </div>
         <div class="mb-3">
             <label for="file" class="form-label">Chọn ảnh cho bài đăng</label>
@@ -37,6 +45,7 @@
                 <img class="mb-2" src="${post.image}" alt="${post.title}" width="120px"/>
             </c:if>
             <form:input cssClass="form-control" type="file" id="file" path="file" accept="image/png, image/gif, image/jpeg" />
+            <form:errors path="file" element="div" cssClass="alert alert-danger mt-1"/>
         </div>
         <div class="mb-3 row">
             <div class="col">
@@ -75,6 +84,7 @@
         <div class="mb-3">
             <label class="form-label">Nội dung bài đăng</label>
             <div id="editor"></div>   
+            <form:errors path="content" element="div" cssClass="alert alert-danger mt-1"/>
         </div>
             <c:choose>
                 <c:when test="${post.id != null}">

@@ -19,7 +19,7 @@
                 Thời gian cho phép gửi câu hỏi: 
                 <b>${times.fromTime} - ${times.toTime}</b>
             </p>
-<!--            <button type="button" id="openModal" class="btn btn-outline-success">Sửa</button>-->
+            <button type="button" id="openModal" class="btn btn-outline-success">Sửa</button>
         </div>
     </div>
 
@@ -64,55 +64,47 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-<!--            <div class="modal-body">
+            <div class="modal-body">
                 <c:url value="/admin/questions/update-time" var="update" />
-                <form:form 
-                    modelAttribute="times" 
-                    method="post" 
-                    action="${update}" 
-                    >
-                    <form:input type="hidden" path="id" /> 
-                    <form:input type="hidden" path="fromTime" id="set1" /> 
-                    <form:input type="hidden" path="toTime" id="set2" /> 
-
+                <form method="post" action="${update}" >
                     <div class="form-group mb-3">
                         <label>Thời gian bắt đầu:</label>
-                        <input type="time" id="time1" step="1" min="00:00:00" max="24:00:00" class="form-control my-2"/>
+                        <input type="time" id="time1" name="time1" class="form-control my-2"/>
                     </div>
                     
                     <div class="form-group mb-3">
                         <label>Thời gian kết thúc:</label>
-                        <input type="time" id="time2" step="1" min="00:00:00" max="24:00:00" class="form-control my-2"/>
+                        <input type="time" id="time1" name="time2" class="form-control my-2"/>
                     </div>
 
                     <button type="submit" class="btn btn-primary">Lưu thời gian</button>
-                </form:form>
-            </div>-->
+                </form>
+            </div>
         </div>
     </div>
 </div>
                 
 <script>
-//    $(document).ready(function () {
-//        var modal = $('#settingModal');
-//
-//        $('#openModal').click(function () {
-//            modal.modal('show');
-//        });
-//        
-//        $('#closeModal').click(function () {
-//            modal.modal('hide'); // Đóng modal
-//        });
-//       
-//        
-//        $("#time1").on('change', function () {
-//            var timePickerValue = $("#time1").val();
-//            $("#set1").val(timePickerValue);
-//        }); 
-//        
-//        $("#time2").on('change', function () {
-//            var timePickerValue = $("#time2").val();
-//            $("#set2").val(timePickerValue);
-//        }); 
-//    });
+    $(document).ready(function () {
+        var modal = $('#settingModal');
+
+        $('#openModal').click(function () {
+            modal.modal('show');
+        });
+        
+        $('#closeModal').click(function () {
+            modal.modal('hide'); // Đóng modal
+        });
+       
+        
+        $("#time1").on('change', function () {
+            var timePickerValue = $("#time1").val();
+            $("#set1").val(timePickerValue);
+        }); 
+        
+        $("#time2").on('change', function () {
+            var timePickerValue = $("#time2").val();
+            $("#set2").val(timePickerValue);
+        }); 
+    });
 </script>

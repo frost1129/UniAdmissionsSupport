@@ -6,8 +6,12 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Post;
+import com.linhv.pojo.User;
 import com.linhv.service.PostService;
+import com.linhv.service.UserService;
+import java.security.Principal;
 import java.util.Map;
+import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +33,9 @@ public class PostController {
     
     @Autowired
     private PostService postService;
+    
+    @Autowired
+    private UserService userService;
     
     @GetMapping("/posts")
     public String allPosts(Model model, @RequestParam Map<String, String> params) {
@@ -61,10 +68,31 @@ public class PostController {
     }
     
     @PostMapping("/create-post")
-    public String create(@ModelAttribute(value = "post") Post p, BindingResult bs) {
+    public String create(@ModelAttribute(value = "post") @Valid Post p, 
+                            Principal principal, 
+                            BindingResult bs) {
+        if (p.getFile().isEmpty()) {
+            bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
+        }
+        
         if (!bs.hasErrors()) {
+            p.setUserId(this.userService.getUserByEmail(principal.getName()));
+            
             if (this.postService.addPost(p) == true)
-                return "redirect:/";
+                return "redirect:/admin/";
+        }
+        return "createPost";
+    }
+    
+    @PostMapping("/update-post")
+    public String update(@ModelAttribute(value = "post") @Valid Post p, 
+                            Principal principal,
+                            BindingResult bs) {
+        if (!bs.hasErrors()) {
+            p.setUserId(this.userService.getUserByEmail(principal.getName()));
+            
+            if (this.postService.updatePost(p) == true)
+                return "redirect:/admin/";
         }
         return "createPost";
     }
