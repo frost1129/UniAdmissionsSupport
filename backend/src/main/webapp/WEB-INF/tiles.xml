@@ -61,5 +61,30 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="title" value="Chi tiết chi nhánh" />
         <put-attribute name="content" value="/WEB-INF/pages/branch-detail.jsp" />
     </definition>
+    
+    <definition name="faculties" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý khoa" />
+        <put-attribute name="content" value="/WEB-INF/pages/faculties.jsp" />
+    </definition>
+    
+    <definition name="faculty-detail" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết khoa" />
+        <put-attribute name="content" value="/WEB-INF/pages/faculty-detail.jsp" />
+    </definition>
+    
+    <definition name="f-overview" extends="baseLayout">
+        <put-attribute name="title" value="Giới thiệu khoa" />
+        <put-attribute name="content" value="/WEB-INF/pages/f-overview.jsp" />
+    </definition>
+    
+    <definition name="f-scores" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý điểm chuẩn của khoa" />
+        <put-attribute name="content" value="/WEB-INF/pages/f-scores.jsp" />
+    </definition>
+    
+    <definition name="f-year-score" extends="baseLayout">
+        <put-attribute name="title" value="Chi tiết điểm chuẩn của khoa" />
+        <put-attribute name="content" value="/WEB-INF/pages/f-year-score.jsp" />
+    </definition>
 
 </tiles-definitions>

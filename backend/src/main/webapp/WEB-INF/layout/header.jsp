@@ -32,7 +32,7 @@
             <a class="nav-link text-white" href="<c:url value="/admin/users" />">Quản lý người dùng</a>
         </li>
         <li class="nav-item mb-2">
-            <a class="nav-link text-white" href="#">Quản lý khoa</a>
+            <a class="nav-link text-white" href="<c:url value="/admin/faculties" />">Quản lý khoa</a>
         </li>
         <li class="nav-item mb-2">
             <a class="nav-link text-white" href="<c:url value="/admin/questions" />">Quản lý câu hỏi</a>

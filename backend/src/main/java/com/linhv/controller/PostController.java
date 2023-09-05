@@ -6,7 +6,6 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Post;
-import com.linhv.pojo.User;
 import com.linhv.service.PostService;
 import com.linhv.service.UserService;
 import java.security.Principal;

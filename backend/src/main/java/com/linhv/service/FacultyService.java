@@ -4,10 +4,17 @@
  */
 package com.linhv.service;
 
+import com.linhv.pojo.Faculty;
+import java.util.List;
+
 /**
  *
  * @author prodi
  */
 public interface FacultyService {
-    
+    List<Faculty> getAll();
+    Faculty getFacultyById(int id);
+    boolean add(Faculty f);
+    boolean update(Faculty f);
+    boolean delete(int id);
 }
