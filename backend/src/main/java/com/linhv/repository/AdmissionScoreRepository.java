@@ -4,10 +4,19 @@
  */
 package com.linhv.repository;
 
+import com.linhv.pojo.AdmissionScore;
+import java.util.List;
+
 /**
  *
  * @author prodi
  */
 public interface AdmissionScoreRepository {
-    
+    List<Integer> getAllAdmissionYear();
+    List<AdmissionScore> getAll();
+    List<AdmissionScore> getAllByFaculty(int id);
+    AdmissionScore getScoreByYear(int year);
+    boolean add(AdmissionScore as);
+    boolean update(AdmissionScore as);
+    boolean delete(int year);
 }

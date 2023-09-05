@@ -5,10 +5,15 @@
 
 package com.linhv.controller;
 
+import com.linhv.pojo.AdmissionScore;
 import com.linhv.pojo.Faculty;
 import com.linhv.pojo.FacultyPost;
 import com.linhv.service.AdmissionScoreService;
 import com.linhv.service.FacultyService;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.Calendar;
+import java.util.Date;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -106,6 +111,8 @@ public class FacultyController {
     @GetMapping("/{id}/scores")
     public String fScores(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        model.addAttribute("scores", this.scoreService.getAllByFaculty(id));
+        
         return "f-scores";
     }
     
@@ -114,17 +121,35 @@ public class FacultyController {
                             @PathVariable(value = "id") int id, 
                             @PathVariable(value = "year") int year) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        model.addAttribute("admissionScore", this.scoreService.getScoreByYear(year));     
+        
         return "f-year-score";
     }
     
     @GetMapping("/{id}/scores/new")
     public String newYearScore(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        model.addAttribute("admissionScore", new AdmissionScore());
+        
         return "f-year-score";
     }
     
     @PostMapping("/{id}/scores/add-or-update")
-    public String addOrUpdateYearScore(@PathVariable(value = "id") int id) {
-        return "redirect:/admin/faculties/{id}/scores";
+    public String addOrUpdateYearScore(@ModelAttribute(value = "admissionScore") @Valid AdmissionScore as, 
+                                        BindingResult bs, 
+                                        @PathVariable(value = "id") int id) {
+//        bs.rejectValue("id", "error.admissionScore", String.valueOf(id));
+        
+        if (!bs.hasErrors()) {
+            as.setFacultyId(this.facultyService.getFacultyById(id));
+            
+            if (this.scoreService.getScoreByYear(as.getId()) != null)
+                this.scoreService.update(as);
+            else
+                this.scoreService.add(as);
+            
+            return String.format("redirect:/admin/faculties/%d/scores", id);
+        }
+        return "f-year-score";
     }
 }

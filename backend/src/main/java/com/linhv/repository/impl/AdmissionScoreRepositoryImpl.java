@@ -5,7 +5,15 @@
 
 package com.linhv.repository.impl;
 
+import com.linhv.pojo.AdmissionScore;
 import com.linhv.repository.AdmissionScoreRepository;
+import java.util.List;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,5 +24,79 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 @Transactional
 public class AdmissionScoreRepositoryImpl implements AdmissionScoreRepository{
+    
+    @Autowired
+    private LocalSessionFactoryBean factory;
 
+    @Override
+    public List<Integer> getAllAdmissionYear() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT a.id FROM AdmissionScore a");
+        return q.getResultList();
+    }
+
+    @Override
+    public List<AdmissionScore> getAll() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM AdmissionScore");
+        return q.getResultList();
+    }
+    
+    @Override
+    public List<AdmissionScore> getAllByFaculty(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM AdmissionScore a WHERE a.facultyId.id=:id");
+        q.setParameter("id", id);
+        
+        return q.getResultList();
+    }
+
+    @Override
+    public AdmissionScore getScoreByYear(int year) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("FROM AdmissionScore a WHERE a.id=:year");
+            q.setParameter("year", year);
+            return (AdmissionScore) q.getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean add(AdmissionScore as) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.save(as);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean update(AdmissionScore as) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.update(as);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean delete(int year) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.delete(this.getScoreByYear(year));
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }
