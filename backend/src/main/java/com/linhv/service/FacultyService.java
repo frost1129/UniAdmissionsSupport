@@ -5,6 +5,7 @@
 package com.linhv.service;
 
 import com.linhv.pojo.Faculty;
+import com.linhv.pojo.FacultyPost;
 import java.util.List;
 
 /**
@@ -17,4 +18,8 @@ public interface FacultyService {
     boolean add(Faculty f);
     boolean update(Faculty f);
     boolean delete(int id);
+    
+    FacultyPost getFacultyPostById(int id);
+    boolean addPost(FacultyPost fp);
+    boolean updatePost(FacultyPost fp);
 }

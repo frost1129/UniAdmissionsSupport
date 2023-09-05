@@ -6,8 +6,10 @@
 package com.linhv.service.impl;
 
 import com.linhv.pojo.Faculty;
+import com.linhv.pojo.FacultyPost;
 import com.linhv.repository.FacultyRepository;
 import com.linhv.service.FacultyService;
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,6 +47,22 @@ public class FacultyServiceImpl implements FacultyService{
     @Override
     public boolean delete(int id) {
         return this.facultyRepo.delete(id);
+    }
+
+    @Override
+    public FacultyPost getFacultyPostById(int id) {
+        return this.facultyRepo.getFacultyPostById(id);
+    }
+
+    @Override
+    public boolean addPost(FacultyPost fp) {
+        fp.setUpdatedDate(new Date());
+        return this.facultyRepo.addPost(fp);
+    }
+
+    @Override
+    public boolean updatePost(FacultyPost fp) {
+        return this.facultyRepo.updatePost(fp);
     }
 
 }

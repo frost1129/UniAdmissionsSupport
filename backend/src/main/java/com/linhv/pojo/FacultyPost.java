@@ -17,7 +17,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,11 +36,10 @@ public class FacultyPost implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "id")
     private Integer id;
     @Lob
-    @Size(max = 65535)
+    @Size(min = 1, message = "{facultyPost.content.notNull}")
     @Column(name = "content")
     private String content;
     @Column(name = "updated_date")

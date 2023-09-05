@@ -97,7 +97,7 @@
                     <p class="card-text">
                         ${b.address}
                     </p>
-                    <a href="${b.link}" class="btn btn-outline-primary mb-2">Xem trên bản đồ</a>
+                    <a href="${b.link}" target="_blank" class="btn btn-outline-primary mb-2">Xem trên bản đồ</a>
                     
                     <c:url value="/admin/branches/${b.id}" var="del" />
                     <form action="${del}" id="delBannerForm" method="POST">

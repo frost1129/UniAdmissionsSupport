@@ -45,14 +45,14 @@ public class AdmissionScore implements Serializable {
     @Column(name = "id")
     private Integer id;
     @Basic(optional = false)
-    @NotNull
+    @NotNull(message = "{admissionScore.year.notNull}")
     @Column(name = "year")
     @Temporal(TemporalType.DATE)
     private Date year;
     @Basic(optional = false)
     @NotNull
     @Lob
-    @Size(min = 1, max = 65535)
+    @Size(min = 1, message = "{admissionScore.content.notNull}")
     @Column(name = "content")
     private String content;
     @JoinColumn(name = "faculty_id", referencedColumnName = "id")

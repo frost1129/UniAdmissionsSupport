@@ -6,8 +6,10 @@
 package com.linhv.repository.impl;
 
 import com.linhv.pojo.Faculty;
+import com.linhv.pojo.FacultyPost;
 import com.linhv.repository.FacultyRepository;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -43,7 +45,7 @@ public class FacultyRepositoryImpl implements FacultyRepository{
             q.setParameter("id", id);
             
             return (Faculty) q.getSingleResult();
-        } catch (HibernateException ex) {
+        } catch (NoResultException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -77,6 +79,7 @@ public class FacultyRepositoryImpl implements FacultyRepository{
     public boolean delete(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
+            s.delete(this.getFacultyPostById(id));
             s.delete(this.getFacultyById(id));
             return true;
         } catch (HibernateException ex) {
@@ -85,4 +88,41 @@ public class FacultyRepositoryImpl implements FacultyRepository{
         }
     }
 
+    @Override
+    public FacultyPost getFacultyPostById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("FROM FacultyPost fp WHERE fp.id=:id");
+            q.setParameter("id", id);
+            
+            return (FacultyPost) q.getSingleResult();
+        } catch (NoResultException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean addPost(FacultyPost fp) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.save(fp);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean updatePost(FacultyPost fp) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            s.update(fp);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -11,6 +11,7 @@ import com.linhv.repository.UserQuestionRepository;
 import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -55,7 +56,7 @@ public class UserQuestionRepositoryImpl implements UserQuestionRepository{
             Query q = s.createQuery("FROM UserQuestion WHERE id=:id");
             q.setParameter("id", id);
             return (UserQuestion) q.getSingleResult();
-        } catch (HibernateException ex) {
+        } catch (NoResultException ex) {
             ex.printStackTrace();
             return null;
         }

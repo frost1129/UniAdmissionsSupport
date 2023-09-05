@@ -6,6 +6,7 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Faculty;
+import com.linhv.pojo.FacultyPost;
 import com.linhv.service.AdmissionScoreService;
 import com.linhv.service.FacultyService;
 import javax.validation.Valid;
@@ -73,34 +74,56 @@ public class FacultyController {
         return "redirect:/admin/faculties";
     }
     
-    @GetMapping("{id}/overview")
+    @GetMapping("/{id}/overview")
     public String fOverview(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        
+        FacultyPost fp = this.facultyService.getFacultyPostById(id);
+        if (fp != null)
+            model.addAttribute("facultyPost", fp);
+        else 
+            model.addAttribute("facultyPost", new FacultyPost());
+        
         return "f-overview";
     }
     
-    @PostMapping("{id}/overview")
-    public String updateFOverview(@PathVariable(value = "id") int id) {
-        return "redirect:/admin/faculties/{id}/overview";
+    @PostMapping("/{id}/overview")
+    public String updateFOverview(@ModelAttribute(value = "facultyPost") @Valid FacultyPost fp,
+                                BindingResult bs, 
+                                @PathVariable(value = "id") int id) {
+        if (!bs.hasErrors()) {
+            if (fp.getId() != null)
+                this.facultyService.updatePost(fp);
+            else {
+                fp.setId(id);
+                this.facultyService.addPost(fp);
+            }
+            return "redirect:/admin/faculties";
+        }
+        return "f-overview";
     }
     
-    @GetMapping("{id}/scores")
+    @GetMapping("/{id}/scores")
     public String fScores(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
         return "f-scores";
     }
     
-    @GetMapping("{id}/scores/{year}")
+    @GetMapping("/{id}/scores/{year}")
     public String fYearScore(Model model, 
                             @PathVariable(value = "id") int id, 
                             @PathVariable(value = "year") int year) {
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
         return "f-year-score";
     }
     
-    @GetMapping("{id}/scores/new")
+    @GetMapping("/{id}/scores/new")
     public String newYearScore(Model model, @PathVariable(value = "id") int id) {
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
         return "f-year-score";
     }
     
-    @PostMapping("{id}/scores/add-or-update")
+    @PostMapping("/{id}/scores/add-or-update")
     public String addOrUpdateYearScore(@PathVariable(value = "id") int id) {
         return "redirect:/admin/faculties/{id}/scores";
     }
