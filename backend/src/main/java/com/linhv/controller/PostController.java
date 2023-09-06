@@ -70,15 +70,15 @@ public class PostController {
     public String create(@ModelAttribute(value = "post") @Valid Post p, 
                             Principal principal, 
                             BindingResult bs) {
-        if (p.getFile().isEmpty()) {
-            bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
-        }
         
         if (!bs.hasErrors()) {
-            p.setUserId(this.userService.getUserByEmail(principal.getName()));
+            if (p.getFile().isEmpty()) {
+                bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
+            }
+//            p.setUserId(this.userService.getUserByEmail(principal.getName()));
             
-            if (this.postService.addPost(p) == true)
-                return "redirect:/admin/";
+//            if (this.postService.addPost(p) == true)
+            return "redirect:/admin/";
         }
         return "createPost";
     }
@@ -93,6 +93,33 @@ public class PostController {
             if (this.postService.updatePost(p) == true)
                 return "redirect:/admin/";
         }
+        return "createPost";
+    }
+    
+    @PostMapping("/add-or-update")
+    public String addOrUpdate(@ModelAttribute(value = "post") @Valid Post p, 
+                                BindingResult bs, 
+                                Principal principal,
+                                Model model) {
+        if (!bs.hasErrors()) {
+            p.setUserId(this.userService.getUserByEmail(principal.getName()));
+            if (!p.getId().isBlank())
+                this.postService.updatePost(p);
+                
+            // xử lý lỗi không upload ảnh bài đăng
+            else if (p.getFile().isEmpty()) {
+                bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
+                model.addAttribute("post", p);
+                return "createPost";
+            }
+            else 
+                this.postService.addPost(p);
+            
+            String type = p.getPostType();
+            return String.format("redirect:/admin/%ss", type);
+        }
+        
+        model.addAttribute("post", p);
         return "createPost";
     }
 }

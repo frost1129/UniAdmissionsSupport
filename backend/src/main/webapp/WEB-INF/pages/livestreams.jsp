@@ -44,9 +44,15 @@
                     <td>${p.userId.lastName} ${p.userId.firstName}</td>
                     <td>
                         <c:url value="/admin/create-post/${p.id}" var="update" />
-                        <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
-                        <a href="" class="btn btn-success rounded-pill p-0 px-2">Xem câu hỏi</a>
-                        <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
+                        <a href="" class="btn btn-info rounded-pill p-0 px-2">Xem câu hỏi</a>
+                        
+                        <c:if test="${userInfo != null}">
+                            <c:if test="${userInfo.id == p.userId.id}">
+                                <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
+                            </c:if>
+                            <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
+                        </c:if>
+                        
                     </td>
                 </tr>
             </c:forEach>

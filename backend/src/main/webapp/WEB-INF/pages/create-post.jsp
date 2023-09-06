@@ -14,12 +14,13 @@
 <body>
     <c:url value="/admin/create-post" var="add"/>
     <c:url value="/admin/update-post" var="update"/>
+    <c:url value="/admin/add-or-update" var="action" />
 
     <form:form 
         cssClass="py-3 container-fluid" 
         modelAttribute="post" 
         method="post" 
-        action="${empty post.id ? add : update}" 
+        action="${action}" 
         enctype="multipart/form-data"
     >
         <form:errors path="*" element="div" cssClass="alert alert-danger mt-1"/>
@@ -41,7 +42,7 @@
         <div class="mb-3">
             <label for="file" class="form-label">Chọn ảnh cho bài đăng</label>
             <br>
-            <c:if test="${post.image != null}">
+            <c:if test="${not empty post.image}">
                 <img class="mb-2" src="${post.image}" alt="${post.title}" width="120px"/>
             </c:if>
             <form:input cssClass="form-control" type="file" id="file" path="file" accept="image/png, image/gif, image/jpeg" />

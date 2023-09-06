@@ -79,7 +79,6 @@ public class Post implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(max = 255)
     @Column(name = "id")
     private String id;
     @Basic(optional = false)
