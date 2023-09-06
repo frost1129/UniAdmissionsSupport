@@ -142,14 +142,18 @@ public class FacultyController {
     public String addOrUpdateYearScore(@ModelAttribute(value = "admissionScore") @Valid AdmissionScore as, 
                                         BindingResult bs, 
                                         @PathVariable(value = "id") int id) {
-        if (this.scoreService.isFacultyYearScoreExist(id, as.getYear()))
-            bs.rejectValue("year", "error.admissionScore", "Đã tồn tại điểm tuyển sinh của khoa trong năm vừa nhập!");
+//        if (this.scoreService.isFacultyYearScoreExist(id, as.getYear()))
+//            bs.rejectValue("year", "error.admissionScore", "Đã tồn tại điểm tuyển sinh của khoa trong năm vừa nhập!");
         
         if (!bs.hasErrors()) {
             as.setFacultyId(this.facultyService.getFacultyById(id));
             
             if (as.getId() != null)
                 this.scoreService.update(as);
+            else if (this.scoreService.isFacultyYearScoreExist(id, as.getYear())) {
+                bs.rejectValue("year", "error.admissionScore", "Đã tồn tại điểm tuyển sinh của khoa trong năm vừa nhập!");
+                return "f-year-score";
+            }
             else
                 this.scoreService.add(as);
             
