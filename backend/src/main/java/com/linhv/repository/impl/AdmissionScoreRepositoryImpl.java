@@ -45,18 +45,21 @@ public class AdmissionScoreRepositoryImpl implements AdmissionScoreRepository{
     @Override
     public List<AdmissionScore> getAllByFaculty(int id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM AdmissionScore a WHERE a.facultyId.id=:id");
+        Query q = s.createQuery("FROM AdmissionScore a WHERE a.facultyId.id=:id ORDER BY a.year DESC");
         q.setParameter("id", id);
+        
         
         return q.getResultList();
     }
 
     @Override
-    public AdmissionScore getScoreByYear(int year) {
+    public AdmissionScore getFacultyScoreByYear(int fId, int year) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            Query q = s.createQuery("FROM AdmissionScore a WHERE a.id=:year");
+            Query q = s.createQuery("FROM AdmissionScore a WHERE a.year=:year AND a.facultyId.id=:fId");
             q.setParameter("year", year);
+            q.setParameter("fId", fId);
+            
             return (AdmissionScore) q.getSingleResult();
         } catch (NoResultException ex) {
             ex.printStackTrace();
@@ -89,11 +92,29 @@ public class AdmissionScoreRepositoryImpl implements AdmissionScoreRepository{
     }
 
     @Override
-    public boolean delete(int year) {
+    public boolean delete(AdmissionScore as) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            s.delete(this.getScoreByYear(year));
+            s.delete(as);
+            
             return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isFacultyYearScoreExist(int fId, int year) {
+        Session s = this.factory.getObject().getCurrentSession();
+        try {
+            Query q = s.createQuery("SELECT COUNT(a) > 0 "
+                                + "FROM AdmissionScore a "
+                                + "WHERE a.year=:year AND a.facultyId.id=:fId");
+            q.setParameter("year", year);
+            q.setParameter("fId", fId);
+            
+            return (boolean) q.getSingleResult();
         } catch (HibernateException ex) {
             ex.printStackTrace();
             return false;

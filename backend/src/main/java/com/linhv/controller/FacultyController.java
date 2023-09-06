@@ -10,10 +10,6 @@ import com.linhv.pojo.Faculty;
 import com.linhv.pojo.FacultyPost;
 import com.linhv.service.AdmissionScoreService;
 import com.linhv.service.FacultyService;
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Calendar;
-import java.util.Date;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -66,8 +62,14 @@ public class FacultyController {
         if (!bs.hasErrors()) {
             if (f.getId() != null)
                 this.facultyService.update(f);
-            else 
+            else {
                 this.facultyService.add(f);
+                
+                FacultyPost fp = new FacultyPost();
+                fp.setId(f.getId());
+                fp.setContent("Vui lòng nhập nội dung giới thiệu khoa");
+                this.facultyService.addPost(fp);
+            }
             return "redirect:/admin/faculties";
         }
         return "faculty-detail";
@@ -79,6 +81,7 @@ public class FacultyController {
         return "redirect:/admin/faculties";
     }
     
+//   THÔNG TIN KHOA
     @GetMapping("/{id}/overview")
     public String fOverview(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
@@ -108,6 +111,7 @@ public class FacultyController {
         return "f-overview";
     }
     
+//    ĐIỂM TUYỂN SINH CỦA KHOA
     @GetMapping("/{id}/scores")
     public String fScores(Model model, @PathVariable(value = "id") int id) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
@@ -121,7 +125,7 @@ public class FacultyController {
                             @PathVariable(value = "id") int id, 
                             @PathVariable(value = "year") int year) {
         model.addAttribute("faculty", this.facultyService.getFacultyById(id));
-        model.addAttribute("admissionScore", this.scoreService.getScoreByYear(year));     
+        model.addAttribute("admissionScore", this.scoreService.getFacultyScoreByYear(id, year));     
         
         return "f-year-score";
     }
@@ -138,12 +142,13 @@ public class FacultyController {
     public String addOrUpdateYearScore(@ModelAttribute(value = "admissionScore") @Valid AdmissionScore as, 
                                         BindingResult bs, 
                                         @PathVariable(value = "id") int id) {
-//        bs.rejectValue("id", "error.admissionScore", String.valueOf(id));
+        if (this.scoreService.isFacultyYearScoreExist(id, as.getYear()))
+            bs.rejectValue("year", "error.admissionScore", "Đã tồn tại điểm tuyển sinh của khoa trong năm vừa nhập!");
         
         if (!bs.hasErrors()) {
             as.setFacultyId(this.facultyService.getFacultyById(id));
             
-            if (this.scoreService.getScoreByYear(as.getId()) != null)
+            if (as.getId() != null)
                 this.scoreService.update(as);
             else
                 this.scoreService.add(as);

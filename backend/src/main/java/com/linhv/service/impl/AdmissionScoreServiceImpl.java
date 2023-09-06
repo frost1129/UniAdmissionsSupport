@@ -38,8 +38,8 @@ public class AdmissionScoreServiceImpl implements AdmissionScoreService{
     }
 
     @Override
-    public AdmissionScore getScoreByYear(int year) {
-        return this.admissionScoreRepo.getScoreByYear(year);
+    public AdmissionScore getFacultyScoreByYear(int fId, int year) {
+        return this.admissionScoreRepo.getFacultyScoreByYear(fId, year);
     }
 
     @Override
@@ -53,7 +53,12 @@ public class AdmissionScoreServiceImpl implements AdmissionScoreService{
     }
 
     @Override
-    public boolean delete(int year) {
-        return this.admissionScoreRepo.delete(year);
+    public boolean delete(AdmissionScore as) {
+        return this.admissionScoreRepo.delete(as);
+    }
+
+    @Override
+    public boolean isFacultyYearScoreExist(int fId, int year) {
+        return this.admissionScoreRepo.isFacultyYearScoreExist(fId, year);
     }
 }

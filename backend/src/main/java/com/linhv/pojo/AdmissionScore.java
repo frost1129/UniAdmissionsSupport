@@ -40,14 +40,14 @@ public class AdmissionScore implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @NotNull(message = "{admissionScore.year.notNull}")
     @Column(name = "id")
     private Integer id;
     @Basic
+    @NotNull(message = "{admissionScore.year.notNull}")
     @Column(name = "year")
-    @Temporal(TemporalType.DATE)
-    private Date year;
+    private Integer year;
     @Basic(optional = false)
     @NotNull
     @Lob
@@ -65,7 +65,7 @@ public class AdmissionScore implements Serializable {
         this.id = id;
     }
 
-    public AdmissionScore(Integer id, Date year, String content) {
+    public AdmissionScore(Integer id, Integer year, String content) {
         this.id = id;
         this.year = year;
         this.content = content;
@@ -79,11 +79,11 @@ public class AdmissionScore implements Serializable {
         this.id = id;
     }
 
-    public Date getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(Date year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 

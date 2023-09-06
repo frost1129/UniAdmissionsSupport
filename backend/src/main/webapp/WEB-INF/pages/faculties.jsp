@@ -73,6 +73,9 @@
             </div>
             <div class="modal-body">
                 Bạn muốn xóa khoa này?
+                <p class="text-danger">
+                    <i>Lưu ý: Việc xóa khoa này sẽ xóa tất cả thông tin và điểm tuyển sinh của khoa.</i>
+                </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" id="closeModal">Hủy</button>

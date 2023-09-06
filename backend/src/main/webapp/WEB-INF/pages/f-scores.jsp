@@ -26,7 +26,7 @@
                     <c:otherwise>
                         <!--<option value="" disabled="true" selected="true">Chọn năm muốn xem</option>-->
                         <c:forEach items="${scores}" var="s" >
-                            <option value="${s.content}">${s.id}</option>
+                            <option value="${s.content}">${s.year}</option>
                         </c:forEach>
                     </c:otherwise>
                 </c:choose>  

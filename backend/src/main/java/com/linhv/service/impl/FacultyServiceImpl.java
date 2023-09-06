@@ -5,9 +5,11 @@
 
 package com.linhv.service.impl;
 
+import com.linhv.pojo.AdmissionScore;
 import com.linhv.pojo.Faculty;
 import com.linhv.pojo.FacultyPost;
 import com.linhv.repository.FacultyRepository;
+import com.linhv.service.AdmissionScoreService;
 import com.linhv.service.FacultyService;
 import java.util.Date;
 import java.util.List;
@@ -23,6 +25,9 @@ public class FacultyServiceImpl implements FacultyService{
     
     @Autowired
     private FacultyRepository facultyRepo;
+    
+    @Autowired
+    private AdmissionScoreService scoreService;
 
     @Override
     public List<Faculty> getAll() {
@@ -46,6 +51,11 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public boolean delete(int id) {
+        List<AdmissionScore> scores = this.scoreService.getAllByFaculty(id);
+        for (AdmissionScore s : scores) {
+            this.scoreService.delete(s);
+        }
+        
         return this.facultyRepo.delete(id);
     }
 
@@ -62,6 +72,7 @@ public class FacultyServiceImpl implements FacultyService{
 
     @Override
     public boolean updatePost(FacultyPost fp) {
+        fp.setUpdatedDate(new Date());
         return this.facultyRepo.updatePost(fp);
     }
 

@@ -15,8 +15,9 @@ public interface AdmissionScoreService {
     List<Integer> getAllAdmissionYear();
     List<AdmissionScore> getAll();
     List<AdmissionScore> getAllByFaculty(int id);
-    AdmissionScore getScoreByYear(int year);
+    AdmissionScore getFacultyScoreByYear(int fId, int year);
     boolean add(AdmissionScore as);
     boolean update(AdmissionScore as);
-    boolean delete(int year);
+    boolean delete(AdmissionScore as);
+    boolean isFacultyYearScoreExist(int fId, int year);
 }

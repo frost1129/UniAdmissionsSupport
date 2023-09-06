@@ -23,6 +23,7 @@
     >
         <form:errors path="*" element="div" cssClass="alert alert-danger mt-1"/>
 
+        <form:input type="hidden" path="id" />
         <form:input type="hidden" path="content" name="content" id="content-field" />
         
         <div class="mb-4 text-primary-emphasis">
@@ -31,8 +32,8 @@
         
         <div class="mb-2">
             <label class="form-label">Năm</label>
-            <form:input type="text" class="form-control" path="id" placeholder="Năm tuyển sinh" />
-            <form:errors path="id" element="div" cssClass="alert alert-danger mt-1"/>
+            <form:input type="text" class="form-control" path="year" placeholder="Năm tuyển sinh" />
+            <form:errors path="year" element="div" cssClass="alert alert-danger mt-1"/>
         </div>
         
         <div class="mb-3">
