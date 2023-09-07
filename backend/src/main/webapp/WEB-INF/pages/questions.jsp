@@ -8,6 +8,10 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<head>
+    <link rel="stylesheet" href="//cdn.quilljs.com/1.3.6/quill.bubble.css">
+</head>
+
 <div class="py-2 container-fluid">
     <h3 class="">
         Quản lý câu hỏi người dùng
@@ -53,8 +57,6 @@
                             <td>${f.content}</td>
                             <td>${f.updatedDate}</td>
                             <td>
-                                <c:url value="/create-post/" var="update" />
-                                <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Chi tiết</a>
                                 <c:url value="/admin/questions/faq/${f.id}" var="del" />
                                 <form action="${del}" id="delFaqForm" method="POST">
                                     <input type="hidden" name="id" value="${f.id}">
@@ -111,7 +113,8 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Câu trả lời</label>
-                        <form:textarea class="form-control" path="content" placeholder="Câu trả lời" style="height: 100px"></form:textarea>
+                        <div id="editor"></div>   
+                        <form:input type="hidden" id="content" path="content"/>
                     </div>
                     <button type="submit" class="btn btn-primary">Lưu</button>
                 </form:form>
@@ -149,9 +152,21 @@
         </div>
     </div>
 </div>
-                
+
+<script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
 <script>
-    $(document).ready(function () {
+    $(document).ready(function () { 
+        var quill = new Quill('#editor', {
+            placeholder: 'Nhập nội dung câu trả lời',
+            theme: 'bubble'
+        });
+        
+        var contentField = document.getElementById('content');
+        quill.on('text-change', function() {
+            contentField.value = quill.root.innerHTML;
+        });
+        
+//        XỬ LÝ THAY ĐỔI THỜI GIAN
         var modal = $('#settingModal');
 
         $('#openModal').click(function () {
@@ -172,22 +187,24 @@
             var timePickerValue = $("#time2").val();
             $("#set2").val(timePickerValue);
         }); 
-    });
     
-//        XỬ LÝ MODAL THÊM FAQ
-        var modal = $('#addFAQsModal');
-        
+    //        XỬ LÝ MODAL THÊM FAQ
+        var modals = $('#addFAQsModal');
+
         $('#openF').click(function () {
-            modal.modal('show');
+            modals.modal('show');
         });
-        
+
         $('#closeF').click(function () {
-            modal.modal('hide'); // Đóng modal
+            modals.modal('hide'); // Đóng modal
         });
-        
+
         $("#addFAQForm").submit(function (e) {
             var title = $('#title').val();
             var content = $('#content').val();
+            
+            console.log(quill.root.innerHTML);
+            console.log(content);
 
             // Kiểm tra xem title và content có trống không
             if (title.trim() === '' || content.trim() === '') {
@@ -196,10 +213,10 @@
                 alert('Vui lòng điền đầy đủ thông tin câu hỏi và câu trả lời.');
             }
         });
-        
-//        XỬ LÝ SỰ KIỆN XÓA FAQ
+
+    //        XỬ LÝ SỰ KIỆN XÓA FAQ
         var delModal = $('#delModal');
-        
+
         $(".openDelModal").click(function () {
             var form = $(this).closest("form"); // Tìm form gần nhất
             var deleteUrl = form.attr("action"); // Lấy URL xóa từ thuộc tính action của form
@@ -210,14 +227,14 @@
             // Mở modal xác nhận
             delModal.modal("show");
         });
-        
+
         $('#closeModal').click(function () {
             delModal.modal('hide');
         });
 
         $("#confDelete").click(function () {
             var deleteUrl = $(this).attr("delete-url"); // Lấy URL xóa từ thuộc tính data-delete-url
-
+            
             $.ajax({
                 type: "POST",
                 url: deleteUrl,
@@ -230,4 +247,5 @@
                 }
             });
         });
+    });
 </script>
