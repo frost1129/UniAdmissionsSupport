@@ -7,8 +7,11 @@ package com.linhv.controller;
 
 import com.linhv.pojo.User;
 import com.linhv.service.UserService;
+import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,16 +19,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  *
  * @author prodi
  */
 @Controller
+@PropertySource("classpath:configs.properties")
 public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private Environment env;
     
     @GetMapping("/")
     public String login() {
@@ -33,8 +41,22 @@ public class UserController {
     }
     
     @GetMapping("/admin/users")
-    public String allUsers(Model model) {
-        model.addAttribute("users", this.userService.getAllUser());
+    public String allUsers(Model model, @RequestParam Map<String, String> params) {
+        if (!params.containsKey("page")) {
+            params.put("page", "1"); 
+        }
+        
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.userService.countAll();
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
+        
+        String current = params.get("page");
+        if (current != null && !current.isEmpty()) {
+            int currentPage = Integer.parseInt(current);
+            model.addAttribute("currentPage", currentPage);
+        }
+        
+        model.addAttribute("users", this.userService.getAllUser(params));
         model.addAttribute("user", new User());
         
         return "users";

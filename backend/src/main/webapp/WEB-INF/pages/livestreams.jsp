@@ -61,6 +61,50 @@
             </c:forEach>
         </tbody>
     </table>
+        
+    <c:if test="${counter > 1}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item">
+                <c:url value="/admin/livestreams" var="prevPageUrl">
+                    <c:if test="${not empty param.kw}">
+                        <c:param name="kw" value="${param.kw}" />
+                    </c:if>
+                    <c:param name="page" value="${currentPage - 1}"></c:param>
+                </c:url>
+                <c:if test="${currentPage > 1}">
+                    <a class="page-link" href="${prevPageUrl}" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </c:if>
+            </li>
+            
+            <c:forEach begin="1" end="${counter}" var="i">
+                <c:url value="/admin/livestreams" var="pageUrl">
+                    <c:if test="${not empty param.kw}">
+                        <c:param name="kw" value="${param.kw}" />
+                    </c:if>
+                    <c:param name="page" value="${i}"></c:param>
+                </c:url>
+                <li class="page-item ${i == currentPage ? 'active' : ''}">
+                    <a class="page-link" href="${pageUrl}">${i}</a>
+                </li>
+            </c:forEach>
+            
+            <li class="page-item">
+                <c:url value="/admin/livestreams" var="nextPageUrl">
+                    <c:if test="${not empty param.kw}">
+                        <c:param name="kw" value="${param.kw}" />
+                    </c:if>
+                    <c:param name="page" value="${currentPage + 1}"></c:param>
+                </c:url>
+                <c:if test="${currentPage < counter}">
+                    <a class="page-link" href="${nextPageUrl}" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </c:if>
+            </li>
+        </ul>
+    </c:if>
 </div>
         
         <!--MODAL XÁC NHẬN XÓA-->

@@ -17,10 +17,14 @@ public interface PostRepository {
     boolean addPost(Post post);
     boolean updatePost(Post post);
     boolean detelePost(Post post);
-    List<Post> getAllPost();
-    List<Post> getAllLivestream();
-    List<Post> getAllPostByAdmission(int admissionId);
+    List<Post> getAllPost(Map<String, String> params);
+    List<Post> getAllLivestream(Map<String, String> params);
+    List<Post> getAllPostByAdmission(int admissionId, Map<String, String> params);
     List<Post> get5PostByAdmission(int admissionId);
     List<Post> getAll(Map<String, String> params);
     List<String> getAllTitle();
+    Long countAll(Map<String, String> params);
+    Long countByAdmission(int admissionId);
+    Long countPost();
+    Long countLivestream();
 }

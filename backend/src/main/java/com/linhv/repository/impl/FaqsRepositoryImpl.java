@@ -129,4 +129,12 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         }
     }
 
+    @Override
+    public Long countAll() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM Faqs");
+        
+        return Long.valueOf(q.getSingleResult().toString());
+    }
+
 }

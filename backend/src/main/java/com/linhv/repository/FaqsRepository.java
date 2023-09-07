@@ -19,4 +19,5 @@ public interface FaqsRepository {
     Faqs add(Faqs f);
     boolean update(Faqs f);
     boolean delete(Faqs f);
+    Long countAll();
 }

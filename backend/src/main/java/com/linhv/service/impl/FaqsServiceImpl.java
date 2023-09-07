@@ -61,4 +61,9 @@ public class FaqsServiceImpl implements FaqsService{
         return this.faqsRepo.delete(f);
     }
 
+    @Override
+    public Long countAll() {
+        return this.faqsRepo.countAll();
+    }
+
 }

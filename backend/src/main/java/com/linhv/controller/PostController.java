@@ -12,6 +12,7 @@ import java.security.Principal;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,9 +37,26 @@ public class PostController {
     @Autowired
     private UserService userService;
     
+    @Autowired
+    private Environment env;
+    
     @GetMapping("/posts")
     public String allPosts(Model model, @RequestParam Map<String, String> params) {
         params.put("postType", "post");
+        if (!params.containsKey("page")) {
+            params.put("page", "1"); 
+        }
+        
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.postService.countAll(params);
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
+        
+        String current = params.get("page");
+        String kw = params.get("kw");
+        if (current != null && !current.isEmpty()) {
+            int currentPage = Integer.parseInt(current);
+            model.addAttribute("currentPage", currentPage);
+        }
         
         model.addAttribute("posts", this.postService.getAll(params));
         
@@ -48,6 +66,19 @@ public class PostController {
     @GetMapping("/livestreams")
     public String allLivestreams(Model model, @RequestParam Map<String, String> params) {
         params.put("postType", "livestream");
+        if (!params.containsKey("page")) {
+            params.put("page", "1"); 
+        }
+        
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.postService.countAll(params);
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
+        
+        String current = params.get("page");
+        if (current != null && !current.isEmpty()) {
+            int currentPage = Integer.parseInt(current);
+            model.addAttribute("currentPage", currentPage);
+        }
         
         model.addAttribute("liveposts", this.postService.getAll(params));
         

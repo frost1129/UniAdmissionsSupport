@@ -152,7 +152,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> getAllUser() {
-        return this.userRepo.getAllUser();
+    public List<User> getAllUser(Map<String, String> params) {
+        return this.userRepo.getAllUser(params);
+    }
+
+    @Override
+    public Long countAll() {
+        return this.userRepo.countAll();
     }
 }

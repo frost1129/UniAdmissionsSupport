@@ -9,7 +9,6 @@ import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.github.slugify.Slugify;
 import com.linhv.pojo.Post;
-import com.linhv.pojo.User;
 import com.linhv.repository.PostRepository;
 import com.linhv.service.PostService;
 import java.io.IOException;
@@ -112,8 +111,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getAllPostByAdmission(int id) {
-        return this.postRepo.getAllPostByAdmission(id);
+    public List<Post> getAllPostByAdmission(int id, Map<String, String> params) {
+        return this.postRepo.getAllPostByAdmission(id, params);
     }
 
     @Override
@@ -122,13 +121,13 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public List<Post> getAllPost() {
-        return this.postRepo.getAllPost();
+    public List<Post> getAllPost(Map<String, String> params) {
+        return this.postRepo.getAllPost(params);
     }
 
     @Override
-    public List<Post> getAllLivestream() {
-        return this.postRepo.getAllLivestream();
+    public List<Post> getAllLivestream(Map<String, String> params) {
+        return this.postRepo.getAllLivestream(params);
     }
 
     @Override
@@ -139,5 +138,25 @@ public class PostServiceImpl implements PostService{
     @Override
     public List<String> getAllTitle() {
         return this.postRepo.getAllTitle();
+    }
+
+    @Override
+    public Long countAll(Map<String, String> params) {
+        return this.postRepo.countAll(params);
+    }
+
+    @Override
+    public Long countByAdmission(int admissionId) {
+        return this.postRepo.countByAdmission(admissionId);
+    }
+
+    @Override
+    public Long countPost() {
+        return this.postRepo.countPost();
+    }
+
+    @Override
+    public Long countLivestream() {
+        return this.postRepo.countLivestream();
     }
 }

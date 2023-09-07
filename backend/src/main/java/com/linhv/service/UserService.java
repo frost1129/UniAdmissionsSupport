@@ -22,5 +22,6 @@ public interface UserService extends UserDetailsService{
     boolean authUser(String email, String password);
     boolean updateUser(Map<String, String> params);
     boolean updateUserByAdmin(User user);
-    List<User> getAllUser();
+    List<User> getAllUser(Map<String, String> params);
+    Long countAll();
 }

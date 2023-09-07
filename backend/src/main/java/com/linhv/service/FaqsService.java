@@ -19,4 +19,5 @@ public interface FaqsService {
     Faqs add(Faqs f, String email);
     boolean update(Faqs f);
     boolean delete(Faqs f);
+    Long countAll();
 }

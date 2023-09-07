@@ -88,10 +88,20 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> getAllPostByAdmission(int id) {
+    public List<Post> getAllPostByAdmission(int id, Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id ORDER BY p.updatedDate");
+        Query q = s.createQuery("FROM Post p WHERE p.admissionType.id=:id ORDER BY p.updatedDate DESC");
         q.setParameter("id", id);
+        
+        if (params != null) {
+            String page = params.get("page");
+            int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+
+            if (page != null) {
+                q.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
+                q.setMaxResults(pageSize);
+            }
+        }
         
         return q.getResultList();
     }
@@ -107,19 +117,39 @@ public class PostRepositoryImpl implements PostRepository{
     }
 
     @Override
-    public List<Post> getAllPost() {
+    public List<Post> getAllPost(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate");
+        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate DESC");
         q.setParameter("type", "post");
+        
+        if (params != null) {
+            String page = params.get("page");
+            int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+
+            if (page != null) {
+                q.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
+                q.setMaxResults(pageSize);
+            }
+        }
         
         return q.getResultList();
     }
 
     @Override
-    public List<Post> getAllLivestream() {
+    public List<Post> getAllLivestream(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate");
+        Query q = s.createQuery("FROM Post p WHERE p.postType=:type ORDER BY p.updatedDate DESC");
         q.setParameter("type", "livestream");
+        
+        if (params != null) {
+            String page = params.get("page");
+            int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+
+            if (page != null) {
+                q.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
+                q.setMaxResults(pageSize);
+            }
+        }
         
         return q.getResultList();
     }
@@ -153,7 +183,7 @@ public class PostRepositoryImpl implements PostRepository{
             q.where(predicates.toArray(Predicate[]::new));
         }
         
-        q.orderBy(b.asc(root.get("updatedDate")));
+        q.orderBy(b.desc(root.get("updatedDate")));
         Query query = session.createQuery(q);
         
         if (params != null) {
@@ -174,6 +204,70 @@ public class PostRepositoryImpl implements PostRepository{
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("SELECT p.title FROM Post p");
         return q.getResultList();
+    }
+
+    @Override
+    public Long countAll(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+        Root<Post> root = q.from(Post.class);
+        q.select(b.count(root)); // Chọn số lượng bản ghi thay vì dữ liệu thực
+
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("title"), String.format("%%%s%%", kw)));
+            }
+
+            String admissionType = params.get("admissionType");
+            if (admissionType != null && !admissionType.isEmpty()) {
+                predicates.add(b.equal(root.get("admissionType"), Integer.valueOf(admissionType)));
+            }
+
+            String postType = params.get("postType");
+            if (postType != null && !postType.isEmpty()) {
+                predicates.add(b.equal(root.get("postType"), postType));
+            }
+
+            q.where(predicates.toArray(new Predicate[0]));
+        }
+
+        Query query = session.createQuery(q);
+        return (Long) query.getSingleResult();
+//        Session s = this.factory.getObject().getCurrentSession();
+//        Query q = s.createQuery("SELECT COUNT(*) FROM Post");
+//        
+//        return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countByAdmission(int admissionId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM Post p WHERE p.admissionType.id=:id");
+        q.setParameter("id", admissionId);
+        
+        return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countPost() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM Post p WHERE p.postType=:type");
+        q.setParameter("type", "post");
+        
+        return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countLivestream() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM Post p WHERE p.postType=:type");
+        q.setParameter("type", "livestream");
+        
+        return Long.valueOf(q.getSingleResult().toString());
     }
 
 }

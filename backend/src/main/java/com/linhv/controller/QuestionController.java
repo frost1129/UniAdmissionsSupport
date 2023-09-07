@@ -49,6 +49,20 @@ public class QuestionController {
     
     @GetMapping("/questions")
     public String allFAQs(Model model, @RequestParam Map<String, String> params) {
+        if (!params.containsKey("page")) {
+            params.put("page", "1"); 
+        }
+        
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.faqService.countAll();
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
+        
+        String current = params.get("page");
+        if (current != null && !current.isEmpty()) {
+            int currentPage = Integer.parseInt(current);
+            model.addAttribute("currentPage", currentPage);
+        }
+        
         model.addAttribute("times", this.settingService.getTime());
         model.addAttribute("faq", new Faqs());
         model.addAttribute("faqs", this.faqService.getAll(params));
@@ -94,8 +108,9 @@ public class QuestionController {
     @GetMapping("/questions/user-questions")
     public String allUserQuestions(Model model, 
                                     @RequestParam Map<String, String> params) {
+        // Đặt giá trị mặc định cho "page" là 1 nếu không tồn tại
         if (!params.containsKey("page")) {
-            params.put("page", "1"); // Đặt giá trị mặc định cho "page" là 1 nếu không tồn tại
+            params.put("page", "1"); 
         }
         
         // PHÂN TRANG
@@ -103,13 +118,11 @@ public class QuestionController {
         long count = this.questionService.countQues();
         model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
         
-//        if (params != null) {
-            String current = params.get("page");
-            if (current != null && !current.isEmpty()) {
-                int currentPage = Integer.parseInt(current);
-                model.addAttribute("currentPage", currentPage);
-            }
-//        }
+        String current = params.get("page");
+        if (current != null && !current.isEmpty()) {
+            int currentPage = Integer.parseInt(current);
+            model.addAttribute("currentPage", currentPage);
+        }
         
         model.addAttribute("questions", this.questionService.getAllQuestions(params));
         
