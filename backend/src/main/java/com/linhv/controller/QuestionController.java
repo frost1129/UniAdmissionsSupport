@@ -95,7 +95,7 @@ public class QuestionController {
     
     @PostMapping("/questions/add-faq")
     public String addFaq(@ModelAttribute(value = "faq") Faqs f, Principal principal) {
-        this.faqService.add(f, principal.getName());
+        this.faqService.add(f, principal.getName());      
         return "redirect:/admin/questions";
     }
     
