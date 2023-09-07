@@ -4,10 +4,18 @@
  */
 package com.linhv.repository;
 
+import com.linhv.pojo.PostComment;
+import java.util.List;
+
 /**
  *
  * @author prodi
  */
 public interface PostCommentRepository {
-    
+    List<PostComment> getAllByPostId(String id);
+    List<PostComment> getSubsByCommentId(String id);
+    PostComment getById(String id);
+    PostComment add(PostComment comment);
+    boolean update(PostComment comment);
+    boolean delete(PostComment comment);
 }

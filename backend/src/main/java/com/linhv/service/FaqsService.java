@@ -4,10 +4,19 @@
  */
 package com.linhv.service;
 
+import com.linhv.pojo.Faqs;
+import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author prodi
  */
 public interface FaqsService {
-    
+    Faqs getFaqsById(int id);
+    List<Faqs> getAll(Map<String, String> params);
+    List<Faqs> getTop5Recent();
+    Faqs add(Faqs f);
+    boolean update(Faqs f);
+    boolean delete(Faqs f);
 }
