@@ -55,7 +55,9 @@ public class UserController {
     }
     
     @PostMapping("/admin/users/add")
-    public String create(@ModelAttribute(value = "user") @Valid User user, BindingResult bs) {
+    public String create(@ModelAttribute(value = "user") @Valid User user, 
+                            BindingResult bs, 
+                            Model model) {
         if (!user.getPassword().equals(user.getConfPassword()))
             bs.rejectValue("confPassword", "error.user", "Mật khẩu xác nhận không khớp!");
 
@@ -69,7 +71,7 @@ public class UserController {
             this.userService.addUserByAdmin(user);
             return "redirect:/admin/users";
         }
-        
+        model.addAttribute("user", user);
         return "user-detail";
     }
     

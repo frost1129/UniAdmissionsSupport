@@ -58,7 +58,8 @@ public class FacultyController {
     
     @PostMapping("/add-or-update")
     public String addOrUpdate(@ModelAttribute(value = "faculty") @Valid Faculty f,
-                                BindingResult bs) {
+                                BindingResult bs, 
+                                Model model) {
         if (!bs.hasErrors()) {
             if (f.getId() != null)
                 this.facultyService.update(f);
@@ -72,6 +73,7 @@ public class FacultyController {
             }
             return "redirect:/admin/faculties";
         }
+        model.addAttribute("faculty", f);
         return "faculty-detail";
     }
     
@@ -98,7 +100,8 @@ public class FacultyController {
     @PostMapping("/{id}/overview")
     public String updateFOverview(@ModelAttribute(value = "facultyPost") @Valid FacultyPost fp,
                                 BindingResult bs, 
-                                @PathVariable(value = "id") int id) {
+                                @PathVariable(value = "id") int id, 
+                                Model model) {
         if (!bs.hasErrors()) {
             if (fp.getId() != null)
                 this.facultyService.updatePost(fp);
@@ -108,6 +111,8 @@ public class FacultyController {
             }
             return "redirect:/admin/faculties";
         }
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        model.addAttribute("facultyPost", fp);
         return "f-overview";
     }
     
@@ -141,7 +146,8 @@ public class FacultyController {
     @PostMapping("/{id}/scores/add-or-update")
     public String addOrUpdateYearScore(@ModelAttribute(value = "admissionScore") @Valid AdmissionScore as, 
                                         BindingResult bs, 
-                                        @PathVariable(value = "id") int id) {
+                                        @PathVariable(value = "id") int id, 
+                                        Model model) {
 //        if (this.scoreService.isFacultyYearScoreExist(id, as.getYear()))
 //            bs.rejectValue("year", "error.admissionScore", "Đã tồn tại điểm tuyển sinh của khoa trong năm vừa nhập!");
         
@@ -159,6 +165,8 @@ public class FacultyController {
             
             return String.format("redirect:/admin/faculties/%d/scores", id);
         }
+        model.addAttribute("faculty", this.facultyService.getFacultyById(id));
+        model.addAttribute("admissionScore", as);
         return "f-year-score";
     }
 }

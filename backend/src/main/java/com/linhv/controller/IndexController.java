@@ -16,6 +16,7 @@ import com.linhv.service.PostService;
 import com.linhv.service.TopicService;
 import com.linhv.service.UserService;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.Map;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,13 +106,18 @@ public class IndexController {
     }
     
     @PostMapping("/topics/topic-detail")
-    public String addTopic(@ModelAttribute(value = "topic") @Valid Topic t, BindingResult bs) {
+    public String addTopic(@ModelAttribute(value = "topic") @Valid Topic t, 
+                            BindingResult bs, 
+                            Model model) {
 //        bs.rejectValue("title", "error.topic", t.getTitle());
         
         if (!bs.hasErrors()){
             this.topicService.addTopic(t);
             return "redirect:/admin/";
         }
+        Map<String, String> params = new HashMap<>();
+        model.addAttribute("posts", this.postService.getAll(params));
+        model.addAttribute("topic", new Topic());
         return "topic-detail";
     }
     
@@ -128,7 +134,9 @@ public class IndexController {
     }
     
     @PostMapping("/branches/add-or-update")
-    public String addOrUpdateBranch(@ModelAttribute(value = "branch") @Valid Branch b, BindingResult bs) {
+    public String addOrUpdateBranch(@ModelAttribute(value = "branch") @Valid Branch b, 
+                                    BindingResult bs, 
+                                    Model model) {
         if (!bs.hasErrors()) {
             if (b.getId() != null) 
                 this.branchService.update(b);
@@ -136,6 +144,7 @@ public class IndexController {
                 this.branchService.add(b);
             return "redirect:/admin/";
         }
+        model.addAttribute("branch", b);
         return "branch-detail";
     }
     
