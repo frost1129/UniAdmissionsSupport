@@ -16,7 +16,7 @@ public interface FaqsService {
     Faqs getFaqsById(int id);
     List<Faqs> getAll(Map<String, String> params);
     List<Faqs> getTop5Recent();
-    Faqs add(Faqs f);
+    Faqs add(Faqs f, String email);
     boolean update(Faqs f);
     boolean delete(Faqs f);
 }

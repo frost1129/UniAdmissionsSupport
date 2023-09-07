@@ -8,6 +8,8 @@ package com.linhv.service.impl;
 import com.linhv.pojo.Faqs;
 import com.linhv.repository.FaqsRepository;
 import com.linhv.service.FaqsService;
+import com.linhv.service.UserService;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,9 @@ public class FaqsServiceImpl implements FaqsService{
     
     @Autowired
     private FaqsRepository faqsRepo;
+    
+    @Autowired
+    private UserService userService;
 
     @Override
     public Faqs getFaqsById(int id) {
@@ -39,7 +44,10 @@ public class FaqsServiceImpl implements FaqsService{
     }
 
     @Override
-    public Faqs add(Faqs f) {
+    public Faqs add(Faqs f, String emai) {
+        f.setUserId(this.userService.getUserByEmail(emai));
+        f.setUpdatedDate(new Date());
+        
         return this.faqsRepo.add(f);
     }
 

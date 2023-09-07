@@ -5,9 +5,12 @@
 
 package com.linhv.controller;
 
+import com.linhv.pojo.Faqs;
 import com.linhv.pojo.QuestionSettings;
+import com.linhv.service.FaqsService;
 import com.linhv.service.QuestionSettingService;
 import com.linhv.service.UserQuestionService;
+import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
@@ -15,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -33,9 +38,14 @@ public class QuestionController {
     @Autowired
     private QuestionSettingService settingService;
     
+    @Autowired
+    private FaqsService faqService;
+    
     @GetMapping("/questions")
-    public String allQuestions(Model model, @RequestParam Map<String, String> params) {
+    public String allFAQs(Model model, @RequestParam Map<String, String> params) {
         model.addAttribute("times", this.settingService.getTime());
+        model.addAttribute("faq", new Faqs());
+        model.addAttribute("faqs", this.faqService.getAll(params));
         
         return "questions";
     }
@@ -61,5 +71,17 @@ public class QuestionController {
             e.printStackTrace();
             return "redirect:/admin/questions"; 
         }
+    }
+    
+    @PostMapping("/questions/add-faq")
+    public String addFaq(@ModelAttribute(value = "faq") Faqs f, Principal principal) {
+        this.faqService.add(f, principal.getName());
+        return "redirect:/admin/questions";
+    }
+    
+    @PostMapping("/questions/faq/{id}")
+    public String deleteFaq(@PathVariable(value = "id") int id) {
+        this.faqService.delete(this.faqService.getFaqsById(id));
+        return "redirect:/admin/questions";
     }
 }

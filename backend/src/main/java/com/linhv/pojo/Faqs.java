@@ -57,7 +57,6 @@ public class Faqs implements Serializable {
     @Column(name = "content")
     private String content;
     @Basic(optional = false)
-    @NotNull
     @Column(name = "updated_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
