@@ -12,7 +12,6 @@ import com.linhv.pojo.User;
 import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
 import com.linhv.service.BranchService;
-import com.linhv.service.MailService;
 import com.linhv.service.PostService;
 import com.linhv.service.TopicService;
 import com.linhv.service.UserService;
@@ -59,9 +58,6 @@ public class IndexController {
     @Autowired
     private UserService userService;    
     
-    @Autowired
-    private MailService mailService;
-    
     @ModelAttribute
     public void commonAttr(Model model) {
         model.addAttribute("admissionTypes", this.admissionTypeService.getAdmissionType());
@@ -84,9 +80,7 @@ public class IndexController {
         model.addAttribute("banners", this.bannerService.getBanners());
         model.addAttribute("branches", this.branchService.getBranches());
         model.addAttribute("topics", this.topicService.getTopics());
-        
-        this.mailService.sendQuestionAnswered(this.userService.getUserByEmail("prodige112002@gmail.com"));
-        
+
         return "index";
     }
     
