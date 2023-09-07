@@ -113,7 +113,7 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Câu trả lời</label>
-                        <div id="editor"></div>   
+                        <div id="editor" class="border border-secondary-subtle rounded"></div>   
                         <form:input type="hidden" id="content" path="content"/>
                     </div>
                     <button type="submit" class="btn btn-primary">Lưu</button>
