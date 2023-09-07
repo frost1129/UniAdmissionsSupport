@@ -4,16 +4,16 @@
  */
 package com.linhv.repository;
 
-import com.linhv.pojo.QuestionSettings;
 import com.linhv.pojo.UserQuestion;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author prodi
  */
 public interface UserQuestionRepository {
-    List<UserQuestion> getAllQuestions();
+    List<UserQuestion> getAllQuestions(Map<String, String> params);
     UserQuestion getQuestionById(int id);
     List<UserQuestion> getQuestionsByUserEmail(String email);
     List<UserQuestion> getQuestionsByAdmissionerId(int id);
@@ -22,4 +22,7 @@ public interface UserQuestionRepository {
     boolean updateQuestion(UserQuestion question);
     UserQuestion addQuestion(UserQuestion question);
     boolean deleteQuestion(UserQuestion question);
+    Long countQues();
+    Long countQuesByUserEmail(String email);
+    Long countQuesByAdmissionType(int id);
 }

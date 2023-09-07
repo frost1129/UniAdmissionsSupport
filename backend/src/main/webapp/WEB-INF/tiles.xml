@@ -42,6 +42,11 @@ Software Foundation//DTD Tiles Configuration 3.0//EN"
         <put-attribute name="content" value="/WEB-INF/pages/questions.jsp" />
     </definition>
     
+    <definition name="user-questions" extends="baseLayout">
+        <put-attribute name="title" value="Quản lý câu hỏi" />
+        <put-attribute name="content" value="/WEB-INF/pages/user-questions.jsp" />
+    </definition>
+    
     <definition name="users" extends="baseLayout">
         <put-attribute name="title" value="Quản lý người dùng" />
         <put-attribute name="content" value="/WEB-INF/pages/users.jsp" />

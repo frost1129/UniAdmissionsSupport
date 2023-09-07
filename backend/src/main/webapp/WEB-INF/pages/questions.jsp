@@ -24,7 +24,9 @@
                 <b>${times.fromTime} - ${times.toTime}</b>
             </p>
             <button type="button" id="openModal" class="btn btn-outline-success">Sửa</button>
-            <button type="button" class="btn btn-outline-info">Xem tất cả câu hỏi người dùng</button>
+            <a href="<c:url value="/admin/questions/user-questions" />" class="btn btn-outline-info">
+                Danh sách câu hỏi người dùng
+            </a>
         </div>
     </div>
             

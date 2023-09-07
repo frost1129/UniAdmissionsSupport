@@ -9,8 +9,8 @@ import com.linhv.pojo.QuestionSettings;
 import com.linhv.pojo.UserQuestion;
 import com.linhv.repository.UserQuestionRepository;
 import java.sql.Time;
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -22,6 +22,8 @@ import javax.persistence.criteria.Subquery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,16 +34,32 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
+@PropertySource("classpath:configs.properties")
 public class UserQuestionRepositoryImpl implements UserQuestionRepository{
     
     @Autowired
     private LocalSessionFactoryBean factory;
+    
+    @Autowired
+    private Environment env;
 
     @Override
-    public List<UserQuestion> getAllQuestions() {
+    public List<UserQuestion> getAllQuestions(Map<String, String> params) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
             Query q = s.createQuery("FROM UserQuestion");
+            
+            if (params != null) {
+                String page = params.get("page");
+                if (page != null && !page.isEmpty()) {
+                    int p = Integer.parseInt(page);
+                    int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+                    
+                    q.setMaxResults(pageSize);
+                    q.setFirstResult((p - 1) * pageSize);
+                }
+            }
+            
             return q.getResultList();
         } catch (HibernateException ex) {
             ex.printStackTrace();
@@ -151,5 +169,31 @@ public class UserQuestionRepositoryImpl implements UserQuestionRepository{
     @Override
     public boolean deleteQuestion(UserQuestion question) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public Long countQues() {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM UserQuestion");
+        
+        return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countQuesByUserEmail(String email) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM UserQuestion uq WHERE uq.askUserEmail=:email");
+        q.setParameter("email", email);
+        
+        return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countQuesByAdmissionType(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM UserQuestion uq WHERE uq.admissionType.id=:id");
+        q.setParameter("id", id);
+        
+        return Long.valueOf(q.getSingleResult().toString());
     }
 }

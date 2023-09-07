@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,6 +32,7 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 @RequestMapping("/admin")
+@PropertySource("classpath:configs.properties")
 public class QuestionController {
     
     @Autowired
@@ -40,6 +43,9 @@ public class QuestionController {
     
     @Autowired
     private FaqsService faqService;
+    
+    @Autowired
+    private Environment env;
     
     @GetMapping("/questions")
     public String allFAQs(Model model, @RequestParam Map<String, String> params) {
@@ -83,5 +89,30 @@ public class QuestionController {
     public String deleteFaq(@PathVariable(value = "id") int id) {
         this.faqService.delete(this.faqService.getFaqsById(id));
         return "redirect:/admin/questions";
+    }
+    
+    @GetMapping("/questions/user-questions")
+    public String allUserQuestions(Model model, 
+                                    @RequestParam Map<String, String> params) {
+        if (!params.containsKey("page")) {
+            params.put("page", "1"); // Đặt giá trị mặc định cho "page" là 1 nếu không tồn tại
+        }
+        
+        // PHÂN TRANG
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        long count = this.questionService.countQues();
+        model.addAttribute("counter", Math.ceil(count*1.0/pageSize));
+        
+//        if (params != null) {
+            String current = params.get("page");
+            if (current != null && !current.isEmpty()) {
+                int currentPage = Integer.parseInt(current);
+                model.addAttribute("currentPage", currentPage);
+            }
+//        }
+        
+        model.addAttribute("questions", this.questionService.getAllQuestions(params));
+        
+        return "user-questions";
     }
 }

@@ -9,6 +9,7 @@ import com.linhv.pojo.UserQuestion;
 import com.linhv.repository.UserQuestionRepository;
 import com.linhv.service.UserQuestionService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,8 +24,8 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     private UserQuestionRepository questionRepo;
 
     @Override
-    public List<UserQuestion> getAllQuestions() {
-        return this.questionRepo.getAllQuestions();
+    public List<UserQuestion> getAllQuestions(Map<String, String> params) {
+        return this.questionRepo.getAllQuestions(params);
     }
 
     @Override
@@ -65,5 +66,20 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     @Override
     public boolean deleteQuestion(UserQuestion question) {
         return this.questionRepo.deleteQuestion(question);
+    }
+
+    @Override
+    public Long countQues() {
+        return this.questionRepo.countQues();
+    }
+
+    @Override
+    public Long countQuesByUserEmail(String email) {
+        return this.questionRepo.countQuesByUserEmail(email);
+    }
+
+    @Override
+    public Long countQuesByAdmissionType(int id) {
+        return this.questionRepo.countQuesByAdmissionType(id);
     }
 }
