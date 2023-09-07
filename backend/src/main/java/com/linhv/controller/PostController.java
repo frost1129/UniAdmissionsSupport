@@ -66,34 +66,41 @@ public class PostController {
         return "createPost";
     }
     
-    @PostMapping("/create-post")
-    public String create(@ModelAttribute(value = "post") @Valid Post p, 
-                            Principal principal, 
-                            BindingResult bs) {
-        
-        if (!bs.hasErrors()) {
-            if (p.getFile().isEmpty()) {
-                bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
-            }
+//    @PostMapping("/create-post")
+//    public String create(@ModelAttribute(value = "post") @Valid Post p, 
+//                            Principal principal, 
+//                            BindingResult bs) {
+//        
+//        if (!bs.hasErrors()) {
+//            if (p.getFile().isEmpty()) {
+//                bs.rejectValue("file", "error.post", "Vui lòng chọn ảnh cho bài đăng");
+//            }
 //            p.setUserId(this.userService.getUserByEmail(principal.getName()));
-            
+//            
 //            if (this.postService.addPost(p) == true)
-            return "redirect:/admin/";
-        }
-        return "createPost";
-    }
+//            return "redirect:/admin/";
+//        }
+//        return "createPost";
+//    }
     
-    @PostMapping("/update-post")
-    public String update(@ModelAttribute(value = "post") @Valid Post p, 
-                            Principal principal,
-                            BindingResult bs) {
-        if (!bs.hasErrors()) {
-            p.setUserId(this.userService.getUserByEmail(principal.getName()));
-            
-            if (this.postService.updatePost(p) == true)
-                return "redirect:/admin/";
-        }
-        return "createPost";
+//    @PostMapping("/update-post")
+//    public String update(@ModelAttribute(value = "post") @Valid Post p, 
+//                            Principal principal,
+//                            BindingResult bs) {
+//        if (!bs.hasErrors()) {
+//            p.setUserId(this.userService.getUserByEmail(principal.getName()));
+//            
+//            if (this.postService.updatePost(p) == true)
+//                return "redirect:/admin/";
+//        }
+//        return "createPost";
+//    }
+    
+    @PostMapping("/delete/{id}")
+    public String deletePost(@PathVariable(value = "id") String id) {
+        String type = this.postService.getPostById(id).getPostType();
+        this.postService.deletePost(id);
+        return String.format("redirect:/admin/%ss", type);
     }
     
     @PostMapping("/add-or-update")

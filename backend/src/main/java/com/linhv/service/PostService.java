@@ -16,7 +16,7 @@ public interface PostService {
     Post getPostById(String id);
     boolean addPost(Post post);
     boolean updatePost(Post post);
-    boolean detelePost(Post post);
+    boolean deletePost(String id);
     List<Post> getAllPostByAdmission(int admissionId);
     List<Post> get5PostByAdmission(int admissionId);
     List<Post> getAllPost();

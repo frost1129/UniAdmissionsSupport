@@ -102,8 +102,13 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public boolean detelePost(Post post) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean deletePost(String id) {
+        Post p = this.getPostById(id);
+        if (p != null) {
+            // xử lý xóa cmt + câu hỏi
+            return this.postRepo.detelePost(p);
+        }
+        return false;
     }
 
     @Override

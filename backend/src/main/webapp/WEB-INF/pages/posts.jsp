@@ -48,7 +48,11 @@
                             <c:if test="${userInfo.id == p.userId.id}">
                                 <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
                             </c:if>
-                            <button class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
+                            <c:url value="/admin/delete/${p.id}" var="del" />
+                            <form action="${del}" id="delForm" method="POST">
+                                <input type="hidden" name="id" value="${f.id}">
+                                <button type="button" class="btn btn-danger rounded-pill p-0 px-2 openModal">Xóa</button>
+                            </form>
                         </c:if>
                     </td>
                 </tr>
@@ -56,3 +60,62 @@
         </tbody>
     </table>
 </div>
+        
+<!--MODAL XÁC NHẬN XÓA-->
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header align-items-center">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
+            </div>
+            <div class="modal-body">
+                Bạn muốn xóa bài đăng này?
+                <p class="text-danger">
+                    <i>Lưu ý: Việc xóa bài đăng này sẽ xóa tất cả comment của bài đăng.</i>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confDelete">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+//        XỬ LÝ SỰ KIỆN XÓA
+        var delModal = $('#delModal');
+        
+        $(".openModal").click(function () {
+            var form = $(this).closest("form"); // Tìm form gần nhất
+            var deleteUrl = form.attr("action"); // Lấy URL xóa từ thuộc tính action của form
+
+            // Thiết lập action cho nút xác nhận xóa
+            $("#confDelete").attr("delete-url", deleteUrl);
+
+            // Mở modal xác nhận
+            delModal.modal("show");
+        });
+        
+        $('#closeModal').click(function () {
+            delModal.modal('hide');
+        });
+
+        $("#confDelete").click(function () {
+            var deleteUrl = $(this).attr("delete-url"); // Lấy URL xóa từ thuộc tính data-delete-url
+
+            $.ajax({
+                type: "POST",
+                url: deleteUrl,
+                success: function () {
+                    delModal.modal("hide");
+                    location.reload();
+                },
+                error: function () {
+                    console.log(error);
+                }
+            });
+        });
+    });
+</script>

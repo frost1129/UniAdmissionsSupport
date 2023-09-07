@@ -64,7 +64,7 @@
     </table>
 </div>
     
-<!--MODAL XÁC NHẬN XÓA BANNER-->
+<!--MODAL XÁC NHẬN XÓA-->
 <div class="modal fade" id="delFacultyModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -87,7 +87,7 @@
 
 <script>
     $(document).ready(function () {
-//        XỬ LÝ SỰ KIỆN XÓA BANNER
+//        XỬ LÝ SỰ KIỆN XÓA
         var delFacultyModal = $('#delFacultyModal');
         
         $(".openModal").click(function () {
