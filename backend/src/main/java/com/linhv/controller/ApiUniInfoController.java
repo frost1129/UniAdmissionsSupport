@@ -5,12 +5,10 @@
 
 package com.linhv.controller;
 
-import com.linhv.pojo.AdmissionType;
 import com.linhv.pojo.Banner;
 import com.linhv.pojo.Branch;
 import com.linhv.pojo.Topic;
 import com.linhv.pojo.UniMainInfo;
-import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.BannerService;
 import com.linhv.service.BranchService;
 import com.linhv.service.TopicService;
@@ -36,8 +34,6 @@ public class ApiUniInfoController {
     @Autowired
     private UniMainInfoService uniMainService;
     @Autowired
-    private AdmissionTypeService admissionTypeService;
-    @Autowired
     private BannerService bannerService;
     @Autowired
     private BranchService branchService;
@@ -62,11 +58,6 @@ public class ApiUniInfoController {
     @GetMapping("/banners/")
     public ResponseEntity<List<Banner>> getBanners() {
         return new ResponseEntity<>(this.bannerService.getBanners(), HttpStatus.OK);
-    }
-    
-    @GetMapping("/admissions/")
-    public ResponseEntity<List<AdmissionType>> getAdmissionTypes() {
-        return new ResponseEntity<>(this.admissionTypeService.getAdmissionType(), HttpStatus.OK);
     }
     
     @GetMapping("/topics/")

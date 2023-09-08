@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Carousel, Image } from "react-bootstrap";
 
-import Api, { enpoints } from "../config/Api";
+import Api, { endpoints } from "../config/Api";
 import MySpinner from "./MySpinner";
 
 const BannerCarousel = () => {
@@ -9,7 +9,7 @@ const BannerCarousel = () => {
 
     useEffect(() => {
         const loadBanners = async () => {
-            let res = await Api.get(enpoints["banners"]);
+            let res = await Api.get(endpoints["banners"]);
             setBanners(res.data);
         };
 
@@ -22,7 +22,7 @@ const BannerCarousel = () => {
         <Carousel data-bs-theme="dark">
             {banners.map((banner) => {
                 return (
-                    <Carousel.Item className="text-center">
+                    <Carousel.Item key={banner.id} className="text-center">
                         <Image src={banner.image} fluid />
                     </Carousel.Item>
                 );

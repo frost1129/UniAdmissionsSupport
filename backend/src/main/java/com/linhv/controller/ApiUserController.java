@@ -38,7 +38,7 @@ public class ApiUserController {
         return new ResponseEntity<>(user, HttpStatus.CREATED);
     }
     
-    @PutMapping("/users/{email}")
+    @PutMapping("/users/{email}/")
     public ResponseEntity<Void> updateUser(@RequestParam Map<String, String> params) {
         this.userService.updateUser(params);
         return new ResponseEntity<>(HttpStatus.OK);

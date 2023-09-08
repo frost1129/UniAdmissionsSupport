@@ -32,8 +32,9 @@ const FAQ = () => {
                     </Accordion.Body>
                 </Accordion.Item>
             </Accordion>
+
             <Row className="my-1">
-                <Link className="text-decoration-none text-center text-uppercase fw-bold my-3">
+                <Link to='/faqs' className="text-decoration-none text-center text-uppercase fw-bold my-3">
                     Xem tất cả câu hỏi thường gặp
                     <FontAwesomeIcon icon={faArrowRight} className="mx-2" />
                 </Link>

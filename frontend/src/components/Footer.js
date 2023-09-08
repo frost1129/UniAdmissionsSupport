@@ -9,7 +9,7 @@ import {
     faMapMarkerAlt,
     faPhone,
 } from "@fortawesome/free-solid-svg-icons";
-import Api, { enpoints } from "../config/Api";
+import Api, { endpoints } from "../config/Api";
 import MySpinner from "./MySpinner";
 
 const Footer = () => {
@@ -19,12 +19,12 @@ const Footer = () => {
 
     useEffect(() => {
         const loadInfo = async () => {
-            let res = await Api.get(enpoints["info"]);
+            let res = await Api.get(endpoints["info"]);
             setInfo(res.data);
         };
 
         const loadBranches = async () => {
-            let res = await Api.get(enpoints["branches"]);
+            let res = await Api.get(endpoints["branches"]);
             setBranches(res.data);
         };
 
@@ -94,6 +94,7 @@ const Footer = () => {
                                         <Link
                                             to={b.link}
                                             target="_blank"
+                                            key={b.id}
                                             className="text-decoration-none link-dark link-opacity-75-hover"
                                         >
                                             <b>Cơ sở {b.id}:</b> {b.address} <br/>

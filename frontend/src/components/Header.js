@@ -1,13 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 import logo from "../img/ou_logo_long.png";
 import UserDetail from "./UserDetail";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Api, { endpoints } from "../config/Api";
+import MySpinner from "./MySpinner";
+import { MyUserContext } from "../App";
 
 const Header = () => {
+    const [user, dispatch] = useContext(MyUserContext);
     const [showUserDetail, setShowUserDetail] = useState(false);
     const [toFaculties, setToFaculties] = useState(false);
+    const [admissionTypes, setAdmissionTypes] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -32,11 +37,22 @@ const Header = () => {
     };
 
     useEffect(() => {
+        const loadAdmissionType = async () => {
+            let {data} = await Api.get(endpoints["admissions"]);
+            setAdmissionTypes(data);
+        }
+        
+        loadAdmissionType();
+    }, []);
+
+    useEffect(() => {
         if (toFaculties) {
             scrollToFaculties();
             setToFaculties(false);
         }
     }, [toFaculties]);
+
+    if (admissionTypes === null) return <MySpinner />;
 
     return (
         <>
@@ -63,72 +79,72 @@ const Header = () => {
                                     title="Hệ tuyển sinh"
                                     id="basic-nav-dropdown"
                                 >
-                                    <NavDropdown.Item href="#action/3.12">
-                                        Đại học chính quy
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.22">
-                                        Văn bằng 2, Liên thông Cao đẳng-Đại Học
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.23">
-                                        Sau đại học
-                                    </NavDropdown.Item>
+                                    {admissionTypes.map(type => {
+                                        let h = `/posts?admissionType=${type.id}`;
+                                        return <NavDropdown.Item>
+                                                <Link to={h} key={type.id} className="text-decoration-none text-dark">
+                                                    {type.name}
+                                                </Link>
+                                            </NavDropdown.Item>
+                                    })}
+                                    
                                 </NavDropdown>
+
                                 <Nav.Link onClick={handleToFaculties}>
                                     Thông tin các Khoa
                                 </Nav.Link>
+
                                 <NavDropdown
                                     title="Có thể bạn quan tâm"
                                     id="basic-nav-dropdown"
                                 >
                                     <NavDropdown.Item href="#action/3.1">
-                                        Điểm chuẩn các năm
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.2">
-                                        Tỉ lệ có việc làm
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.3">
-                                        Học bổng tuyển sinh
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.4">
-                                        Học phí năm học 2023 - 2024
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item href="#action/3.5">
-                                        Các văn bản pháp lý
-                                    </NavDropdown.Item>
-                                </NavDropdown>
-                                <Nav.Link href="#faqs">FAQs</Nav.Link>
-                                <Link to='/login' className="fw-bold text-decoration-none text-dark">
-                                    Đăng nhập
-                                </Link>
-                                <NavDropdown
-                                    className="fw-bold text-dark"
-                                    title="Xin chào, user"
-                                    id="basic-nav-dropdown"
-                                >
-                                    <NavDropdown.Item>
-                                        <Link
-                                            className="text-decoration-none text-dark"
-                                            onClick={handleShowUserDetail}
-                                        >
-                                            Thông tin tài khoản
-                                        </Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>
                                         <Link to='/admin' className="text-decoration-none text-dark">
-                                            Bảng điều khiển
+                                            điểm chuẩn các năm
                                         </Link>
                                     </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        <Link to='/question-manage' className="text-decoration-none text-dark">
-                                            Quản lý câu hỏi
-                                        </Link>
-                                    </NavDropdown.Item>
-                                    <NavDropdown.Item>
-                                        <Link className="text-decoration-none text-dark">
-                                            Đăng xuất
-                                        </Link>
-                                    </NavDropdown.Item>
+
                                 </NavDropdown>
+
+                                <Nav.Link>  
+                                    <Link to='/faqs' className="text-decoration-none text-dark">
+                                        FAQs
+                                    </Link>
+                                </Nav.Link>
+                                {user === null ? 
+                                    <Link to='/login' className="btn btn-primary text-decoration-none">
+                                        Đăng nhập
+                                    </Link> : 
+                                    <NavDropdown
+                                        className="fw-bold text-dark"
+                                        title="Xin chào, user"
+                                        id="basic-nav-dropdown"
+                                    >
+                                        <NavDropdown.Item>
+                                            <Link
+                                                className="text-decoration-none text-dark"
+                                                onClick={handleShowUserDetail}
+                                            >
+                                                Thông tin tài khoản
+                                            </Link>
+                                        </NavDropdown.Item>
+                                        {/* <NavDropdown.Item>
+                                            <Link to='/admin' className="text-decoration-none text-dark">
+                                                Bảng điều khiển
+                                            </Link>
+                                        </NavDropdown.Item> */}
+                                        <NavDropdown.Item>
+                                            <Link to='/question-manage' className="text-decoration-none text-dark">
+                                                Quản lý câu hỏi
+                                            </Link>
+                                        </NavDropdown.Item>
+                                        <NavDropdown.Item>
+                                            <Link className="text-decoration-none text-dark">
+                                                Đăng xuất
+                                            </Link>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                }       
                             </Nav>
                         </Navbar.Collapse>
                     </span>
