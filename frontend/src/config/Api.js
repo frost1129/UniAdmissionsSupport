@@ -1,6 +1,8 @@
 import axios from "axios";
+import cookie from "react-cookies";
 
 const SERVER_CONTEXT = "/notbackend";
+const SERVER = "http://localhost:8080";
 
 export const endpoints = {
     "info": `${SERVER_CONTEXT}/api/info/`,
@@ -14,9 +16,19 @@ export const endpoints = {
     "top-admission-post": (admissionId) => `${SERVER_CONTEXT}/api/posts/top-five/${admissionId}/`, 
     "top-5-faqs": `${SERVER_CONTEXT}/api/faqs/top-5/`,
     "faqs": `${SERVER_CONTEXT}/api/faqs/`, 
-    "post-details": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}`
+    "post-details": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}`, 
+    "current-user": `${SERVER_CONTEXT}/api/current-user/`
+}
+
+export const authApi = () => {
+    return axios.create({
+        baseURL: SERVER, 
+        headers: {
+            "Authorization": cookie.load("token")
+        }
+    })
 }
 
 export default axios.create({
-    baseURL: "http://localhost:8080"
+    baseURL: SERVER
 });

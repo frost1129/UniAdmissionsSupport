@@ -27,7 +27,7 @@ const Faculties = () => {
                 </div>
 
                 {faculties.map(faculty => 
-                <div key={faculty.id} class="col-6 col-md-4 mb-3 text-center thumbnail">
+                <div key={faculty.id} className="col-6 col-md-4 mb-3 text-center thumbnail">
                     <Link to={`/faculties/${faculty.id}`} className="text-decoration-none">
                         <Card>
                             <Card.Img src="https://res.cloudinary.com/dbh8vdpi7/image/upload/v1694168330/img_cb2nq9.jpg"/>

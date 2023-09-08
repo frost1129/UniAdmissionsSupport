@@ -1,20 +1,64 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     Button,
     Container,
     Form,
-    FormCheck,
     Image,
     InputGroup,
     Row,
 } from "react-bootstrap";
-import FormCheckInput from "react-bootstrap/esm/FormCheckInput";
-import FormCheckLabel from "react-bootstrap/esm/FormCheckLabel";
 import ImgLogin from "../img/login_img.png";
 import "./signin.css"
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import Api, { authApi, endpoints } from "../config/Api";
+import cookie from "react-cookies";
+import { useContext } from "react";
+import { MyUserContext } from "../App";
 
 const SignIn = () => {
+    const [user, dispatch] = useContext(MyUserContext);
+    const [u, setU] = useState({
+        "email": "",
+        "password": ""
+    });
+
+    const login = (evt) => {
+        evt.preventDefault();
+
+        const process = async () => {
+            try {
+                let res = await Api.post(endpoints["login"], {
+                    "email": u.email,
+                    "password": u.password
+                });
+                cookie.save("token", res.data);
+                
+                let { data } = await authApi().get(endpoints["current-user"]);
+                cookie.save("user", data);
+                console.log(data);
+
+                dispatch({
+                    "type": "login", 
+                    "payload": data
+                })
+
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+
+        process();
+    }
+
+    const change = (evt, field) => {
+        setU(current => {
+            return {...current, [field]: evt.target.value}
+        })
+    }
+
+    if (user !== null)
+        return <Navigate to="/" />
+
     return (
         <Container className="d-flex justify-content-center align-items-center min-vh-100">
             <Row className="rounded-4 p-3 bg-white shadow box-area">
@@ -27,47 +71,31 @@ const SignIn = () => {
 
                 {/* SIGN IN */}
                 <Container className="col-md-6 rounded-4 bg-info-subtle right-box">
-                    <Form>
+                    <Form onSubmit={login}>
                         <div className="mb-4">
                             <h3 className="fw-bold">ĐĂNG NHẬP</h3>
                         </div>
                         <InputGroup className="mb-3 text-primary-emphasis">
                             <input
                                 type="text"
+                                onChange={(e) => change(e, "email")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Địa chỉ Email"
                                 name="email"
                             />
                         </InputGroup>
-                        <InputGroup className="mb-1">
+                        <InputGroup className="mb-3">
                             <input
                                 type="password"
+                                onChange={(e) => change(e, "password")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Mật khẩu"
                                 name="password"
                             />
                         </InputGroup>
-                        <InputGroup className="mb-5 d-flex justify-content-between">
-                            <FormCheck className="form-check">
-                                <FormCheckInput
-                                    type="checkbox"
-                                    id="formCheck"
-                                />
-                                <FormCheckLabel
-                                    for="formCheck"
-                                    className="text-secondary"
-                                >
-                                    <small>Ghi nhớ đăng nhập</small>
-                                </FormCheckLabel>
-                            </FormCheck>
-                            <div className="forgot">
-                                <small>
-                                    <a href="#quenmk">Quên mặt khẩu?</a>
-                                </small>
-                            </div>
-                        </InputGroup>
+                        
                         <InputGroup className="mb-3">
-                            <Button className="btn-lg btn-primary w-100 fs-6">
+                            <Button type="submit" className="btn-lg btn-primary w-100 fs-6">
                                 Đăng nhập
                             </Button>
                         </InputGroup>

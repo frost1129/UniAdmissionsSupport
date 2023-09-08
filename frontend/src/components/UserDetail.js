@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Button, Form, Image, Modal } from "react-bootstrap";
+import { MyUserContext } from "../App";
 
 const UserDetail = ({ onClose }) => {
+    const [user,] = useContext(MyUserContext);
+
     return (
         <Modal
             show="true"
@@ -24,7 +27,7 @@ const UserDetail = ({ onClose }) => {
                     <div className="text-center">
                         <Image
                             className="img-thumbnail img-avatar"
-                            src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                            src={user.image}
                             style={{width: "50vw", maxWidth: "160px"}}
                         />
                     </div>
@@ -39,23 +42,18 @@ const UserDetail = ({ onClose }) => {
                         </div>
                         <Form.Group className="mb-2">
                             <Form.Label>Địa chỉ Email</Form.Label>
-                            <Form.Control type="email" placeholder="email hiện tại của người dùng" readOnly/>
+                            <Form.Control type="email" placeholder={user.email} readOnly/>
                         </Form.Group>
                         <Form.Group className="mb-2">
                             <Form.Label>Họ và tên đệm</Form.Label>
-                            <Form.Control type="text" placeholder="họ và tên đệm hiện tại của người dùng"/>
+                            <Form.Control type="text" placeholder={user.lastName}/>
                         </Form.Group>
                         <Form.Group className="mb-2">
                             <Form.Label>Tên</Form.Label>
-                            <Form.Control type="text" placeholder="tên hiện tại của người dùng"/>
-                        </Form.Group>
-                        <Form.Group className="mb-2">
-                            <Form.Label>Mật khẩu</Form.Label>
-                            <Form.Control type="password" placeholder="Nhập mật khẩu để xác nhận thay đổi"/>
+                            <Form.Control type="text" placeholder={user.firstName}/>
                         </Form.Group>
                     </Form>
                 </div>
-                
 
                 {/* <div className="password">
                     <div className="d-flex justify-content-between align-items-end">

@@ -37,6 +37,12 @@ const Header = () => {
         }
     };
 
+    const logout = () => {
+        dispatch({
+            "type": "logout"
+        })
+    }
+
     useEffect(() => {
         const loadAdmissionType = async () => {
             let {data} = await Api.get(endpoints["admissions"]);
@@ -129,7 +135,7 @@ const Header = () => {
                                     </Link> : 
                                     <NavDropdown
                                         className="fw-bold text-dark"
-                                        title="Xin chào, user"
+                                        title={`Xin chào, ${user.firstName}`}
                                         id="basic-nav-dropdown"
                                     >
                                         <NavDropdown.Item>
@@ -151,7 +157,7 @@ const Header = () => {
                                             </Link>
                                         </NavDropdown.Item>
                                         <NavDropdown.Item>
-                                            <Link className="text-decoration-none text-dark">
+                                            <Link onClick={logout} className="text-decoration-none text-dark">
                                                 Đăng xuất
                                             </Link>
                                         </NavDropdown.Item>
