@@ -3,9 +3,16 @@ import { Button, Container, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const UserQuestion = () => {
+
+
+    const send = (evt) => {
+        evt.preventDefault();
+        
+    }
+
     return (
         <Container className="bg-white">
-            <Form className="col-md-10 mx-auto p-3 bg-white rounded shadow">
+            <Form onSubmit={send} className="col-md-10 mx-auto p-3 bg-white rounded shadow">
             <h3 className="text-center fw-bold mb-3">Câu hỏi tuyển sinh</h3>
                 <Form.Group className="mb-3">
                     <Form.Label>Họ và Tên</Form.Label>
@@ -26,9 +33,10 @@ const UserQuestion = () => {
                     <Form.Label>Nội dung câu hỏi</Form.Label>
                     <Form.Control as="textarea" rows={3} placeholder="Nhập nội dung câu hỏi ở đây" />
                 </Form.Group>
+                
                 <Form.Group className="mb-1 col-12 text-center">
                     Bạn có thể đăng nhập để gửi và lưu câu hỏi của mình 
-                    <Link className="mx-1">
+                    <Link to="/login" className="mx-1">
                     ở đây.
                     </Link>
                     <br/>

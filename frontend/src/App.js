@@ -46,6 +46,7 @@ const App = () => {
                     <Route path="/faqs" element={<FAQs/>} />
                     <Route path="/posts" element={<Posts/>} />
                     <Route path="/posts/:postId" element={<PostDetail/>} />
+                    <Route path="/faculties/:fId" element={<PostDetail />} />
 
                     <Route path="/admin/addpost" element={<PostConfig/>} />
                 

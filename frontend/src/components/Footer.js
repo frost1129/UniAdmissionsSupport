@@ -46,7 +46,7 @@ const Footer = () => {
     if (branches === null) return <MySpinner />;
 
     return (
-        <footer className="page-footer font-small blue pt-4">
+        <footer className="page-footer font-small blue pt-4 bg-primary-subtle">
             <div className="container-fluid text-center text-md-left">
                 <Row>
                     <div className="col-md-3 mt-md-0 mt-3 center img-fluid">

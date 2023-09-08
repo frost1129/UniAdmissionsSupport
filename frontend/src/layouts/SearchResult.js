@@ -1,9 +1,10 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Form, InputGroup } from "react-bootstrap";
 import SearchPostItem from "../components/SearchPostItem";
 import Paging from "../components/Paging";
+import { useNavigate } from "react-router-dom";
 
 const SearchResult = () => {
     const postData = {
@@ -11,6 +12,13 @@ const SearchResult = () => {
         type: "Loại hình tuyển sinh",
         date: "Ngày đăng",
     };
+    const [kw, setKw] = useState("");
+    const nav = useNavigate();
+
+    const search = (evt) => {
+        evt.preventDefault();
+        nav(`/search/?kw=${kw}`)
+    }
 
     return (
         <Container className="bg-white">
@@ -18,16 +26,21 @@ const SearchResult = () => {
                 <h3 className="text-uppercase text-center p-3">
                     Kết quả tìm kiếm
                 </h3>
-                <InputGroup className="mb-3 shadow-sm">
-                    <Form.Control
-                        placeholder="Nội dung cần tìm..."
-                        aria-label="Nội dung cần tìm..."
-                    />
-                    <Button variant="outline-secondary">
-                        Tìm kiếm
-                        <FontAwesomeIcon className="mx-1" icon={faSearch} />
-                    </Button>
-                </InputGroup>
+                <Form onSubmit={search}>
+                    <InputGroup className="mb-3 shadow-sm">
+                        <Form.Control
+                            type="text"
+                            value={kw}
+                            name="kw"
+                            onChange={e => setKw(e.target.value)}
+                            placeholder="Nội dung cần tìm..."
+                        />
+                        <Button type="submit" variant="outline-secondary">
+                            Tìm kiếm
+                            <FontAwesomeIcon className="mx-1" icon={faSearch} />
+                        </Button>
+                    </InputGroup>
+                </Form>
 
                 <Container>
                     <SearchPostItem post={postData}/>

@@ -7,7 +7,6 @@ package com.linhv.controller;
 
 import com.linhv.pojo.Banner;
 import com.linhv.pojo.Branch;
-import com.linhv.pojo.Topic;
 import com.linhv.pojo.UniMainInfo;
 import com.linhv.service.BannerService;
 import com.linhv.service.BranchService;
@@ -37,8 +36,6 @@ public class ApiUniInfoController {
     private BannerService bannerService;
     @Autowired
     private BranchService branchService;
-    @Autowired
-    private TopicService topicService;
 
     @GetMapping("/hello/")
     public ResponseEntity<String> hello() {
@@ -58,10 +55,5 @@ public class ApiUniInfoController {
     @GetMapping("/banners/")
     public ResponseEntity<List<Banner>> getBanners() {
         return new ResponseEntity<>(this.bannerService.getBanners(), HttpStatus.OK);
-    }
-    
-    @GetMapping("/topics/")
-    public ResponseEntity<List<Topic>> getTopics() {
-        return new ResponseEntity<>(this.topicService.getTopics(), HttpStatus.OK);
     }
 }

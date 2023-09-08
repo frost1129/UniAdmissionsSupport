@@ -5,7 +5,18 @@
 
 package com.linhv.controller;
 
+import com.linhv.pojo.Faqs;
+import com.linhv.service.FaqsService;
+import com.linhv.service.QuestionSettingService;
+import com.linhv.service.UserQuestionService;
+import java.util.List;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -15,5 +26,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api")
 public class ApiQuestionController {
-
+    
+    @Autowired
+    private FaqsService faqService;
+    
+    @Autowired
+    private QuestionSettingService settingService;
+    
+    @Autowired
+    private UserQuestionService questionService;
+    
+    @GetMapping("/faqs/top-5/")
+    public ResponseEntity<List<Faqs>> get5Faqs() {
+        return new ResponseEntity<>(this.faqService.getTop5Recent(), HttpStatus.OK);
+    }
+    
+    @GetMapping("/faqs/")
+    public ResponseEntity<List<Faqs>> getAllFaqs(@RequestParam Map<String, String> params) {
+        return new ResponseEntity<>(this.faqService.getAll(params), HttpStatus.OK);
+    }
 }

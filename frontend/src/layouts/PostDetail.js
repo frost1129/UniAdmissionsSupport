@@ -1,33 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Button, Card, Container, Form, Image } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
+import Api, { endpoints } from "../config/Api";
+import MySpinner from "../components/MySpinner";
+import { formatTimestamp } from "../config/Timestamp";
+import QuillHtmlRender from "../components/QuillHtmlRender";
 
 const PostDetail = () => {
+    const [post, setPost] = useState(null);
+    const { postId } = useParams();
+
+    useEffect(() => {
+        const loadPostDetai = async () => {
+            let {data} = await Api.get(endpoints["post-details"](postId));
+            const formattedDate = formatTimestamp(data.updatedDate);
+            setPost({
+                ...data, 
+                updatedDate: formattedDate,
+            });
+        }
+
+        loadPostDetai();
+    }, [postId]);
+
+    if (post === null) return <MySpinner />;
+
     return (
         <Container>
             <Container className="col-md-10 mx-auto bg-white">
                 <article>
+                    <Image className="img-fit mt-3" src={post.image} fluid rounded />
+
                     <header className="my-4">
                         <h3 className="fw-bold text-uppercase mt-3 text-primary">
-                            Tiêu đề bài viết...
+                            {post.title}
                         </h3>
                         <p className="text-muted fst-italic">
-                            Được đăng vào ngày ....
+                            Được đăng vào {post.updatedDate}
                         </p>
                         <Link className="badge bg-secondary text-decoration-none link-light">
-                            Loại hình tuyển sinh
+                            {post.admissionType.name}
                         </Link>
                     </header>
 
-                    <Image className="img-fit" src="https://dummyimage.com/900x400/ced4da/6c757d.jpg" fluid rounded />
-
                     <section className="my-4">
-                        some content here
+                        <QuillHtmlRender content={post.content} />
                     </section>
                 </article>
 
                 <section className="my-5">
+                    {post.postType === "post" ? 
                     <Card className="bg-light">
                         <Card.Body>
                             <Alert variant="success">
@@ -57,10 +80,10 @@ const PostDetail = () => {
                             </Form>
 
                             <h5 className="text-secondary">Bài viết chưa có bình luận nào!</h5>
-                            <Comment/>
-                            
+                            <Comment/>   
                         </Card.Body>
                     </Card>
+                    : "" }
                 </section>
             </Container>
         </Container>

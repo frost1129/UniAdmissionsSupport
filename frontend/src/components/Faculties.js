@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import Api, { endpoints } from "../config/Api";
+import MySpinner from "./MySpinner";
 
 const Faculties = () => {
+    const [faculties, setFaculties] = useState(null);
+
+    useEffect(() => {
+        const loadFaculties = async () => {
+            let {data} = await Api.get(endpoints["faculties"]);
+            setFaculties(data);
+        }
+
+        loadFaculties();
+    }, []);
+
+    if (faculties === null) return <MySpinner />;
+
     return (
         <Container id="faculties" className="col-md-10 mx-auto py-2 my-3 bg-white">
             <Row>
@@ -11,18 +26,18 @@ const Faculties = () => {
                     <p>Thông tin về các khoa đào tạo của trường Đại học Mở Thành phố Hồ Chí Minh.</p>
                 </div>
 
-                <div class="col-6 col-md-4 mb-3 text-center thumbnail">
-                    <Link className="text-decoration-none">
+                {faculties.map(faculty => 
+                <div key={faculty.id} class="col-6 col-md-4 mb-3 text-center thumbnail">
+                    <Link to={`/faculties/${faculty.id}`} className="text-decoration-none">
                         <Card>
-                            <Card.Img src="https://dummyimage.com/600x400/aaa/fff"/>
+                            <Card.Img src="https://res.cloudinary.com/dbh8vdpi7/image/upload/v1694168330/img_cb2nq9.jpg"/>
                             <Card.ImgOverlay>
-                                <h5 className="text-white pt-5 mt-5">Ten khoa ne`</h5>
+                                <h3 className="text-white pt-5 mt-5">{faculty.name}</h3>
                             </Card.ImgOverlay>
                         </Card>
                     </Link>
-
-
                 </div>
+                )}
             </Row>
         </Container>
     );

@@ -13,6 +13,7 @@ const Header = () => {
     const [showUserDetail, setShowUserDetail] = useState(false);
     const [toFaculties, setToFaculties] = useState(false);
     const [admissionTypes, setAdmissionTypes] = useState(null);
+    const [topics, setTopics] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -41,8 +42,14 @@ const Header = () => {
             let {data} = await Api.get(endpoints["admissions"]);
             setAdmissionTypes(data);
         }
+
+        const loadTopics = async () => {
+            let {data} = await Api.get(endpoints["topics"]);
+            setTopics(data);
+        }
         
         loadAdmissionType();
+        loadTopics();
     }, []);
 
     useEffect(() => {
@@ -52,7 +59,11 @@ const Header = () => {
         }
     }, [toFaculties]);
 
-    if (admissionTypes === null) return <MySpinner />;
+    useEffect(() => {
+        window.scrollTo(0, 0);
+      }, [location]);
+
+    if (admissionTypes === null || topics === null) return <MySpinner />;
 
     return (
         <>
@@ -98,12 +109,13 @@ const Header = () => {
                                     title="Có thể bạn quan tâm"
                                     id="basic-nav-dropdown"
                                 >
-                                    <NavDropdown.Item href="#action/3.1">
-                                        <Link to='/admin' className="text-decoration-none text-dark">
-                                            điểm chuẩn các năm
+                                    {topics.map(topic => 
+                                    <NavDropdown.Item key={topic.id}>
+                                        <Link to={`/posts/${topic.postId}`} className="text-decoration-none text-dark">
+                                            {topic.title}
                                         </Link>
                                     </NavDropdown.Item>
-
+                                    )}
                                 </NavDropdown>
 
                                 <Nav.Link>  

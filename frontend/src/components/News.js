@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faClock } from "@fortawesome/free-solid-svg-icons";
 import Api, { endpoints } from "../config/Api";
 import MySpinner from "./MySpinner";
+import { formatTimestamp } from "../config/Timestamp";
 
 const News = () => {
 
@@ -16,18 +17,6 @@ const News = () => {
     const [post1Remain, setPost1Remain] = useState([]);
     const [post2, setPost2] = useState([]);
     const [post3, setPost3] = useState([]);
-
-    const formatTimestamp = (timestamp) => {
-        const date = new Date(timestamp);
-        const hours = date.getHours().toString().padStart(2, '0');
-        const minutes = date.getMinutes().toString().padStart(2, '0');
-        const seconds = date.getSeconds().toString().padStart(2, '0');
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-
-        return `${hours}:${minutes}:${seconds} ${day}/${month}/${year}`;
-    }
 
     useEffect(() => {
         const loadAdmissionType = async () => {
@@ -85,7 +74,7 @@ const News = () => {
 
                 <div key={post1.id} className="col-sm-12 col-md-7 col-xs-12 col-lg-7">
                     <div className="thumb-container">
-                        <Link>
+                        <Link to={`/posts/${post1.id}`}>
                             <Image className="thumb mb-3 border-2" alt={post1.title} src={post1.image} rounded />
                         </Link>
                     </div>
@@ -95,7 +84,7 @@ const News = () => {
                             {post1.updatedDate}
                         </small>
                     </div>
-                    <Link className="text-decoration-none">
+                    <Link to={`/posts/${post1.id}`} className="text-decoration-none">
                         <h3>{post1.title}</h3>
                     </Link>
                 </div>
@@ -105,7 +94,7 @@ const News = () => {
                     <Row key={post.id} className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
-                                <Link>
+                                <Link to={`/posts/${post.id}`}>
                                     <Image className="thumb img-md" alt={post.title} src={post.image} rounded />
                                 </Link>
                             </div>
@@ -118,7 +107,7 @@ const News = () => {
                                 />
                                 {post.updatedDate}
                             </small>
-                            <Link className="text-decoration-none">
+                            <Link to={`/posts/${post.id}`} className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
                                     {post.title}
                                 </p>
@@ -149,7 +138,7 @@ const News = () => {
                     <Row key={post.id} className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
-                                <Link>
+                                <Link to={`/posts/${post.id}`}>
                                     <Image className="thumb img-md" alt={post.title} src={post.image} rounded />
                                 </Link>
                             </div>
@@ -162,7 +151,7 @@ const News = () => {
                                 />
                                 {post.updatedDate}
                             </small>
-                            <Link className="text-decoration-none">
+                            <Link to={`/posts/${post.id}`} className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
                                     {post.title}
                                 </p>
@@ -190,7 +179,7 @@ const News = () => {
                     <Row key={post.id} className="mt-3 news-md">
                         <div className="col-4">
                             <div className="thumb-container">
-                                <Link>
+                                <Link to={`/posts/${post.id}`}>
                                     <Image className="thumb img-md" alt={post.title} src={post.image} rounded />
                                 </Link>
                             </div>
@@ -203,7 +192,7 @@ const News = () => {
                                 />
                                 {post.updatedDate}
                             </small>
-                            <Link className="text-decoration-none">
+                            <Link to={`/posts/${post.id}`} className="text-decoration-none">
                                 <p className="mb-4 link-dark link-opacity-50-hover">
                                     {post.title}
                                 </p>
