@@ -43,11 +43,20 @@ public class AdmissionScoreRepositoryImpl implements AdmissionScoreRepository{
     }
     
     @Override
+    public List<AdmissionScore> get5ByFaculty(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM AdmissionScore a WHERE a.facultyId.id=:id ORDER BY a.year DESC");
+        q.setParameter("id", id);
+        q.setMaxResults(5);
+        
+        return q.getResultList();
+    }
+    
+    @Override
     public List<AdmissionScore> getAllByFaculty(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM AdmissionScore a WHERE a.facultyId.id=:id ORDER BY a.year DESC");
         q.setParameter("id", id);
-        
         
         return q.getResultList();
     }

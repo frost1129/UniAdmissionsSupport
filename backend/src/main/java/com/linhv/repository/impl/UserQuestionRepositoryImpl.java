@@ -84,10 +84,10 @@ public class UserQuestionRepositoryImpl implements UserQuestionRepository{
     public List<UserQuestion> getQuestionsByUserEmail(String email) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            Query q = s.createQuery("FROM UserQuestion uq WHERE uq.askUserEmail=:email");
+            Query q = s.createQuery("FROM UserQuestion WHERE askUserEmail=:email");
             q.setParameter("email", email);
             return q.getResultList();
-        } catch (HibernateException ex) {
+        } catch (NoResultException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -97,10 +97,10 @@ public class UserQuestionRepositoryImpl implements UserQuestionRepository{
     public List<UserQuestion> getQuestionsByAdmissionerId(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         try {
-            Query q = s.createQuery("FROM UserQuestion uq WHERE uq.answerUserId=:id");
+            Query q = s.createQuery("FROM UserQuestion WHERE answerUserId.id=:id");
             q.setParameter("id", id);
             return q.getResultList();
-        } catch (HibernateException ex) {
+        } catch (NoResultException ex) {
             ex.printStackTrace();
             return null;
         }
@@ -111,7 +111,7 @@ public class UserQuestionRepositoryImpl implements UserQuestionRepository{
         Session s = this.factory.getObject().getCurrentSession();
         
         try {
-            Query q = s.createQuery("FROM UserQuestion uq WHERE uq.answeruser IS NULL");
+            Query q = s.createQuery("FROM UserQuestion uq WHERE uq.answerUserId IS NULL");
             return q.getResultList();
         } catch (HibernateException ex) {
             ex.printStackTrace();

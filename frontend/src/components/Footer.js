@@ -109,7 +109,7 @@ const Footer = () => {
 
             <hr />
 
-            <div className="text-center my-3">
+            <div className="text-center py-3">
                 © 2023 Trường Đại học Mở Thành phố Hồ Chí Minh
             </div>
         </footer>

@@ -33,6 +33,11 @@ public class AdmissionScoreServiceImpl implements AdmissionScoreService{
     }
     
     @Override
+    public List<AdmissionScore> get5ByFaculty(int id) {
+        return this.admissionScoreRepo.get5ByFaculty(id);
+    }
+    
+    @Override
     public List<AdmissionScore> getAllByFaculty(int id) {
         return this.admissionScoreRepo.getAllByFaculty(id);
     }

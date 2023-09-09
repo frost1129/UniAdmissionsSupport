@@ -3,7 +3,7 @@ import { Container, Nav, NavDropdown, Navbar } from "react-bootstrap";
 
 import logo from "../img/ou_logo_long.png";
 import UserDetail from "./UserDetail";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Api, { endpoints } from "../config/Api";
 import MySpinner from "./MySpinner";
 import { MyUserContext } from "../App";
@@ -67,7 +67,7 @@ const Header = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, [location]);
+    }, [location]);
 
     if (admissionTypes === null || topics === null) return <MySpinner />;
 
@@ -156,11 +156,14 @@ const Header = () => {
                                                 Quản lý câu hỏi
                                             </Link>
                                         </NavDropdown.Item>
-                                        <NavDropdown.Item>
-                                            <Link onClick={logout} className="text-decoration-none text-dark">
-                                                Đăng xuất
-                                            </Link>
-                                        </NavDropdown.Item>
+                                        {location.pathname !== '/question-manage' ? 
+                                            <NavDropdown.Item>
+                                                <Link onClick={logout} className="text-decoration-none text-dark">
+                                                    Đăng xuất
+                                                </Link>
+                                            </NavDropdown.Item>
+                                        : ""}
+                                    
                                     </NavDropdown>
                                 }       
                             </Nav>

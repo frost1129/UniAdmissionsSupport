@@ -17,7 +17,13 @@ export const endpoints = {
     "top-5-faqs": `${SERVER_CONTEXT}/api/faqs/top-5/`,
     "faqs": `${SERVER_CONTEXT}/api/faqs/`, 
     "post-details": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}`, 
-    "current-user": `${SERVER_CONTEXT}/api/current-user/`
+    "current-user": `${SERVER_CONTEXT}/api/current-user/`, 
+    "question-unanswer": `${SERVER_CONTEXT}/api/user-questions/unanswer/`,
+    "question-admission": (admissionId) => `${SERVER_CONTEXT}/api/user-questions/advisor/${admissionId}/`,
+    "question-email": (email) => `${SERVER_CONTEXT}/api/user-questions/${email}/`, 
+    "faculty-post": (id) => `${SERVER_CONTEXT}/api/faculty-post/${id}/`, 
+    "faculty-score": (id) => `${SERVER_CONTEXT}/api/faculty-score/${id}/`, 
+    "faculty-detail": (id) => `${SERVER_CONTEXT}/api/faculties/${id}/`, 
 }
 
 export const authApi = () => {

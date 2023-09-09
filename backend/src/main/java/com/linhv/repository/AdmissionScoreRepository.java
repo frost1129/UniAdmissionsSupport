@@ -14,6 +14,7 @@ import java.util.List;
 public interface AdmissionScoreRepository {
     List<Integer> getAllAdmissionYear();
     List<AdmissionScore> getAll();
+    List<AdmissionScore> get5ByFaculty(int id);
     List<AdmissionScore> getAllByFaculty(int id);
     AdmissionScore getFacultyScoreByYear(int fId, int year);
     boolean add(AdmissionScore as);
