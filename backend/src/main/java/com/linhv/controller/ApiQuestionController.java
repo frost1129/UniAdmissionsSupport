@@ -62,15 +62,16 @@ public class ApiQuestionController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
-    @GetMapping("/user-questions/{email}/")
-    public ResponseEntity<List<UserQuestion>> getQuestionsByEmail(@PathVariable(value = "email") String email) {
-        List<UserQuestion> list = this.questionService.getQuestionsByUserEmail(email);
+    @GetMapping("/user-questions/by-email/")
+    public ResponseEntity<List<UserQuestion>> getQuestionsByEmail(Principal user) {
+        List<UserQuestion> list = this.questionService.getQuestionsByUserEmail(user.getName());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
-    @GetMapping("/user-questions/advisor/{admissionId}/")
-    public ResponseEntity<List<UserQuestion>> getQuestionsByAdmission(@PathVariable(value = "admissionId") int id) {
-        List<UserQuestion> list = this.questionService.getQuestionsByAdmissionerId(id);
+    @GetMapping("/user-questions/advisor/")
+    public ResponseEntity<List<UserQuestion>> getQuestionsByAdmission(Principal user) {
+        User u = this.userService.getUserByEmail(user.getName());
+        List<UserQuestion> list = this.questionService.getQuestionsByAdmissionerId(u.getId());
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

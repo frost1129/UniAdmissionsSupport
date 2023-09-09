@@ -6,7 +6,7 @@ import { Alert, Button, Container, Form, Modal, Table } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { MyUserContext } from "../App";
 import { useEffect } from "react";
-import Api, { endpoints } from "../config/Api";
+import Api, { authApi, endpoints } from "../config/Api";
 import MySpinner from "../components/MySpinner";
 import { formatTimestamp } from "../config/Timestamp";
 
@@ -35,7 +35,7 @@ const QuestionManage = () => {
         }
 
         const loadEmailQues = async () => {
-            let {data} = await Api.get(endpoints["question-email"](user.email));
+            let {data} = await authApi().get(endpoints["question-email"]);
             const formattedData = data.map(d => ({
                 ...d,
                 submitTime: formatTimestamp(d.submitTime),
@@ -44,7 +44,7 @@ const QuestionManage = () => {
         }
 
         const loadAdvisorQues = async () => {
-            let {data} = await Api.get(endpoints["question-admission"](user.id));
+            let {data} = await authApi().get(endpoints["question-admission"]);
             const formattedData = data.map(d => ({
                 ...d,
                 submitTime: formatTimestamp(d.submitTime),
