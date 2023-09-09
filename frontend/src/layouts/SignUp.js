@@ -40,10 +40,10 @@ const SignUp = () => {
             setErr("Hiện tại hệ thống đang trục trặc, vui lòng thử lại sau.");
         }
 
-        if (user.password === user.confirmPass)
-            process();
-        else {
+        if (user.password !== user.confirmPass)
             setErr("Mật khẩu xác nhận không khớp!");
+        else {
+            process();
         }
     }
 
@@ -78,6 +78,7 @@ const SignUp = () => {
                                 onChange={(e) => change(e, "email")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Địa chỉ Email"
+                                required
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -86,6 +87,7 @@ const SignUp = () => {
                                 onChange={(e) => change(e, "lastName")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Họ và tên đệm"
+                                required
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -94,6 +96,7 @@ const SignUp = () => {
                                 onChange={(e) => change(e, "firstName")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Tên"
+                                required
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -102,6 +105,7 @@ const SignUp = () => {
                                 onChange={(e) => change(e, "password")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Mật khẩu"
+                                required
                             />
                         </InputGroup>
                         <InputGroup className="mb-3">
@@ -110,6 +114,7 @@ const SignUp = () => {
                                 onChange={(e) => change(e, "confirmPass")}
                                 className="form-control form-control-lg bg-light fs-6"
                                 placeholder="Xác nhận mật khẩu"
+                                required
                             />
                         </InputGroup>
                         <Form.Group className="mb-3">

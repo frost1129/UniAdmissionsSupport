@@ -5,9 +5,13 @@
 
 package com.linhv.service.impl;
 
+import com.linhv.pojo.AdmissionType;
 import com.linhv.pojo.UserQuestion;
 import com.linhv.repository.UserQuestionRepository;
+import com.linhv.service.AdmissionTypeService;
 import com.linhv.service.UserQuestionService;
+import com.linhv.service.UserService;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,9 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     
     @Autowired
     private UserQuestionRepository questionRepo;
+    
+    @Autowired
+    private UserService userService;
 
     @Override
     public List<UserQuestion> getAllQuestions(Map<String, String> params) {
@@ -54,13 +61,24 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     }
 
     @Override
-    public boolean updateQuestion(UserQuestion question) {
-        return this.questionRepo.updateQuestion(question);
+    public boolean updateQuestion(Map<String, String> params) {
+        UserQuestion ques = this.getQuestionById(Integer.parseInt(params.get("id")));
+        ques.setAnswer(params.get("answer"));
+        ques.setAnswerUserId(this.userService.getUserByEmail(params.get("answerUser")));
+        
+        return this.questionRepo.updateQuestion(ques);
     }
 
     @Override
-    public UserQuestion addQuestion(UserQuestion question) {
-        return this.questionRepo.addQuestion(question);
+    public UserQuestion addQuestion(Map<String, String> params) {
+        UserQuestion ques = new UserQuestion();
+        
+        ques.setContent(params.get("content"));
+        ques.setAskUserEmail(params.get("askUser"));
+        ques.setAdmissionType(new AdmissionType(Integer.valueOf(params.get("admissionType"))));
+        ques.setSubmitTime(new Date());
+        
+        return this.questionRepo.addQuestion(ques);
     }
 
     @Override

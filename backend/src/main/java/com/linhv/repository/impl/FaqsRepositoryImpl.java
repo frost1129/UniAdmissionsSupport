@@ -73,7 +73,7 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         
         if (params != null) {
             String page = params.get("page");
-            int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+            int pageSize = Integer.parseInt(this.env.getProperty("FAQS_PAGE_SIZE"));
 
             if (page != null) {
                 query.setFirstResult((Integer.parseInt(page) - 1) * pageSize);
