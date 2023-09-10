@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +40,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("/api")
+@PropertySource("classpath:configs.properties")
 public class ApiQuestionController {
     
     @Autowired
@@ -52,6 +55,9 @@ public class ApiQuestionController {
     @Autowired
     private UserQuestionService questionService;
     
+    @Autowired
+    private Environment env;
+    
     @GetMapping("/questions/setting/")
     public ResponseEntity<QuestionSettings> getSetting() {
         return new ResponseEntity<>(this.settingService.getTime(), HttpStatus.OK);
@@ -65,6 +71,14 @@ public class ApiQuestionController {
     @GetMapping("/faqs/")
     public ResponseEntity<List<Faqs>> getAllFaqs(@RequestParam Map<String, String> params) {
         return new ResponseEntity<>(this.faqService.getAll(params), HttpStatus.OK);
+    }
+    
+    @GetMapping("/faqs/counter/")
+    public ResponseEntity<Integer> countAllFaqs(@RequestParam Map<String, String> params) {
+        Long count = this.faqService.countAllByParams(params);
+        int pageSize = Integer.parseInt(this.env.getProperty("PAGE_SIZE"));
+        int counter = (int) Math.ceil(count*1.0/pageSize);
+        return new ResponseEntity<>(counter, HttpStatus.OK);
     }
     
     @GetMapping("/user-questions/unanswer/")

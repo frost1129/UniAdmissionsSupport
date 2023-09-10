@@ -3,20 +3,46 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import {
     Accordion,
+    Alert,
     Button,
     Container,
     Form,
     InputGroup,
+    Pagination,
 } from "react-bootstrap";
 import Api, { endpoints } from "../config/Api";
 import MySpinner from "../components/MySpinner";
 import QuillHtmlRender from "../components/QuillHtmlRender";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const FAQs = () => {
     const [faqs, setFaqs] = useState([]);
+
+    const [counter, setCounter] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [q, setQ] = useSearchParams();
     const [kw, setKw] = useState("");
     const nav = useNavigate();
+
+    let items = [];
+    for (let number = 1; number <= counter; number++) {
+        items.push(
+            <Pagination.Item 
+                key={number} 
+                active={number === currentPage}
+                onClick={() => handlePageClick(number)}
+            >
+                {number}
+            </Pagination.Item>
+        );
+    }
+
+    const handlePageClick = (pageNum) => {
+        let updatedSearchParams = new URLSearchParams(q.toString());
+        updatedSearchParams.set('page', pageNum);
+        setQ(updatedSearchParams.toString());
+        setCurrentPage(pageNum);
+    }
 
     const search = (evt) => {
         evt.preventDefault();
@@ -24,15 +50,48 @@ const FAQs = () => {
     }
 
     useEffect(() => {
-        const loadFaqs = async () => {
-            let {data} = await Api.get(endpoints["faqs"]);
-            setFaqs(data);
+        const loadCounter = async () => {
+            let e = endpoints["faqs-count"];
+            e = `${e}?`
+
+            let searchKw = q.get("kw");
+            if (searchKw !== null) {
+                e = `${e}kw=${searchKw}`;
+            }
+
+            let resCount = await Api.get(e);
+            setCounter(resCount.data);
         }
 
-        loadFaqs();
-    }, []);
+        const loadFaqs = async () => {
+            try {
+                let e = endpoints["faqs"];
+                e = `${e}?`
 
-    if (faqs === null) return <MySpinner />;
+                let searchKw = q.get("kw");
+                if (searchKw !== null) {
+                    e = `${e}kw=${searchKw}`;
+                }
+
+                let paging = q.get("page");
+                if (paging !== null) 
+                    e = `${e}&page=${paging}`;
+                else 
+                    e = `${e}&page=1`;
+
+                let res = await Api.get(e);
+
+                setFaqs(res.data);
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+
+        loadCounter();
+        loadFaqs();
+    }, [q]);
+
+    if (faqs === null || counter === null) return <MySpinner />;
 
     return (
         <Container className="bg-white">
@@ -56,6 +115,7 @@ const FAQs = () => {
                     </InputGroup>
                 </Form>
 
+                {faqs.length === 0 ? <Alert variant="warning">Không có câu hỏi nào chứa từ khóa trên</Alert> : 
                 <Container fluid>
                     <Accordion flush>
                         
@@ -72,6 +132,11 @@ const FAQs = () => {
 
                     </Accordion>
                 </Container>
+                }
+
+                {counter === 0 ? "" : 
+                    <Pagination className="justify-content-center my-3">{items}</Pagination>
+                }
             </Container>
         </Container>
     );

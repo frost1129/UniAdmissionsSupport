@@ -16,6 +16,7 @@ export const endpoints = {
     "login": `${SERVER_CONTEXT}/api/login/`, 
     "top-admission-post": (admissionId) => `${SERVER_CONTEXT}/api/posts/top-five/${admissionId}/`, 
     "top-5-faqs": `${SERVER_CONTEXT}/api/faqs/top-5/`,
+    "faqs-count": `${SERVER_CONTEXT}/api/faqs/counter/`, 
     "faqs": `${SERVER_CONTEXT}/api/faqs/`, 
     "posts": `${SERVER_CONTEXT}/api/posts/`, 
     "posts-count": `${SERVER_CONTEXT}/api/posts/counter/`, 

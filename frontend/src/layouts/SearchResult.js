@@ -40,7 +40,7 @@ const SearchResult = () => {
 
     const search = (evt) => {
         evt.preventDefault();
-        nav(`/search/?kw=${kw}&page=1`);
+        nav(`/search/?kw=${kw}`);
     }
 
     useEffect(() => {

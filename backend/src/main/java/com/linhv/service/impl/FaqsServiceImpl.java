@@ -66,4 +66,9 @@ public class FaqsServiceImpl implements FaqsService{
         return this.faqsRepo.countAll();
     }
 
+    @Override
+    public Long countAllByParams(Map<String, String> params) {
+        return this.faqsRepo.countAllByParams(params);
+    }
+
 }

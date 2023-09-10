@@ -54,7 +54,7 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         Session session = this.factory.getObject().getCurrentSession();
         CriteriaBuilder b = session.getCriteriaBuilder();
         CriteriaQuery<Faqs> q = b.createQuery(Faqs.class);
-        Root root = q.from(Faqs.class);
+        Root<Faqs> root = q.from(Faqs.class);
         q.select(root);
         
          if (params != null) {
@@ -135,6 +135,29 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         Query q = s.createQuery("SELECT COUNT(*) FROM Faqs");
         
         return Long.valueOf(q.getSingleResult().toString());
+    }
+
+    @Override
+    public Long countAllByParams(Map<String, String> params) {
+        Session session = this.factory.getObject().getCurrentSession();
+        CriteriaBuilder b = session.getCriteriaBuilder();
+        CriteriaQuery<Long> q = b.createQuery(Long.class);
+        Root<Faqs> root = q.from(Faqs.class);
+        q.select(b.count(root));
+        
+        if (params != null) {
+            List<Predicate> predicates = new ArrayList<>();
+            
+            String kw = params.get("kw");
+            if (kw != null && !kw.isEmpty()) {
+                predicates.add(b.like(root.get("title"), String.format("%%%s%%", kw)));
+            }
+            
+            q.where(predicates.toArray(Predicate[]::new));
+        }
+
+        Query query = session.createQuery(q);
+        return (Long) query.getSingleResult();
     }
 
 }

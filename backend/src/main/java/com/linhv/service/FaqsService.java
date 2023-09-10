@@ -20,4 +20,5 @@ public interface FaqsService {
     boolean update(Faqs f);
     boolean delete(Faqs f);
     Long countAll();
+    Long countAllByParams(Map<String, String> params);
 }
