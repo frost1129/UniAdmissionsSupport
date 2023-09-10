@@ -42,12 +42,12 @@ public class ApiFacultyController {
         return new ResponseEntity<>(this.facultyService.getFacultyById(id), HttpStatus.OK);
     }
     
-    @GetMapping("/faculty-score/{id}/")
+    @GetMapping("/faculties/faculty-score/{id}/")
     ResponseEntity<List<AdmissionScore>> getFacultyScore(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.scoreService.get5ByFaculty(id), HttpStatus.OK);
     }
     
-    @GetMapping("/faculty-post/{id}/")
+    @GetMapping("/faculties/faculty-post/{id}/")
     ResponseEntity<FacultyPost> getFacultyPost(@PathVariable(value = "id") int id) {
         return new ResponseEntity<>(this.facultyService.getFacultyPostById(id), HttpStatus.OK);
     }

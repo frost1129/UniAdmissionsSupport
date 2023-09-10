@@ -22,7 +22,7 @@ const UserDetail = ({ onClose }) => {
                 <div className="avatar mb-4">
                     <div className="d-flex justify-content-between align-items-end">
                         <h6>Ảnh đại diện</h6>
-                        <Button variant="outline-primary">Chỉnh sửa</Button>
+                        {/* <Button variant="outline-primary">Chỉnh sửa</Button> */}
                     </div>
                     <div className="text-center">
                         <Image
@@ -36,21 +36,21 @@ const UserDetail = ({ onClose }) => {
                     <Form>
                         <div className="d-flex justify-content-between align-items-end">
                             <h6>Thông tin cá nhân</h6>
-                            <Button type="submit" variant="outline-primary">
+                            {/* <Button type="submit" variant="outline-primary">
                                 Lưu chỉnh sửa
-                            </Button>
+                            </Button> */}
                         </div>
                         <Form.Group className="mb-2">
                             <Form.Label>Địa chỉ Email</Form.Label>
-                            <Form.Control type="email" placeholder={user.email} readOnly/>
+                            <Form.Control type="email" value={user.email} readOnly/>
                         </Form.Group>
                         <Form.Group className="mb-2">
                             <Form.Label>Họ và tên đệm</Form.Label>
-                            <Form.Control type="text" placeholder={user.lastName}/>
+                            <Form.Control type="text" value={user.lastName} readOnly/>
                         </Form.Group>
                         <Form.Group className="mb-2">
                             <Form.Label>Tên</Form.Label>
-                            <Form.Control type="text" placeholder={user.firstName}/>
+                            <Form.Control type="text" value={user.firstName} readOnly/>
                         </Form.Group>
                     </Form>
                 </div>

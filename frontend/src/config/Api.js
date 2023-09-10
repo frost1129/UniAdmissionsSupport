@@ -14,7 +14,8 @@ export const endpoints = {
     "topics": `${SERVER_CONTEXT}/api/topics/`,
     
     "register": `${SERVER_CONTEXT}/api/users/`,
-    "login": `${SERVER_CONTEXT}/api/login/`, 
+    "login": `${SERVER_CONTEXT}/api/login/`,
+
     "current-user": `${SERVER_CONTEXT}/api/current-user/`, 
     
     "top-5-faqs": `${SERVER_CONTEXT}/api/faqs/top-5/`,
@@ -36,8 +37,8 @@ export const endpoints = {
     "question-add": `${SERVER_CONTEXT}/api/user-question/add/`, 
     "question-update": `${SERVER_CONTEXT}/api/user-question/update/`, 
 
-    "faculty-post": (id) => `${SERVER_CONTEXT}/api/faculty-post/${id}/`, 
-    "faculty-score": (id) => `${SERVER_CONTEXT}/api/faculty-score/${id}/`, 
+    "faculty-post": (id) => `${SERVER_CONTEXT}/api/faculties/faculty-post/${id}/`, 
+    "faculty-score": (id) => `${SERVER_CONTEXT}/api/faculties/faculty-score/${id}/`, 
     "faculty-detail": (id) => `${SERVER_CONTEXT}/api/faculties/${id}/`, 
 }
 

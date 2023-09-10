@@ -63,7 +63,7 @@ const PostDetail = () => {
                                         <p className="mb-0">
                                             Hãy đăng nhập để có thể bắt đầu để lại bình luận.
                                         </p>
-                                        <Link className="btn btn-outline-success">
+                                        <Link to="/login" className="btn btn-outline-success">
                                             Đăng nhập
                                         </Link>
                                     </div>
@@ -72,7 +72,7 @@ const PostDetail = () => {
                                         <p className="mb-0">
                                             Nếu chưa có tài khoản, bạn có thể bắt đầu bằng việc đăng ký tài khoản.
                                         </p>
-                                        <Link className="btn btn-outline-warning">
+                                        <Link to="/signup" className="btn btn-outline-warning">
                                             Đăng ký
                                         </Link>
                                     </div>
@@ -98,7 +98,7 @@ const PostDetail = () => {
                                         <p className="mb-0">
                                             Hãy đăng nhập để có thể bắt đầu gửi câu hỏi cho buổi livestream.
                                         </p>
-                                        <Link className="btn btn-outline-success">
+                                        <Link to="/login" className="btn btn-outline-success">
                                             Đăng nhập
                                         </Link>
                                     </div>
@@ -107,7 +107,7 @@ const PostDetail = () => {
                                         <p className="mb-0">
                                             Nếu chưa có tài khoản, bạn có thể bắt đầu bằng việc đăng ký tài khoản.
                                         </p>
-                                        <Link className="btn btn-outline-warning">
+                                        <Link to="/signup" className="btn btn-outline-warning">
                                             Đăng ký
                                         </Link>
                                     </div>
