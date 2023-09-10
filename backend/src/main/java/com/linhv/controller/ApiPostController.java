@@ -67,4 +67,5 @@ public class ApiPostController {
         int counter = (int) Math.ceil(count*1.0/pageSize);
         return new ResponseEntity<>(counter, HttpStatus.OK);
     }
+    
 }
