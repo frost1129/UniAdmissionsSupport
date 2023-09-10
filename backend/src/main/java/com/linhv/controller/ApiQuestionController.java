@@ -58,7 +58,6 @@ public class ApiQuestionController {
     @Autowired
     private Environment env;
     
-    
     @GetMapping("/questions/setting/")
     public ResponseEntity<QuestionSettings> getSetting() {
         return new ResponseEntity<>(this.settingService.getTime(), HttpStatus.OK);
