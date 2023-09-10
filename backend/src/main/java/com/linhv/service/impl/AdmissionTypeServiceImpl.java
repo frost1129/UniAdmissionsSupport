@@ -27,4 +27,9 @@ public class AdmissionTypeServiceImpl implements AdmissionTypeService{
         return this.admissionTypeRepo.getAllAdmissionType();
     }
 
+    @Override
+    public AdmissionType getById(int id) {
+        return this.admissionTypeRepo.findAdmissionTypeById(id);
+    }
+
 }

@@ -1,24 +1,99 @@
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
-import { Button, Container, Form, InputGroup } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
+import { Alert, Button, Container, Form, InputGroup, Pagination } from "react-bootstrap";
 import SearchPostItem from "../components/SearchPostItem";
 import Paging from "../components/Paging";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import Api, { endpoints } from "../config/Api";
+import { formatTimestamp } from "../config/Timestamp";
+import MySpinner from "../components/MySpinner";
 
 const SearchResult = () => {
-    const postData = {
-        title: "Tiêu đề bài viết 123",
-        type: "Loại hình tuyển sinh",
-        date: "Ngày đăng",
-    };
+    const [posts, setPosts] = useState(null);
+
+    const [counter, setCounter] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [q, setQ] = useSearchParams();
     const [kw, setKw] = useState("");
     const nav = useNavigate();
 
+    let items = [];
+    for (let number = 1; number <= counter; number++) {
+        items.push(
+            <Pagination.Item 
+                key={number} 
+                active={number === currentPage}
+                onClick={() => handlePageClick(number)}
+            >
+                {number}
+            </Pagination.Item>
+        );
+    }
+
+    const handlePageClick = (pageNum) => {
+        let updatedSearchParams = new URLSearchParams(q.toString());
+        updatedSearchParams.set('page', pageNum);
+        setQ(updatedSearchParams.toString());
+        setCurrentPage(pageNum);
+    }
+
     const search = (evt) => {
         evt.preventDefault();
-        nav(`/search/?kw=${kw}`)
+        nav(`/search/?kw=${kw}&page=1`);
     }
+
+    useEffect(() => {
+        const loadCounter = async () => {
+            let e = endpoints["posts-count"];
+            e = `${e}?`
+
+            let searchKw = q.get("kw");
+            if (searchKw !== null) {
+                e = `${e}kw=${searchKw}`;
+            }
+
+            let resCount = await Api.get(e);
+            setCounter(resCount.data);
+        }
+
+        const loadPosts = async () => {
+            try {
+                let e = endpoints["posts"];
+                e = `${e}?`
+
+                let searchKw = q.get("kw");
+                if (searchKw !== null) {
+                    e = `${e}kw=${searchKw}`;
+                }
+
+                let paging = q.get("page");
+                if (paging !== null) 
+                    e = `${e}&page=${paging}`;
+                else 
+                    e = `${e}&page=1`;
+
+                let res = await Api.get(e);
+
+                const formattedData = res.data.map(post => ({
+                    ...post,
+                    updatedDate: formatTimestamp(post.updatedDate),
+                }));
+
+                setPosts(formattedData);
+            } catch (ex) {
+                console.error(ex);
+            }
+        }
+
+        loadPosts();
+        loadCounter();
+        setKw("");
+    }, [q]);
+
+    if (posts === null || counter === null) return <MySpinner />;
+
+    console.log(posts);
 
     return (
         <Container className="bg-white">
@@ -42,18 +117,17 @@ const SearchResult = () => {
                     </InputGroup>
                 </Form>
 
-                <Container>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                    <SearchPostItem post={postData}/>
-                </Container>
+                {posts.length === 0 ? <Alert variant="warning">Không có bài viết nào với từ khóa này</Alert> : 
+                    <Container className="mb-3">
+                        {posts.map(post => 
+                            <SearchPostItem key={post.id} post={post} />
+                        )}
+                    </Container>
+                }
 
-                <Paging />
+                {counter === 0 ? "" : 
+                    <Pagination className="justify-content-center">{items}</Pagination>
+                }
             </Container>
         </Container>
     );

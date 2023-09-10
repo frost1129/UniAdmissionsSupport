@@ -25,6 +25,7 @@ const Search = () => {
                         name="kw"
                         onChange={e => setKw(e.target.value)}
                         placeholder="Nội dung cần tìm..."
+                        required
                     />
                     <Button type="submit" variant="outline-light">
                         Tìm kiếm

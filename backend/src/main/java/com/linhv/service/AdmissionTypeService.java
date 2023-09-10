@@ -13,4 +13,5 @@ import java.util.List;
  */
 public interface AdmissionTypeService {
     List<AdmissionType> getAdmissionType();
+    AdmissionType getById(int id);
 }
