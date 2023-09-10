@@ -159,5 +159,4 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         Query query = session.createQuery(q);
         return (Long) query.getSingleResult();
     }
-
 }
