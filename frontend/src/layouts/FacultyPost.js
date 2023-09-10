@@ -67,7 +67,7 @@ const FacultyPost = () => {
                         </div>
                     
                         {score.map(s => 
-                            <div key={s.id} className="col-6 col-md-3 mb-3 mx-3 bg-white d-flex rounded shadow">
+                            <div key={s.id} className="col-6 col-md-3 mb-3 mx-3 pt-3 bg-white d-flex rounded shadow">
                                 <p>
                                     <b>Năm {s.year}: <br/></b>
                                     <QuillHtmlRender content={s.content} />

@@ -6,9 +6,11 @@
 package com.linhv.service.impl;
 
 import com.linhv.pojo.AdmissionType;
+import com.linhv.pojo.User;
 import com.linhv.pojo.UserQuestion;
 import com.linhv.repository.UserQuestionRepository;
 import com.linhv.service.AdmissionTypeService;
+import com.linhv.service.MailService;
 import com.linhv.service.UserQuestionService;
 import com.linhv.service.UserService;
 import java.util.Date;
@@ -29,6 +31,9 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private MailService mailService;
 
     @Override
     public List<UserQuestion> getAllQuestions(Map<String, String> params) {
@@ -61,10 +66,13 @@ public class UserQuestionServiceImpl implements UserQuestionService{
     }
 
     @Override
-    public boolean updateQuestion(Map<String, String> params) {
-        UserQuestion ques = this.getQuestionById(Integer.parseInt(params.get("id")));
-        ques.setAnswer(params.get("answer"));
-        ques.setAnswerUserId(this.userService.getUserByEmail(params.get("answerUser")));
+    public boolean updateQuestion(UserQuestion question) {
+        UserQuestion ques = this.getQuestionById(question.getId());
+        ques.setAnswer(question.getAnswer());
+        ques.setAnswerUserId(question.getAnswerUserId());
+        
+        User u = userService.getUserByEmail(ques.getAskUserEmail());
+        mailService.sendQuestionAnswered(u);
         
         return this.questionRepo.updateQuestion(ques);
     }
@@ -77,6 +85,11 @@ public class UserQuestionServiceImpl implements UserQuestionService{
         ques.setAskUserEmail(params.get("askUser"));
         ques.setAdmissionType(new AdmissionType(Integer.valueOf(params.get("admissionType"))));
         ques.setSubmitTime(new Date());
+        
+        List<User> advisors = userService.getAllUserByAdmissionType(Integer.valueOf(params.get("admissionType")));
+        for (User advisor : advisors) {
+            mailService.sendNewQuestionMail(advisor);
+        }
         
         return this.questionRepo.addQuestion(ques);
     }

@@ -19,5 +19,6 @@ public interface UserRepository {
     boolean authUser(String email, String password);
     boolean updateUser(User user);
     List<User> getAllUser(Map<String, String> params);
+    List<User> getAllUserByAdmissionType(int admissionId);
     Long countAll();
 }

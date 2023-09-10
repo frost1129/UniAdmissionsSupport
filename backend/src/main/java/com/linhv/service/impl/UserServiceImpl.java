@@ -160,4 +160,9 @@ public class UserServiceImpl implements UserService{
     public Long countAll() {
         return this.userRepo.countAll();
     }
+
+    @Override
+    public List<User> getAllUserByAdmissionType(int admissionId) {
+        return this.userRepo.getAllUserByAdmissionType(admissionId);
+    }
 }

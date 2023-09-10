@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
@@ -85,6 +86,14 @@ public class ApiQuestionController {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
     
+    @GetMapping(path="/user-questions/{id}/", produces = {MediaType.APPLICATION_JSON_VALUE})
+    public ResponseEntity<UserQuestion> getQuestionById(@PathVariable(value = "id")int id) {
+        UserQuestion uq = this.questionService.getQuestionById(id);
+        if (uq == null)
+            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(uq, HttpStatus.OK);
+    }
+    
     @PostMapping(path = "/user-question/add/", 
             consumes = {MediaType.MULTIPART_FORM_DATA_VALUE}, 
             produces = {MediaType.APPLICATION_JSON_VALUE})
@@ -94,13 +103,13 @@ public class ApiQuestionController {
         return new ResponseEntity<>(uq, HttpStatus.CREATED);
     }
     
-    @PutMapping("/user-question/update/")
-    public ResponseEntity<Void> addAnswer(@RequestParam Map<String, String> params, Principal ansUser) {
-        if (this.questionService.getQuestionById(Integer.parseInt(params.get("id"))) == null)
+    @PutMapping(path = "/user-question/update/")
+    public ResponseEntity<Void> addAnswer(@RequestBody UserQuestion uq, Principal ansUser) {
+        if (this.questionService.getQuestionById(uq.getId()) == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         
-        params.put("answerUser", ansUser.getName());
-        if (this.questionService.updateQuestion(params))
+        uq.setAnswerUserId(this.userService.getUserByEmail(ansUser.getName()));
+        if (this.questionService.updateQuestion(uq))
             return new ResponseEntity<>(HttpStatus.OK);
         
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

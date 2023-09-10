@@ -19,7 +19,7 @@ public interface UserQuestionService {
     List<UserQuestion> getQuestionsByAdmissionerId(int id);
     List<UserQuestion> getUnansweredQuestions();
     List<UserQuestion> getTimedQuestions();
-    boolean updateQuestion(Map<String, String> params);
+    boolean updateQuestion(UserQuestion question);
     UserQuestion addQuestion(Map<String, String> params);
     boolean deleteQuestion(UserQuestion question);
     Long countQues();

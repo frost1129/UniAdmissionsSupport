@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Alert, Button, Card, Container, Form, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
@@ -6,9 +6,12 @@ import Api, { endpoints } from "../config/Api";
 import MySpinner from "../components/MySpinner";
 import { formatTimestamp } from "../config/Timestamp";
 import QuillHtmlRender from "../components/QuillHtmlRender";
+import { MyUserContext } from "../App";
 
 const PostDetail = () => {
+    const [user, ] = useContext(MyUserContext);
     const [post, setPost] = useState(null);
+    const [comments, setComments] = useState([]);
     const { postId } = useParams();
 
     useEffect(() => {
@@ -51,39 +54,73 @@ const PostDetail = () => {
 
                 <section className="my-5">
                     {post.postType === "post" ? 
-                    <Card className="bg-light">
+                    <Card className="bg-white">
                         <Card.Body>
-                            <Alert variant="success">
-                                <Alert.Heading>Hãy đăng nhập để có thể bình luận</Alert.Heading>
-                                <div className="d-lg-flex justify-content-between align-items-end">
-                                    <p className="mb-0">
-                                        Hãy đăng nhập để có thể bắt đầu để lại bình luận dưới bài viết.
-                                    </p>
-                                    <Link className="btn btn-outline-success">
-                                        Đăng nhập
-                                    </Link>
-                                </div>
-                                <hr />
-                                <div className="d-lg-flex justify-content-between">
-                                    <p className="mb-0">
-                                        Nếu chưa có tài khoản, bạn có thể bắt đầu bằng việc đăng ký tài khoản.
-                                    </p>
-                                    <Link className="btn btn-outline-warning">
-                                        Đăng ký
-                                    </Link>
-                                </div>
-                            </Alert>
-
-                            <Form className="mb-3">
-                                <textarea className="form-control" rows="3" placeholder="Hãy để lại bình luận nào..." />
-                                <Button className="mt-2" type="submit">Gửi bình luận</Button>
-                            </Form>
-
-                            <h5 className="text-secondary">Bài viết chưa có bình luận nào!</h5>
-                            <Comment/>   
+                            {user === null ? 
+                                <Alert variant="success">
+                                    <Alert.Heading>Hãy đăng nhập để có thể bình luận</Alert.Heading>
+                                    <div className="d-lg-flex justify-content-between align-items-end">
+                                        <p className="mb-0">
+                                            Hãy đăng nhập để có thể bắt đầu để lại bình luận.
+                                        </p>
+                                        <Link className="btn btn-outline-success">
+                                            Đăng nhập
+                                        </Link>
+                                    </div>
+                                    <hr />
+                                    <div className="d-lg-flex justify-content-between">
+                                        <p className="mb-0">
+                                            Nếu chưa có tài khoản, bạn có thể bắt đầu bằng việc đăng ký tài khoản.
+                                        </p>
+                                        <Link className="btn btn-outline-warning">
+                                            Đăng ký
+                                        </Link>
+                                    </div>
+                                </Alert>
+                            :
+                                <Form className="mb-3">
+                                    <textarea className="form-control" rows="3" placeholder="Hãy để lại bình luận nào..." />
+                                    <Button className="mt-2" type="submit">Gửi bình luận</Button>
+                                </Form>
+                            }
+                            {comments.length === 0 ? 
+                                <h5 className="text-secondary">Bài viết chưa có bình luận nào!</h5>
+                            : <Comment/> }
                         </Card.Body>
                     </Card>
-                    : "" }
+                    : 
+                    <Card className="bg-white">
+                        <Card.Body>
+                            {user === null ? 
+                                <Alert variant="success">
+                                    <Alert.Heading>Hãy đăng nhập để có thể gửi câu hỏi cho buổi livestream</Alert.Heading>
+                                    <div className="d-lg-flex justify-content-between align-items-end">
+                                        <p className="mb-0">
+                                            Hãy đăng nhập để có thể bắt đầu gửi câu hỏi cho buổi livestream.
+                                        </p>
+                                        <Link className="btn btn-outline-success">
+                                            Đăng nhập
+                                        </Link>
+                                    </div>
+                                    <hr />
+                                    <div className="d-lg-flex justify-content-between">
+                                        <p className="mb-0">
+                                            Nếu chưa có tài khoản, bạn có thể bắt đầu bằng việc đăng ký tài khoản.
+                                        </p>
+                                        <Link className="btn btn-outline-warning">
+                                            Đăng ký
+                                        </Link>
+                                    </div>
+                                </Alert>
+                            :
+                                <Form className="mb-3">
+                                    <textarea className="form-control" rows="3" placeholder="Bạn muốn đặt câu hỏi gì cho buổi livestream?" />
+                                    <Button className="mt-2" type="submit">Gửi câu hỏi</Button>
+                                </Form>
+                            }
+                        </Card.Body>
+                    </Card>
+                    }
                 </section>
             </Container>
         </Container>

@@ -16,13 +16,59 @@ const QuestionManage = () => {
     const [emailQues, setEmailQues] = useState([]);
     const [advisorQues, setAdvisorQues] = useState([]);
 
+    const [loading, setLoading] = useState(false);
+
     const [showEdit, setShowEdit] = useState(false);
     const [showInfo, setShowInfo] = useState(false);
+    const [currentQues, setCurrentQues] = useState(null);
 
-    const handleClose = () => setShowInfo(false);
-    const handleShow = () => setShowInfo(true);
-    const handleEditClose = () => setShowEdit(false);
-    const handleEditShow = () => setShowEdit(true);
+    const handleClose = () => {
+        setShowInfo(false);
+        setCurrentQues(null);
+    }
+    const handleEditClose = () => {
+        setShowEdit(false);
+        setCurrentQues(null);
+    }
+
+    const handleShow = (quesId) => {
+        loadQuestion(quesId);
+        setShowInfo(true);
+    }
+    const handleEditShow = (quesId) => {
+        loadQuestion(quesId);
+        setShowEdit(true);
+    }
+
+    const loadQuestion = async (quesId) => {
+        let {data} = await Api.get(endpoints["question-detail"](quesId));
+        setCurrentQues(data);
+    }
+
+    const change = (evt, field) => {
+        setCurrentQues(current => {
+            return {...current, [field]: evt.target.value}
+        })
+    }
+
+    const updateQuestion = (evt) => {
+        evt.preventDefault();
+
+        const process = async () => {
+            setLoading(true);
+            let res = await authApi().put(endpoints["question-update"], {
+                "id": currentQues.id,
+                "answer": currentQues.answer
+            });
+            
+            if (res.status === 200) {
+                setLoading(false);
+                handleEditClose();
+            }
+        }
+
+        process();
+    }
 
     useEffect(() => {
         const loadUnQues = async () => {
@@ -58,7 +104,7 @@ const QuestionManage = () => {
             loadAdvisorQues();
             loadUnQues();
         }
-    }, [user.userRole]);
+    }, [user.userRole, unQues, emailQues]);
 
     if (emailQues === null || (advisorQues === null && unQues === null)) return <MySpinner />
 
@@ -94,7 +140,7 @@ const QuestionManage = () => {
                                     }
                                 </td>
                                 <td>
-                                    <Link className="btn btn-sm" onClick={handleShow}>
+                                    <Link className="btn btn-sm" onClick={() => handleShow(ques.id)}>
                                         <FontAwesomeIcon icon={faInfoCircle} style={{color: "#2e2eff"}}/>
                                     </Link>
                                 </td>
@@ -129,10 +175,7 @@ const QuestionManage = () => {
                                     <td>{ques.askUserEmail}</td>
                                     <td>{ques.submitTime}</td>
                                     <td>
-                                        <Link className="btn btn-sm" onClick={handleShow}>
-                                            <FontAwesomeIcon icon={faInfoCircle} style={{color: "#2e2eff"}}/>
-                                        </Link>
-                                        <Link className="btn btn-sm" onClick={handleEditShow}>
+                                        <Link className="btn btn-sm" onClick={() => handleEditShow(ques.id)}>
                                             <FontAwesomeIcon icon={faPencilAlt}/>
                                         </Link>
                                     </td>
@@ -158,27 +201,27 @@ const QuestionManage = () => {
                                 </tr>
                             </thead>
                             <tbody className="text-center">
+                                {advisorQues.map(ques => 
                                 <tr>
-                                    <td>1</td>
-                                    <td className="text-start">1</td>
-                                    <td>1</td>
-                                    <td>1</td>
+                                    <td>{ques.id}</td>
+                                    <td className="text-start">{ques.content}</td>
+                                    <td>{ques.askUserEmail}</td>
+                                    <td>{ques.submitTime}</td>
                                     <td>
-                                        <Link className="btn btn-sm" onClick={handleShow}>
-                                            <FontAwesomeIcon icon={faInfoCircle} style={{color: "#2e2eff"}}/>
-                                        </Link>
-                                        <Link className="btn btn-sm" onClick={handleEditShow}>
+                                        <Link className="btn btn-sm" onClick={() => handleEditShow(ques.id)}>
                                             <FontAwesomeIcon icon={faPencilAlt}/>
                                         </Link>
                                     </td>
                                 </tr>
+                                )}
                             </tbody>
                         </Table>
                     </>
                 }
                 </>
                 }
-                
+
+{/* MODAL XEM CHI TIẾT CÂU HỎI */}
                 <Modal
                     show={showInfo}
                     size="md"
@@ -186,52 +229,71 @@ const QuestionManage = () => {
                     centered
                     onHide={handleClose}
                 >
-                    <Modal.Header closeButton>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Chi tiết câu hỏi
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label className="fw-bold">Nội dung câu hỏi</Form.Label>
-                                <p>Nội dung câu hỏi </p>
-                            </Form.Group>
-                            <Form.Group >
-                                <Form.Label className="fw-bold">Câu trả lời</Form.Label>
-                                <p>Nội dung câu trả lời </p>
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
+                    {currentQues === null ? 
+                        <MySpinner />
+                    : <>
+                        <Modal.Header closeButton>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                Chi tiết câu hỏi
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form>
+                                <Form.Group className="mb-3">
+                                    <Form.Label className="fw-bold">Nội dung câu hỏi</Form.Label>
+                                    <p>{currentQues.content}</p>
+                                </Form.Group>
+                                <Form.Group >
+                                    <Form.Label className="fw-bold">Câu trả lời</Form.Label>
+                                    <p>{currentQues.answer === null ? "Chưa có câu trả lời" : currentQues.answer}</p>
+                                </Form.Group>
+                            </Form>
+                        </Modal.Body>
+                    </>
+                    }
+                    
                 </Modal>
+
+{/* MODAL CHỈNH SỬA CÂU HỎI */}
                 <Modal
                     show={showEdit}
                     size="md"
                     aria-labelledby="contained-modal-title-vcenter"
                     backdrop="static"
                     centered
-                >
-                    <Modal.Header>
-                        <Modal.Title id="contained-modal-title-vcenter">
-                            Chi tiết câu hỏi
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                        <Form>
-                            <Form.Group className="mb-3">
-                                <Form.Label>Nội dung câu hỏi</Form.Label>
-                                <Form.Control type="text" placeholder="Nội dung câu hỏi..." readOnly/>
-                            </Form.Group>
-                            <Form.Group >
-                                <Form.Label>Câu trả lời</Form.Label>
-                                <Form.Control as="textarea" rows={5} placeholder="Nhập câu trả lời ở đây" />
-                            </Form.Group>
-                        </Form>
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="secondary" onClick={handleEditClose}>Cancle</Button>
-                        <Button variant="primary" onClick={handleEditClose}>Lưu câu trả lời</Button>
-                    </Modal.Footer>
+                >   
+                    {currentQues === null ? 
+                        <MySpinner />
+                    : <>
+                        <Modal.Header>
+                            <Modal.Title id="contained-modal-title-vcenter">
+                                Chi tiết câu hỏi
+                            </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form onSubmit={updateQuestion}>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Nội dung câu hỏi</Form.Label>
+                                    <Form.Control type="text" value={currentQues.content} readOnly/>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <Form.Label>Câu trả lời</Form.Label>
+                                    <Form.Control 
+                                        as="textarea" 
+                                        rows={5} 
+                                        placeholder="Nhập câu trả lời ở đây" 
+                                        onChange={(e) => change(e, "answer")}
+                                        value={currentQues.answer === null ? undefined : currentQues.answer} />
+                                </Form.Group>
+                                {loading === true ? <MySpinner /> : 
+                                <Form.Group className="mb-3">
+                                    <Button type="button" variant="secondary" className="me-2" onClick={handleEditClose}>Cancle</Button>
+                                    <Button type="submit" variant="primary">Lưu câu trả lời</Button>
+                                </Form.Group>
+                                }
+                            </Form>
+                        </Modal.Body>
+                    </>}
                 </Modal>
             </Container>
         </Container>

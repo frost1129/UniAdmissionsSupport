@@ -119,4 +119,13 @@ public class UserRepositoryImpl implements UserRepository{
         
         return Long.valueOf(q.getSingleResult().toString());
     }
+
+    @Override
+    public List<User> getAllUserByAdmissionType(int admissionId) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM User WHERE userAdmissionType.id=:id");
+        q.setParameter("id", admissionId);
+        
+        return q.getResultList();
+    }
 }

@@ -23,5 +23,6 @@ public interface UserService extends UserDetailsService{
     boolean updateUser(Map<String, String> params);
     boolean updateUserByAdmin(User user);
     List<User> getAllUser(Map<String, String> params);
+    List<User> getAllUserByAdmissionType(int admissionId);
     Long countAll();
 }

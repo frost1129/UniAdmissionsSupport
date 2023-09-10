@@ -18,6 +18,7 @@ export const endpoints = {
     "faqs": `${SERVER_CONTEXT}/api/faqs/`, 
     "post-details": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}`, 
     "current-user": `${SERVER_CONTEXT}/api/current-user/`, 
+    "question-detail": (id) => `${SERVER_CONTEXT}/api/user-questions/${id}/`,
     "question-unanswer": `${SERVER_CONTEXT}/api/user-questions/unanswer/`,
     "question-admission": `${SERVER_CONTEXT}/api/user-questions/advisor/`,
     "question-email": `${SERVER_CONTEXT}/api/user-questions/by-email/`, 
