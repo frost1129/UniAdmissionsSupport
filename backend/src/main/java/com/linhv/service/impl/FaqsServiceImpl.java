@@ -71,4 +71,9 @@ public class FaqsServiceImpl implements FaqsService{
         return this.faqsRepo.countAllByParams(params);
     }
 
+    @Override
+    public List<Faqs> getAllByUserId(int id) {
+        return this.faqsRepo.getAllByUserId(id);
+    }
+
 }

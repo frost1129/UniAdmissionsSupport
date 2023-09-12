@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {
+    Alert,
     Button,
     Container,
     Form,
@@ -17,10 +18,21 @@ import { MyUserContext } from "../App";
 
 const SignIn = () => {
     const [user, dispatch] = useContext(MyUserContext);
+    const [notify, setNotify] = useState({
+        "variant": "", 
+        "content": ""
+    });
     const [u, setU] = useState({
         "email": "",
         "password": ""
     });
+
+    const loadNotify = (variant, content) => {
+        setNotify({
+            "variant": variant, 
+            "content": content,
+        });
+    };
 
     const login = (evt) => {
         evt.preventDefault();
@@ -44,10 +56,15 @@ const SignIn = () => {
 
             } catch (ex) {
                 console.error(ex);
+                loadNotify("danger", "Tên tài khoản hoặc mật khẩu không đúng"); 
             }
         }
-
-        process();
+        if (u.email === "")
+            loadNotify("warning", "Vui lòng nhập email");
+        else if (u.password === "")
+            loadNotify("warning", "Vui lòng nhập mật khẩu");
+        else 
+            process();
     }
 
     const change = (evt, field) => {
@@ -75,6 +92,9 @@ const SignIn = () => {
                         <div className="mb-4">
                             <h3 className="fw-bold">ĐĂNG NHẬP</h3>
                         </div>
+
+                        {notify.variant === "" ? "" : <Alert variant={notify.variant}>{notify.content}</Alert>}
+
                         <InputGroup className="mb-3 text-primary-emphasis">
                             <input
                                 type="text"

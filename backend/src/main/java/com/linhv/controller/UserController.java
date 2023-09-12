@@ -105,4 +105,10 @@ public class UserController {
         }
         return "user-detail";
     }
+    
+    @PostMapping("/admin/users/{id}/delete")
+    public String delete(@PathVariable(value = "id") int id) {
+        this.userService.deleteUser(this.userService.getUserById(id));
+        return "redirect:/admin/users";
+    }
 }

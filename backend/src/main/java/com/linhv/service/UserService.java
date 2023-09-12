@@ -25,4 +25,5 @@ public interface UserService extends UserDetailsService{
     List<User> getAllUser(Map<String, String> params);
     List<User> getAllUserByAdmissionType(int admissionId);
     Long countAll();
+    boolean deleteUser(User user);
 }

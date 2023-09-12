@@ -57,7 +57,12 @@
                     <td>
                         <c:url value="/admin/users/${u.id}" var="update" />
                         <a href="${update}" class="btn btn-success rounded-pill p-0 px-2">Cập nhật</a>
-                        <button id="openModal" class="btn btn-danger rounded-pill p-0 px-2">Xóa</button>
+                        
+                        <c:url value="/admin/users/${u.id}/delete" var="del" />
+                        <form action="${del}" id="delForm" method="POST">
+                            <input type="hidden" name="id" value="${f.id}">
+                            <button type="button" class="btn btn-danger rounded-pill p-0 px-2 openModal">Xóa</button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>
@@ -101,53 +106,60 @@
     </c:if>
 </div>
         
-<div class="modal fade" id="newUserModal" tabindex="-1" role="dialog">
+<div class="modal fade" id="delModal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Xóa người dùng</h5>
-                <button type="button" id="closeModal" class="btn bg-transparent" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+            <div class="modal-header align-items-center">
+                <h5 class="modal-title" id="exampleModalLabel">Xác nhận xóa</h5>
             </div>
-<!--            <div class="modal-body">
-                <c:url value="/admin/questions/update-time" var="update" />
-                <form:form 
-                    modelAttribute="times" 
-                    method="post" 
-                    action="${update}" 
-                    >
-                    <form:input type="hidden" path="id" /> 
-                    <form:input type="hidden" path="fromTime" id="set1" /> 
-                    <form:input type="hidden" path="toTime" id="set2" /> 
-
-                    <div class="form-group mb-3">
-                        <label>Thời gian bắt đầu:</label>
-                        <input type="time" id="time1" step="1" min="00:00:00" max="24:00:00" class="form-control my-2"/>
-                    </div>
-                    
-                    <div class="form-group mb-3">
-                        <label>Thời gian kết thúc:</label>
-                        <input type="time" id="time2" step="1" min="00:00:00" max="24:00:00" class="form-control my-2"/>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Lưu thời gian</button>
-                </form:form>
-            </div>-->
+            <div class="modal-body">
+                Bạn muốn xóa bài đăng này?
+                <p class="text-danger">
+                    <i>Lưu ý: Xóa người dùng này đồng nghĩa với việc xóa toàn bộ bài đăng, livestream, ... và các nội dung có liên quan tới người dùng này.</i>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="closeModal">Hủy</button>
+                <button type="button" class="btn btn-danger" id="confDelete">Xác nhận xóa</button>
+            </div>
         </div>
     </div>
 </div>
                 
 <script>
     $(document).ready(function () {
-        var modal = $('#newUserModal');
+    //        XỬ LÝ SỰ KIỆN XÓA
+        var delModal = $('#delModal');
+        
+        $(".openModal").click(function () {
+            var form = $(this).closest("form"); // Tìm form gần nhất
+            var deleteUrl = form.attr("action"); // Lấy URL xóa từ thuộc tính action của form
 
-        $('#openModal').click(function () {
-            modal.modal('show');
+            // Thiết lập action cho nút xác nhận xóa
+            $("#confDelete").attr("delete-url", deleteUrl);
+
+            // Mở modal xác nhận
+            delModal.modal("show");
         });
         
         $('#closeModal').click(function () {
-            modal.modal('hide'); // Đóng modal
+            delModal.modal('hide');
+        });
+
+        $("#confDelete").click(function () {
+            var deleteUrl = $(this).attr("delete-url"); // Lấy URL xóa từ thuộc tính data-delete-url
+
+            $.ajax({
+                type: "POST",
+                url: deleteUrl,
+                success: function () {
+                    delModal.modal("hide");
+                    location.reload();
+                },
+                error: function () {
+                    console.log(error);
+                }
+            });
         });
     });
 </script>

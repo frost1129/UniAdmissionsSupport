@@ -26,6 +26,9 @@ export const endpoints = {
     "posts": `${SERVER_CONTEXT}/api/posts/`, 
     "posts-count": `${SERVER_CONTEXT}/api/posts/counter/`, 
     "post-details": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}`, 
+    "post-comments": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}/comments/`,
+    "post-add-comment": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}/add-comment/`,
+    "post-add-question": (postId) => `${SERVER_CONTEXT}/api/posts/${postId}/add-question/`,
     
 
     "question-setting": `${SERVER_CONTEXT}/api/questions/setting/`, 

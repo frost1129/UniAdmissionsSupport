@@ -7,8 +7,18 @@ package com.linhv.service.impl;
 
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
+import com.linhv.pojo.Faqs;
+import com.linhv.pojo.LivestreamQuesion;
+import com.linhv.pojo.Post;
+import com.linhv.pojo.PostComment;
 import com.linhv.pojo.User;
+import com.linhv.pojo.UserQuestion;
 import com.linhv.repository.UserRepository;
+import com.linhv.service.FaqsService;
+import com.linhv.service.LivestreamQuestionService;
+import com.linhv.service.PostCommentService;
+import com.linhv.service.PostService;
+import com.linhv.service.UserQuestionService;
 import com.linhv.service.UserService;
 import java.io.IOException;
 import java.util.Date;
@@ -35,6 +45,21 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserServiceImpl implements UserService{
     @Autowired
     private UserRepository userRepo;
+    
+    @Autowired
+    private PostCommentService commentService;
+    
+    @Autowired
+    private LivestreamQuestionService questionService;
+    
+    @Autowired
+    private PostService postService;
+    
+    @Autowired
+    private FaqsService faqService;
+    
+    @Autowired
+    private UserQuestionService userQuesService;
     
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -164,5 +189,41 @@ public class UserServiceImpl implements UserService{
     @Override
     public List<User> getAllUserByAdmissionType(int admissionId) {
         return this.userRepo.getAllUserByAdmissionType(admissionId);
+    }
+
+    @Override
+    public boolean deleteUser(User user) {
+        List<PostComment> cmts = this.commentService.getAllByUserId(user.getId());
+        for (PostComment cmt : cmts) {
+            this.commentService.delete(cmt.getId());
+        }
+        
+        List<LivestreamQuesion> questions = this.questionService.getAllByUserId(user.getId());
+        for (LivestreamQuesion ques : questions) {
+            this.questionService.delete(ques);
+        }
+        
+        List<Faqs> faqs = this.faqService.getAllByUserId(user.getId());
+        for (Faqs f : faqs) {
+            this.faqService.delete(f);
+        }
+        
+        List<UserQuestion> answeredQuestions = this.userQuesService.getQuestionsByAdmissionerId(user.getId());
+        for (UserQuestion ques : answeredQuestions) {
+            ques.setAnswerUserId(null);
+            this.userQuesService.updateQuestion(ques);
+        }
+        
+        List<UserQuestion> uQuestions = this.userQuesService.getQuestionsByUserEmail(user.getEmail());
+        for (UserQuestion ques : uQuestions) {
+            this.userQuesService.deleteQuestion(ques);
+        }
+        
+        List<Post> posts = this.postService.getAllByUserId(user.getId());
+        for (Post p : posts) {
+            this.postService.deletePost(p.getId());
+        }
+//        return true;
+        return this.userRepo.deleteUser(user);
     }
 }

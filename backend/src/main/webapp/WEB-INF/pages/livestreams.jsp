@@ -44,7 +44,8 @@
                     <td>${p.userId.lastName} ${p.userId.firstName}</td>
                     <td>
                         <c:url value="/admin/create-post/${p.id}" var="update" />
-                        <a href="" class="btn btn-info rounded-pill p-0 px-2">Xem câu hỏi</a>
+                        <c:url value="/admin/livestreams/${p.id}/questions" var="questions" />
+                        <a href="${questions}" class="btn btn-info rounded-pill p-0 px-2">Xem câu hỏi</a>
                         
                         <c:if test="${userInfo != null}">
                             <c:if test="${userInfo.id == p.userId.id}">

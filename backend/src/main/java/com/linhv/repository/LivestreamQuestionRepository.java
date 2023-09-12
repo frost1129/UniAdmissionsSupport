@@ -17,4 +17,5 @@ public interface LivestreamQuestionRepository {
     LivestreamQuesion add(LivestreamQuesion liveQues);
     boolean update(LivestreamQuesion liveQues);
     boolean delete(LivestreamQuesion liveQues);
+    List<LivestreamQuesion> getAllByUserId(int id);
 }

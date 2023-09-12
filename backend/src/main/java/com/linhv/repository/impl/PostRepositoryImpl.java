@@ -270,4 +270,13 @@ public class PostRepositoryImpl implements PostRepository{
         return Long.valueOf(q.getSingleResult().toString());
     }
 
+    @Override
+    public List<Post> getAllByUserId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Post p WHERE p.userId.id=:id");
+        q.setParameter("id", id);
+        
+        return q.getResultList();
+    }
+
 }

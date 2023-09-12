@@ -8,8 +8,12 @@ package com.linhv.service.impl;
 import com.cloudinary.Cloudinary;
 import com.cloudinary.utils.ObjectUtils;
 import com.github.slugify.Slugify;
+import com.linhv.pojo.LivestreamQuesion;
 import com.linhv.pojo.Post;
+import com.linhv.pojo.PostComment;
 import com.linhv.repository.PostRepository;
+import com.linhv.service.LivestreamQuestionService;
+import com.linhv.service.PostCommentService;
 import com.linhv.service.PostService;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -31,6 +35,12 @@ public class PostServiceImpl implements PostService{
     
     @Autowired
     private PostRepository postRepo;
+    
+    @Autowired
+    private PostCommentService commentService;
+    
+    @Autowired
+    private LivestreamQuestionService questionService;
     
     @Autowired
     private Cloudinary cloudinary;
@@ -105,6 +115,16 @@ public class PostServiceImpl implements PostService{
         Post p = this.getPostById(id);
         if (p != null) {
             // xử lý xóa cmt + câu hỏi
+            List<PostComment> cmts = this.commentService.getAllByPostId(id);
+            for (PostComment cmt : cmts) {
+                this.commentService.delete(cmt.getId());
+            }
+            
+            List<LivestreamQuesion> questions = this.questionService.getAllByPostId(id);
+            for (LivestreamQuesion ques : questions) {
+                this.questionService.delete(ques);
+            }
+            
             return this.postRepo.detelePost(p);
         }
         return false;
@@ -158,5 +178,10 @@ public class PostServiceImpl implements PostService{
     @Override
     public Long countLivestream() {
         return this.postRepo.countLivestream();
+    }
+
+    @Override
+    public List<Post> getAllByUserId(int id) {
+        return this.postRepo.getAllByUserId(id);
     }
 }

@@ -104,7 +104,7 @@ const QuestionManage = () => {
             loadAdvisorQues();
             loadUnQues();
         }
-    }, [user.userRole, unQues, emailQues]);
+    }, [user]);
 
     if (emailQues === null || (advisorQues === null && unQues === null)) return <MySpinner />
 

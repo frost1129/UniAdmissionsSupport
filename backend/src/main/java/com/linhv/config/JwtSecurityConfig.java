@@ -80,6 +80,7 @@ public class JwtSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/api/current-user/").authenticated()
                 .antMatchers(HttpMethod.PUT, "/api/current-user/").authenticated()
+                .antMatchers(HttpMethod.POST, "/api/posts/**/add-comment/").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/user-questions/**").authenticated()
                 .antMatchers(HttpMethod.GET, "/api/user-questions/unanswer/").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_ADVISOR')")
                 .antMatchers(HttpMethod.GET, "/api/user-questions/advisor/").access("hasRole('ROLE_ADMIN') or hasRole('ROLE_ADVISOR')")

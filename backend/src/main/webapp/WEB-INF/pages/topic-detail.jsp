@@ -18,7 +18,7 @@
     action="${action}" 
     enctype="multipart/form-data"
 >
-    <form:input type="hidden" path="postId" id="selectedId"/>
+    <%--<form:input type="hidden" path="postId" id="selectedId"/>--%>
 
     <div class="mb-4 text-primary-emphasis">
         <h4>Chi tiết chủ đề</h4>
@@ -30,7 +30,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">Vai trò</label>
-        <select class="form-select" id="postSelect">
+        <form:select class="form-select" id="postSelect" path="postId">
             <c:choose>
                 <c:when test="${empty posts}">
                     <option value="" disabled="true">Chưa có bài viết nào trong hệ thống</option>
@@ -42,7 +42,7 @@
                     </c:forEach>
                 </c:otherwise>
             </c:choose>
-        </select>
+        </form:select>
         <form:errors path="postId" element="div" cssClass="alert alert-danger mt-1"/>
         <i>
             Bấm vào 
@@ -55,12 +55,12 @@
 </form:form>
     
 <script>
-    $(document).ready(function () {
-        var selectedId = $("#selectedId");
-
-        $("#postSelect").change(function () {
-            var selectedValue = $(this).val();
-            selectedId.val(selectedValue);
-        });
-    });
+//    $(document).ready(function () {
+//        var selectedId = $("#selectedId");
+//
+//        $("#postSelect").change(function () {
+//            var selectedValue = $(this).val();
+//            selectedId.val(selectedValue);
+//        });
+//    });
 </script>

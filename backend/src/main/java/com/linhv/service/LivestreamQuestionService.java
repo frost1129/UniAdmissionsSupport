@@ -6,6 +6,7 @@ package com.linhv.service;
 
 import com.linhv.pojo.LivestreamQuesion;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -14,7 +15,8 @@ import java.util.List;
 public interface LivestreamQuestionService {
     List<LivestreamQuesion> getAllByPostId(String id);
     LivestreamQuesion getById(String id);
-    LivestreamQuesion add(LivestreamQuesion liveQues);
-    boolean update(LivestreamQuesion liveQues);
+    LivestreamQuesion add(Map<String, String> params);
+    boolean update(Map<String, String> params);
     boolean delete(LivestreamQuesion liveQues);
+    List<LivestreamQuesion> getAllByUserId(int id);
 }

@@ -77,6 +77,8 @@ public class UserRepositoryImpl implements UserRepository{
     @Override
     public boolean authUser(String email, String password) {
         User user = getUserByEmail(email);
+        if (user == null)
+            return false;
         return this.encoder.matches(password, user.getPassword());
     }
 
@@ -127,5 +129,17 @@ public class UserRepositoryImpl implements UserRepository{
         q.setParameter("id", admissionId);
         
         return q.getResultList();
+    }
+
+    @Override
+    public boolean deleteUser(User user) {
+        Session session = this.factory.getObject().getCurrentSession();
+        try {
+            session.delete(user);
+            return true;
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }

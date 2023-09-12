@@ -1,21 +1,23 @@
 import React from "react";
 import { Image } from "react-bootstrap";
+import Moment from "react-moment";
 
-const Comment = () => {
+const Comment = ({ comment }) => {
     return (
         <div className="d-flex mb-4 bg-white">
             <div className="flex-shrink-0">
                 <Image
-                    src="https://dummyimage.com/50x50/ced4da/6c757d.jpg"
+                    src={comment.userId.image}
                     roundedCircle
+                    style={{height: "50px", width: "50px", objectFit: "cover"}}
                 />
             </div>
             <div className="ms-3">
-                <div className="fw-bold">User name</div>
-                <p>Content....</p>
-
-                <div>Chứa các cmt con.....</div>
-
+                <div>
+                    <b>{comment.userId.lastName} {comment.userId.firstName}</b> - <Moment locale="vi" fromNow>{comment.updatedDate}</Moment>
+                </div>
+                <p>{comment.content}</p>
+                {/* <div>Chứa các cmt con.....</div> */}
             </div>
         </div>
     );

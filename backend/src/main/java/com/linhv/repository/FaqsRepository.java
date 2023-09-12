@@ -21,5 +21,5 @@ public interface FaqsRepository {
     boolean delete(Faqs f);
     Long countAll();
     Long countAllByParams(Map<String, String> params);
-
+    List<Faqs> getAllByUserId(int id);
 }

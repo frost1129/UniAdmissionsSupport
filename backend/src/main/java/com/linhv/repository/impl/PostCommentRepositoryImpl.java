@@ -32,7 +32,7 @@ public class PostCommentRepositoryImpl implements PostCommentRepository{
     public List<PostComment> getAllByPostId(String id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM PostComment cmt "
-                                    + "WHERE cmt.postId.id=:id ");
+                                    + "WHERE cmt.postId.id=:id ORDER BY cmt.updatedDate");
         q.setParameter("id", id);
         
         return q.getResultList();
@@ -42,7 +42,7 @@ public class PostCommentRepositoryImpl implements PostCommentRepository{
     public List<PostComment> getSubsByCommentId(String id) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createQuery("FROM PostComment cmt "
-                                    + "WHERE cmt.commentId.id=:id ");
+                                    + "WHERE cmt.commentId.id=:id ORDER BY cmt.updatedDate");
         q.setParameter("id", id);
         
         return q.getResultList();
@@ -93,6 +93,25 @@ public class PostCommentRepositoryImpl implements PostCommentRepository{
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public int countCommentByPostId(String id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("SELECT COUNT(*) FROM PostComment cmt "
+                                    + "WHERE cmt.postId.id=:id");
+        q.setParameter("id", id);
+        
+        return (int) q.getSingleResult();
+    }
+
+    @Override
+    public List<PostComment> getAllByUserId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM PostComment cmt WHERE cmt.userId.id=:id");
+        q.setParameter("id", id);
+        
+        return q.getResultList();
     }
 
 }

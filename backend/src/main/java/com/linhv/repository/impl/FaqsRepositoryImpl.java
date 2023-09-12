@@ -159,4 +159,13 @@ public class FaqsRepositoryImpl implements FaqsRepository{
         Query query = session.createQuery(q);
         return (Long) query.getSingleResult();
     }
+
+    @Override
+    public List<Faqs> getAllByUserId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM Faqs f WHERE f.userId.id=:id");
+        q.setParameter("id", id);
+        
+        return q.getResultList();
+    }
 }

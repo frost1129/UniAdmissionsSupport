@@ -12,7 +12,7 @@ import { formatTimestamp } from "../config/Timestamp";
 const Posts = () => {
     const [posts, setPosts] = useState(null);
     const [type, setType] = useState(null);
-
+ 
     const [counter, setCounter] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [q, setQ] = useSearchParams();

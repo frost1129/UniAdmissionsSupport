@@ -27,4 +27,5 @@ public interface PostService {
     Long countByAdmission(int admissionId);
     Long countPost();
     Long countLivestream();
+    List<Post> getAllByUserId(int id);
 }

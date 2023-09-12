@@ -6,6 +6,7 @@ package com.linhv.service;
 
 import com.linhv.pojo.PostComment;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -15,7 +16,9 @@ public interface PostCommentService {
     List<PostComment> getAllByPostId(String id);
     List<PostComment> getSubsByCommentId(String id);
     PostComment getById(String id);
-    PostComment add(PostComment comment);
-    boolean update(PostComment comment);
-    boolean delete(PostComment comment);
+    PostComment add(Map<String, String> params);
+    boolean update(Map<String, String> params);
+    boolean delete(String id);
+    int countCommentByPostId(String id);
+    List<PostComment> getAllByUserId(int id);
 }

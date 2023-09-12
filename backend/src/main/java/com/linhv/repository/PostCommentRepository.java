@@ -18,4 +18,6 @@ public interface PostCommentRepository {
     PostComment add(PostComment comment);
     boolean update(PostComment comment);
     boolean delete(PostComment comment);
+    int countCommentByPostId(String id);
+    List<PostComment> getAllByUserId(int id);
 }

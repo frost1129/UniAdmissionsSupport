@@ -21,4 +21,5 @@ public interface UserRepository {
     List<User> getAllUser(Map<String, String> params);
     List<User> getAllUserByAdmissionType(int admissionId);
     Long countAll();
+    boolean deleteUser(User user);
 }

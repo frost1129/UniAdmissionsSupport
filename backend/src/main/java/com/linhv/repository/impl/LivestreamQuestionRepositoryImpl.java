@@ -31,7 +31,7 @@ public class LivestreamQuestionRepositoryImpl implements LivestreamQuestionRepos
     @Override
     public List<LivestreamQuesion> getAllByPostId(String id) {
         Session s = this.factory.getObject().getCurrentSession();
-        Query q = s.createQuery("FROM LivestreamQuestion lq "
+        Query q = s.createQuery("FROM LivestreamQuesion lq "
                                     + "WHERE lq.livestreamPostId.id=:id ");
         q.setParameter("id", id);
         
@@ -83,6 +83,15 @@ public class LivestreamQuestionRepositoryImpl implements LivestreamQuestionRepos
             ex.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public List<LivestreamQuesion> getAllByUserId(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createQuery("FROM LivestreamQuesion ques WHERE ques.userId.id=:id");
+        q.setParameter("id", id);
+        
+        return q.getResultList();
     }
 
 }

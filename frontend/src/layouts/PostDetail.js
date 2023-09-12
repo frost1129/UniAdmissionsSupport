@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Alert, Button, Card, Container, Form, Image } from "react-bootstrap";
 import { Link, useParams } from "react-router-dom";
 import Comment from "../components/Comment";
-import Api, { endpoints } from "../config/Api";
+import Api, { authApi, endpoints } from "../config/Api";
 import MySpinner from "../components/MySpinner";
 import { formatTimestamp } from "../config/Timestamp";
 import QuillHtmlRender from "../components/QuillHtmlRender";
@@ -11,8 +11,84 @@ import { MyUserContext } from "../App";
 const PostDetail = () => {
     const [user, ] = useContext(MyUserContext);
     const [post, setPost] = useState(null);
-    const [comments, setComments] = useState([]);
+    const [comments, setComments] = useState(null);
     const { postId } = useParams();
+    const [cmt, setCmt] = useState({
+        "content": ""
+    });
+
+    const [loading, setLoading] = useState(false);
+    const [notify, setNotify] = useState({
+        "variant": "", 
+        "content": ""
+    });
+
+    const addComment = (evt) => {
+        evt.preventDefault();
+
+        const process = async () => {
+            let form = new FormData();
+            for (let field in cmt)
+                form.append(field, cmt[field]);
+
+            setLoading(true);
+            let res = await authApi().post(endpoints["post-add-comment"](postId), form);
+
+            if (res.status === 201) {
+                setLoading(false);
+                loadNotify("success", "Gửi bình luận thành công");
+                setCmt({
+                    "content": "", 
+                });
+            } else {
+                loadNotify("danger", "Hệ thống đang gặp trục trặc, vui lòng thử lại sau.");
+            }
+        }
+        if (cmt.content === "")
+            loadNotify("warning", "Vui lòng nhập nội dung comment");
+        else 
+            process();
+    }
+
+    const addQuestion = (evt) => {
+        evt.preventDefault();
+
+        const process = async () => {
+            let form = new FormData();
+            for (let field in cmt)
+                form.append(field, cmt[field]);
+
+            setLoading(true);
+            let res = await authApi().post(endpoints["post-add-question"](postId), form);
+
+            if (res.status === 201) {
+                setLoading(false);
+                loadNotify("success", "Gửi câu hỏi thành công, hãy đón chờ buổi livestream để nhận câu trả lời nhé");
+                setCmt({
+                    "content": "", 
+                });
+            } else {
+                loadNotify("danger", "Hệ thống đang gặp trục trặc, vui lòng thử lại sau.");
+            }
+        }
+        if (cmt.content === "")
+            loadNotify("warning", "Vui lòng nhập nội dung câu hỏi");
+        else 
+            process();
+    }
+
+    const loadNotify = (variant, content) => {
+        setNotify({
+            "variant": variant, 
+            "content": content,
+        });
+    };
+
+    const change = (evt, field) => {
+        setCmt(current => {
+            return {...current, [field]: evt.target.value}
+        })
+    }
 
     useEffect(() => {
         const loadPostDetai = async () => {
@@ -24,10 +100,17 @@ const PostDetail = () => {
             });
         }
 
-        loadPostDetai();
-    }, [postId]);
+        
+        const loadComment = async () => {
+            let {data} = await Api.get(endpoints["post-comments"](postId));
+            setComments(data);
+        }
 
-    if (post === null) return <MySpinner />;
+        loadPostDetai();
+        loadComment();
+    }, [postId, loading]);
+
+    if (post === null || comments === null) return <MySpinner />;
 
     return (
         <Container>
@@ -53,6 +136,7 @@ const PostDetail = () => {
                 </article>
 
                 <section className="my-5">
+                    {notify.variant === "" ? "" : <Alert variant={notify.variant}>{notify.content}</Alert>}
                     {post.postType === "post" ? 
                     <Card className="bg-white">
                         <Card.Body>
@@ -78,14 +162,25 @@ const PostDetail = () => {
                                     </div>
                                 </Alert>
                             :
-                                <Form className="mb-3">
-                                    <textarea className="form-control" rows="3" placeholder="Hãy để lại bình luận nào..." />
-                                    <Button className="mt-2" type="submit">Gửi bình luận</Button>
+                                <Form className="mb-3" onSubmit={addComment}>
+                                    <textarea
+                                        type="text" 
+                                        as="textarea" 
+                                        rows={3}
+                                        value={cmt.content}
+                                        onChange={(e) => change(e, "content")}
+                                        className="form-control"
+                                        placeholder="Hãy để lại bình luận nào..." />
+                                    {loading === false ? 
+                                    <Button className="mt-2" type="submit">Gửi bình luận</Button> : 
+                                    <MySpinner />}
                                 </Form>
                             }
                             {comments.length === 0 ? 
                                 <h5 className="text-secondary">Bài viết chưa có bình luận nào!</h5>
-                            : <Comment/> }
+                            : 
+                                comments.map(cmt => <Comment key={cmt.id} comment={cmt} />)
+                            }
                         </Card.Body>
                     </Card>
                     : 
@@ -113,9 +208,18 @@ const PostDetail = () => {
                                     </div>
                                 </Alert>
                             :
-                                <Form className="mb-3">
-                                    <textarea className="form-control" rows="3" placeholder="Bạn muốn đặt câu hỏi gì cho buổi livestream?" />
-                                    <Button className="mt-2" type="submit">Gửi câu hỏi</Button>
+                                <Form className="mb-3" onSubmit={addQuestion}>
+                                    <textarea 
+                                        type="text" 
+                                        as="textarea" 
+                                        rows={3}
+                                        value={cmt.content}
+                                        onChange={(e) => change(e, "content")}
+                                        className="form-control"
+                                        placeholder="Bạn muốn đặt câu hỏi gì cho buổi livestream?" />
+                                    {loading === false ? 
+                                    <Button className="mt-2" type="submit">Gửi câu hỏi</Button> : 
+                                    <MySpinner />}
                                 </Form>
                             }
                         </Card.Body>

@@ -6,6 +6,7 @@
 package com.linhv.controller;
 
 import com.linhv.pojo.Post;
+import com.linhv.service.LivestreamQuestionService;
 import com.linhv.service.PostService;
 import com.linhv.service.UserService;
 import java.security.Principal;
@@ -36,6 +37,9 @@ public class PostController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private LivestreamQuestionService questionService;
     
     @Autowired
     private Environment env;
@@ -159,5 +163,12 @@ public class PostController {
         
         model.addAttribute("post", p);
         return "createPost";
+    }
+    
+    @GetMapping("/livestreams/{id}/questions")
+    public String liveQuestions(@PathVariable(value = "id") String id, Model model) {
+        model.addAttribute("livePost", this.postService.getPostById(id));
+        model.addAttribute("questions", this.questionService.getAllByPostId(id));
+        return "live-questions";
     }
 }
